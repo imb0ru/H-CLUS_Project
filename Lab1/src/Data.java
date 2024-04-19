@@ -102,21 +102,22 @@ public class Data {
     public String toString() {
         String s = "";
         for (int i = 0; i < numberOfExamples; i++) {
-            s += i + ": " + data[i] + "\n";
+            s += i + ": [" + data[i] + "]\n";
         }
         return s;
     }
 
-    public static void main(String args[]){
-        Data trainingSet=new Data();
+    public static void main(String args[]) {
+        Data trainingSet = new Data();
         System.out.println(trainingSet);
-        double [][] distancematrix=trainingSet.distance();
+        double[][] distanceMatrix = trainingSet.distance();
         System.out.println("Distance matrix:\n");
-        for (double[] doubles : distancematrix) {
-            for (int j = 0; j < distancematrix.length; j++)
-                System.out.print(doubles[j] + "\t");
+        for (double[] doubles : distanceMatrix) {
+            for (int j = 0; j < distanceMatrix.length; j++)
+                System.out.print(String.format("%.2f\t", doubles[j])); // Utilizzo String.format() per formattare il numero con due decimali e aggiungere il tab
             System.out.println();
         }
     }
+
 
 }
