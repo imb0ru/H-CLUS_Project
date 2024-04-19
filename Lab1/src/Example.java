@@ -4,7 +4,7 @@
  *
  * @author Team MAP Que Nada
  */
-public class Example {
+class Example {
     private Double [] example; //vettore di valori reali
 
     /**
@@ -62,16 +62,10 @@ public class Example {
      */
     public String toString() {
         String s = "";
-        for(int i = 0; i < example.length; i++){
-            s += example[i] + " ";
+        for (Double aDouble : example) {
+            s += aDouble + " ";
         }
         return s;
     }
 }
-
-
-
-
-
-
 
