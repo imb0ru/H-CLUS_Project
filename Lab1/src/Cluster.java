@@ -11,16 +11,16 @@ class Cluster {
 		clusteredData=clusteredDataTemp;
 		clusteredData[clusteredData.length-1]=id;			
 	}
-		
-	
+
+
 	int getSize() {
 		return clusteredData.length;
 	}
-	
+
 	int getElement(int i) {
 		return clusteredData[i];
 	}
-	
+
 	// crea una copia del cluster corrente
 	Cluster createACopy() {
 			Cluster copyC=new Cluster();
@@ -28,7 +28,7 @@ class Cluster {
 				copyC.addData(clusteredData[i]);
 			return copyC;
 	}
-	
+
 	// crea un nuovo cluster che � la fusione dei due cluster pre-esistenti
 	Cluster mergeCluster (Cluster c)
 	{
@@ -38,28 +38,27 @@ class Cluster {
 		for (int i=0;i<c.getSize();i++)
 			newC.addData(c.clusteredData[i]);
 		return newC;
-		
+
 	}
-	
-	
-	public String toString() {		
+
+
+	public String toString() {
 		String str="";
 		for (int i=0;i<clusteredData.length-1;i++)
 			str+=clusteredData[i]+",";
 		str+=clusteredData[clusteredData.length-1];
-		return str;	
+		return str;
 	}
-	
+
 	String toString(Data data){
 		String str="";
-		
-		for(int i=0;i<clusteredData.length;i++)
-			str+="<"+data.getExample(clusteredData[i])+">";				
-		
+
+        for (Integer clusteredDatum : clusteredData) str += "<[" + data.getExample(clusteredDatum) + "]>";
+
 		return str;
-		
+
 	}
-	
+
 
 
 }

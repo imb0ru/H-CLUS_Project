@@ -62,9 +62,11 @@ class Example {
      */
     public String toString() {
         String s = "";
-        for (Double aDouble : example) {
-            s += aDouble + " ";
+        for (int i = 0; i < example.length - 1; i++) {
+            Double aDouble = example[i];
+            s += aDouble + ",";
         }
+        s += example[example.length - 1];
         return s;
     }
 }

@@ -8,28 +8,18 @@ class HierachicalClusterMiner {
 	}
 
 	void mine(Data data, ClusterDistance distance) {
-		ClusterSet[] dendrogram = new ClusterSet[data.getNumberOfExample()];
-
-		// Creazione del livello base (livello 0) del dendrogramma
+		ClusterSet level0 = new ClusterSet(data.getNumberOfExample());
 		for (int i = 0; i < data.getNumberOfExample(); i++) {
-			ClusterSet baseLevelClusterSet = new ClusterSet(data.getNumberOfExample());
-			Cluster baseCluster = new Cluster();
-			baseCluster.addData(i);
-			baseLevelClusterSet.add(baseCluster);
-			dendrogram[0] = baseLevelClusterSet;
+			Cluster c = new Cluster();
+			c.addData(i);
+			level0.add(c);
 		}
-
-		// Costruzione dei livelli successivi del dendrogramma
-		for (int level = 1; level < dendrogram.length; level++) {
-			ClusterSet prevLevelClusterSet = dendrogram[level - 1];
-			ClusterSet mergedClusterSet = prevLevelClusterSet.mergeClosestClusters(distance, data);
-			dendrogram[level] = mergedClusterSet;
+		this.dendrogram.setClusterSet(level0, 0);
+		for (int i = 1; i < this.dendrogram.getDepth(); i++) {
+			ClusterSet nextlevel = this.dendrogram.getClusterSet(i - 1).mergeClosestClusters(distance, data);
+			this.dendrogram.setClusterSet(nextlevel, i);
 		}
-
-		//da realizzare/aggiustare la memorizzazione del dendrogramma
-
 	}
-
 
 	public String toString() {
 		return dendrogram.toString();
