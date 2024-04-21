@@ -114,7 +114,7 @@ public class Data {
         System.out.println("Distance matrix:\n");
         for (double[] doubles : distanceMatrix) {
             for (int j = 0; j < distanceMatrix.length; j++)
-                System.out.print(String.format("%.2f\t", doubles[j])); // Utilizzo String.format() per formattare il numero con due decimali e aggiungere il tab
+                System.out.printf("%.2f\t", doubles[j]); // Utilizzo String.format() per formattare il numero con due decimali e aggiungere il tab
             System.out.println();
         }
     }

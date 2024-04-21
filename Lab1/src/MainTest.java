@@ -14,11 +14,11 @@ public class MainTest {
 
 		double [][] distancematrix=data.distance();
 		System.out.println("Distance matrix:\n");
-		for(int i=0;i<distancematrix.length;i++) {
-			for(int j=0;j<distancematrix.length;j++)
-				System.out.print(String.format("%.2f\t",distancematrix[i][j]));
-			System.out.println();
-		}
+        for (double[] doubles : distancematrix) {
+            for (int j = 0; j < distancematrix.length; j++)
+                System.out.printf("%.2f\t", doubles[j]);
+            System.out.println();
+        }
 		clustering.mine(data,distance);
 		System.out.println(clustering);
 		System.out.println(clustering.toString(data));

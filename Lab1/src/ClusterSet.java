@@ -21,29 +21,34 @@ class ClusterSet {
 	}
 
 	ClusterSet mergeClosestClusters(ClusterDistance distance, Data data){
-		if ( 2 < lastClusterIndex ) {
+		if ( 2 <= lastClusterIndex ) {
 			double minD = Double.MAX_VALUE;
-			int mini = -1;
-			int minj = -1;
+			Cluster cluster1 = null;
+			Cluster cluster2 = null;
 
-			for (int i = 0; i < lastClusterIndex-1; i++) {
-				for(int j = i+1; j<lastClusterIndex; j++){
-					double d = distance.distance(C[i], C[j], data);
+			for (int i = 0; i < this.C.length; i++) {
+				Cluster c1 = get(i);
+				for(int j = i+1; j<this.C.length; j++){
+					Cluster c2 = get(j);
+					double d = distance.distance(c1, c2, data);
 					if (d < minD) {
 						minD = d;
-						mini = i;
-						minj = j;
+						cluster1 = c1;
+						cluster2 = c2;
 					}
 				}
 			}
-			Cluster mergedCluster = C[mini].mergeCluster(C[minj]);
-			ClusterSet finalClusterSet = new ClusterSet(lastClusterIndex-1);
-			for(int i=0; i<lastClusterIndex; i++){
-				if(i!=mini && i!=minj){
-					finalClusterSet.add(C[i]);
+			Cluster mergedCluster = cluster1.mergeCluster(cluster2);
+			ClusterSet finalClusterSet = new ClusterSet(this.C.length-1);
+			for(int i=0; i<this.C.length; i++){
+				Cluster c = get(i);
+				if(c!=cluster1) {
+					if (c != cluster2)
+						finalClusterSet.add(c);
 				}
+				else
+					finalClusterSet.add(mergedCluster);
 			}
-			finalClusterSet.add(mergedCluster);
 
 			return finalClusterSet;
 		}
@@ -56,7 +61,7 @@ class ClusterSet {
 		String str="";
 		for(int i=0;i<C.length;i++){
 			if (C[i]!=null){
-				str+="cluster"+i+":"+C[i]+"\n";
+				str+="cluster"+i+":["+C[i]+"]\n";
 			}
 		}
 		return str;

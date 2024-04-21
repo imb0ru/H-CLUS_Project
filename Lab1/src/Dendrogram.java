@@ -41,7 +41,7 @@ class Dendrogram {
     public String toString(){
         String v="";
         for (int i=0;i<tree.length;i++)
-            v+=("level"+i+":\n"+tree[i]+'\n');
+            v+=("level"+i+":\n"+tree[i]+ "\n");
         return v;
     }
 
