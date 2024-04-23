@@ -1,5 +1,21 @@
-
+/**
+ * classe SingleLinkDistance
+ * Implementa il metodo distance dell'interfaccia
+ * ClusterDistance per calcolare
+ * la distanza tra due cluster
+ *
+ */
 public class SingleLinkDistance implements ClusterDistance {
+	/**
+	 * metodo distance
+	 * restituisce la minima distanza tra due cluster
+	 * con la distanza singlelink
+	 *
+	 * @param c1 primo cluster
+	 * @param c2 secondo cluster
+	 * @param d dato utilizzato per calcolare la distanza tra i cluster
+	 * @return min (un double)
+	 */
 	public double distance(Cluster c1, Cluster c2, Data d) {
 		
 		double min=Double.MAX_VALUE;

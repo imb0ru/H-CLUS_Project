@@ -1,3 +1,6 @@
+
+//// AGGIUNGERE I COMMENTI PER DOCUMENTAZIONE + CONTROLLA VISIBILITA
+
 class Cluster {
 	private Integer clusteredData[]=new Integer[0];
 	//add the index of a sample to the cluster
