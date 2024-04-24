@@ -1,9 +1,8 @@
-
-
+// AGGIUNGERE I COMMENTI PER DOCUMENTAZIONE, VISIBILITA CONTROLLATA
 class HierachicalClusterMiner {
 	private Dendrogram dendrogram;
 
-	HierachicalClusterMiner(int depth) {
+	public HierachicalClusterMiner(int depth) {
 		dendrogram= new Dendrogram(depth);
 	}
 
@@ -25,7 +24,7 @@ class HierachicalClusterMiner {
 		return dendrogram.toString();
 	}
 	
-	String toString(Data data) {
+	public String toString(Data data) {
 		return dendrogram.toString(data);
 	}
 

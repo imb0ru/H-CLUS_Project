@@ -1,4 +1,21 @@
+/**
+ * classe AverageLinkDistance
+ * Implementa l'interfaccia ClusterDistance per calcolare
+ * la media della distanza tra due cluster
+ *
+ */
+
 public class AverageLinkDistance implements ClusterDistance {
+    /**
+     * metodo distance
+     * restituisce la media delle distanze minime tra i cluster
+     * con la distanza AverageLink
+     *
+     * @param c1 primo cluster
+     * @param c2 secondo cluster
+     * @param d dato utilizzato per calcolare la distanza tra i cluster
+     * @return sum (un double)
+     */
     public double distance(Cluster c1, Cluster c2, Data d) {
         double sum = 0.0;
         for (int i=0;i< c1.getSize();i++)

@@ -6,7 +6,6 @@
  */
 class Example {
     private Double [] example; //vettore di valori reali
-
     /**
      * Costruttore, crea un'istanza di classe Example di dimensione length
      *
@@ -46,7 +45,7 @@ class Example {
      * @param  newE istanza di classe Example con cui calcolare la distanza
      * @return sum somma delle distanze tra i valori delle due istanze Example
      */
-    public Double distance(Example newE){
+     Double distance(Example newE){
         Double sum = 0.0;
         for(int i = 0; i < example.length; i++){
             sum += Math.pow(example[i] - newE.get(i), 2);

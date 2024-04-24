@@ -1,3 +1,4 @@
+//// AGGIUNGERE I COMMENTI PER DOCUMENTAZIONE + CONTROLLA VISIBILITA
 class Dendrogram {
     private ClusterSet tree[]; //modella il dendrogramma
 

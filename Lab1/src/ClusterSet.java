@@ -1,4 +1,6 @@
 
+//// AGGIUNGERE I COMMENTI PER DOCUMENTAZIONE + CONTROLLA VISIBILITA
+
 class ClusterSet {
 
 	private Cluster C[];

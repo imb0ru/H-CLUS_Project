@@ -12,7 +12,7 @@ public class Data {
      * costruttore Data
      * inizializza il dataset data con 5 esempi
      */
-    Data(){
+    public Data(){
         //data
         data = new Example [5];
         Example e=new Example(3);
@@ -55,7 +55,7 @@ public class Data {
      *
      * @return numberOfExamples rappresenta il numero di esempi nel dataset
      */
-    int getNumberOfExample () {
+    public int getNumberOfExample () {
         return numberOfExamples;
     }
 
@@ -66,7 +66,7 @@ public class Data {
      * @param exampleIndex indice dell'elemento da restituire
      * @return data[exampleIndex] elemento in posizione exampleIndex
      */
-    Example getExample (int exampleIndex) {
+    public Example getExample (int exampleIndex) {
         return data[exampleIndex];
     }
 
@@ -97,7 +97,8 @@ public class Data {
      * metodo toString
      * crea una stringa in cui memorizza gli esempi memorizzati
      * nell’attributo data, opportunamente enumerati.
-     * Restituisce tale stringa
+     *
+     * @return la stringa con gli esempi in data
      */
     public String toString() {
         String s = "";
@@ -106,7 +107,13 @@ public class Data {
         }
         return s;
     }
-
+    /**
+     * metodo main
+     * Crea l'oggetto Data e lo stampa a video,
+     * poi calcola e stampa la matrice delle distanze Euclidee
+     * calcolate tra gli esempi memorizzati in data.
+     *
+     */
     public static void main(String args[]) {
         Data trainingSet = new Data();
         System.out.println(trainingSet);
