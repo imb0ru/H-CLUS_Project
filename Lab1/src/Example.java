@@ -11,7 +11,7 @@ class Example {
      *
      * @param length dimensione del vettore
      */
-    public Example(int length){
+    Example(int length){
         example = new Double[length];
     }
 
@@ -23,7 +23,7 @@ class Example {
      * @param value valore da inserire
      * @return void
      */
-    public void set(int index, Double value){
+    void set(int index, Double value){
         example[index] = value;
     }
 
@@ -34,7 +34,7 @@ class Example {
      * @param index indice del valore da prendere
      * @return value valore memorizzato in example in posizione index
      */
-    public Double get(int index){
+    Double get(int index){
         return example[index];
     }
 

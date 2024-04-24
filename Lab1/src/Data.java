@@ -4,15 +4,15 @@
  *
  * @author Team MAP Que Nada
  */
-public class Data {
-    private Example data []; //rappresenta il dataset
+class Data {
+    private Example[] data; //rappresenta il dataset
     private int numberOfExamples; //numero di esempi nel dataset
 
     /**
-     * costruttore Data
-     * inizializza il dataset data con 5 esempi
+     * Costruttore
+     * crea un'istanza di classe Data con un dataset predefinito
      */
-    public Data(){
+    Data(){
         //data
         data = new Example [5];
         Example e=new Example(3);
@@ -50,28 +50,28 @@ public class Data {
     }
 
     /**
-     *metodo getNumberOfExample
+     * metodo getNumberOfExample
      * restituisce il numero degli esempi memorizzati in data
      *
      * @return numberOfExamples rappresenta il numero di esempi nel dataset
      */
-    public int getNumberOfExample () {
+    int getNumberOfExample () {
         return numberOfExamples;
     }
 
     /**
-     *metodo getExample
+     * metodo getExample
      * restituisce l'elemento dell'istanza data in posizione exampleIndex
      *
      * @param exampleIndex indice dell'elemento da restituire
      * @return data[exampleIndex] elemento in posizione exampleIndex
      */
-    public Example getExample (int exampleIndex) {
+    Example getExample (int exampleIndex) {
         return data[exampleIndex];
     }
 
     /**
-     *metodo distance
+     * metodo distance
      * restituisce la matrice triangolare superiore delle distanze Euclidee
      * calcolate tra gli esempi memorizzati in data.
      * Tale matrice va avvalorata usando il metodo distance di Example
@@ -114,7 +114,7 @@ public class Data {
      * calcolate tra gli esempi memorizzati in data.
      *
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         Data trainingSet = new Data();
         System.out.println(trainingSet);
         double[][] distanceMatrix = trainingSet.distance();
