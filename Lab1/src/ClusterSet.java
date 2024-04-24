@@ -1,15 +1,30 @@
-
-//// AGGIUNGERE I COMMENTI PER DOCUMENTAZIONE + CONTROLLA VISIBILITA
-
+/**
+ * classe ClusterSet
+ * Implementa un insieme di cluster
+ *
+ * @author Team MAP Que Nada
+ */
 class ClusterSet {
-
-	private Cluster C[];
+	private Cluster[] C;
 	private int lastClusterIndex=0;
-	
+
+	/**
+	 * Costruttore
+	 * crea un'istanza di classe ClusterSet di dimensione k
+	 *
+	 * @param k dimensione dell'insieme di cluster
+	 */
 	ClusterSet(int k){
 		C=new Cluster[k];
 	}
-	
+
+	/**
+	 * metodo add
+	 * aggiunge il cluster c all'insieme di cluster
+	 * controlla che il cluster non sia già presente nell'insieme
+	 *
+	 * @param c cluster da aggiungere all'insieme
+	 */
 	void add(Cluster c){
 		for(int j=0;j<lastClusterIndex;j++)
 			if(c==C[j]) // to avoid duplicates
@@ -17,11 +32,26 @@ class ClusterSet {
 		C[lastClusterIndex]=c;
 		lastClusterIndex++;
 	}
-	
+
+	/**
+	 * metodo get
+	 * restituisce il cluster in posizione i
+	 *
+	 * @param i indice del cluster da restituire
+	 * @return cluster in posizione i
+	 */
 	Cluster get(int i){
 		return C[i];
 	}
 
+	/**
+	 * metodo mergeClosestClusters
+	 * restituisce un nuovo insieme di cluster che è la fusione dei due cluster più vicini
+	 *
+	 * @param distance interfaccia di calcolo della distanza tra due cluster
+	 * @param data dataset
+	 * @return insieme di cluster con i due cluster più vicini fusi
+	 */
 	ClusterSet mergeClosestClusters(ClusterDistance distance, Data data){
 		if ( 2 <= lastClusterIndex ) {
 			double minD = Double.MAX_VALUE;
@@ -59,6 +89,12 @@ class ClusterSet {
 		}
 	}
 
+	/**
+	 * metodo toString
+	 * restituisce una stringa contenente gli indici degli esempi raggruppati nei cluster
+	 *
+	 * @return str stringa contenente gli indici degli esempi raggruppati nei cluster
+	 */
 	public String toString(){
 		String str="";
 		for(int i=0;i<C.length;i++){
@@ -70,8 +106,14 @@ class ClusterSet {
 		
 	}
 
-	
-	String toString(Data data){
+	/**
+	 * metodo toString
+	 * restituisce una stringa contenente gli esempi raggruppati nei cluster
+	 *
+	 * @param data oggetto di classe Data che modella il dataset su cui il clustering è calcolato
+	 * @return str stringa contenente gli esempi raggruppati nei cluster
+	 */
+	public String toString(Data data){
 		String str="";
 		for(int i=0;i<C.length;i++){
 			if (C[i]!=null){

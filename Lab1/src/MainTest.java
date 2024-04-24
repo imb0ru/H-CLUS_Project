@@ -1,11 +1,10 @@
-
-//// AGGIUNGERE I COMMENTI PER DOCUMENTAZIONE + CONTROLLA VISIBILITA
-
+/**
+ * classe MainTest
+ * Classe di test per il clustering
+ *
+ * @author Team MAP Que Nada
+ */
 public class MainTest {
-
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		Data data =new Data();
 		System.out.println(data);
@@ -25,7 +24,6 @@ public class MainTest {
 		clustering.mine(data,distance);
 		System.out.println(clustering);
 		System.out.println(clustering.toString(data));
-
 
 		System.out.println("Average link distance");
 		distance=new AverageLinkDistance();

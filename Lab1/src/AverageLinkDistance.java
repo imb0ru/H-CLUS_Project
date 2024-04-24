@@ -3,9 +3,10 @@
  * Implementa l'interfaccia ClusterDistance per calcolare
  * la media della distanza tra due cluster
  *
+ * @author Team MAP Que Nada
  */
 
-public class AverageLinkDistance implements ClusterDistance {
+class AverageLinkDistance implements ClusterDistance {
     /**
      * metodo distance
      * restituisce la media delle distanze minime tra i cluster
@@ -13,8 +14,8 @@ public class AverageLinkDistance implements ClusterDistance {
      *
      * @param c1 primo cluster
      * @param c2 secondo cluster
-     * @param d dato utilizzato per calcolare la distanza tra i cluster
-     * @return sum (un double)
+     * @param d dataset
+     * @return media selle distanze tra i cluster
      */
     public double distance(Cluster c1, Cluster c2, Data d) {
         double sum = 0.0;

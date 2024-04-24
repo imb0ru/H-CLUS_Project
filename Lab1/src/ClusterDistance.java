@@ -11,8 +11,8 @@ interface ClusterDistance {
 	 *
 	 * @param c1 primo cluster
 	 * @param c2 secondo cluster
-	 * @param d dati utilizzati per calcolare la distanza tra i cluster
+	 * @param d dataset
 	 * @return double
 	 */
-		double distance(Cluster c1, Cluster c2, Data d);
+	double distance(Cluster c1, Cluster c2, Data d);
 }
