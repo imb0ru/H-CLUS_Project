@@ -1,4 +1,6 @@
 package distance;
+import data.*;
+import clustering.Cluster;
 /**
  * classe AverageLinkDistance
  * Implementa l'interfaccia ClusterDistance per calcolare
@@ -7,7 +9,7 @@ package distance;
  * @author Team MAP Que Nada
  */
 
-class AverageLinkDistance implements ClusterDistance {
+public class AverageLinkDistance implements ClusterDistance {
     /**
      * metodo distance
      * restituisce la media delle distanze minime tra i cluster

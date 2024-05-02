@@ -1,11 +1,13 @@
 package distance;
+import data.*;
+import clustering.Cluster;
 /**
  * classe SingleLinkDistance
  * Implementa il metodo distance dell'interfaccia
  * ClusterDistance per calcolare la distanza tra due cluster
  * @author Team MAP Que Nada
  */
-class SingleLinkDistance implements ClusterDistance {
+public class SingleLinkDistance implements ClusterDistance {
 	/**
 	 * metodo distance
 	 * restituisce la minima distanza tra due cluster

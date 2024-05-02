@@ -5,7 +5,7 @@ package data;
  *
  * @author Team MAP Que Nada
  */
-class Data {
+public  class Data {
     private Example[] data; //rappresenta il dataset
     private int numberOfExamples; //numero di esempi nel dataset
 
@@ -13,7 +13,7 @@ class Data {
      * Costruttore
      * crea un'istanza di classe Data con un dataset predefinito
      */
-    Data(){
+    public Data(){
         //data
         data = new Example [5];
         Example e=new Example(3);
@@ -56,7 +56,7 @@ class Data {
      *
      * @return numberOfExamples rappresenta il numero di esempi nel dataset
      */
-    int getNumberOfExample () {
+    public int getNumberOfExample () {
         return numberOfExamples;
     }
 
@@ -67,7 +67,7 @@ class Data {
      * @param exampleIndex indice dell'elemento da restituire
      * @return data[exampleIndex] elemento in posizione exampleIndex
      */
-    Example getExample (int exampleIndex) {
+    public Example getExample (int exampleIndex) {
         return data[exampleIndex];
     }
 
@@ -79,7 +79,7 @@ class Data {
      *
      * @return dist matrice delle distanze tra gli esempi del dataset
      */
-    double[][] distance() {
+    public double[][] distance() {
         double[][] dist = new double[numberOfExamples][numberOfExamples];
         for (int i = 0; i < numberOfExamples; i++) {
             for (int j = i + 1; j < numberOfExamples; j++) {

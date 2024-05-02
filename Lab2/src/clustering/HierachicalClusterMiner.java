@@ -1,11 +1,13 @@
 package clustering;
+import data.Data;
+import distance.ClusterDistance;
 /**
  * Classe HierachicalClusterMiner
  * modella il processo di clustering
  *
  * @author Team MAP Que Nada
  */
-class HierachicalClusterMiner {
+public class HierachicalClusterMiner {
 	private Dendrogram dendrogram;
 
 	/**
@@ -13,7 +15,7 @@ class HierachicalClusterMiner {
 	 * crea un'istanza di classe HierachicalClusterMiner con profondità depth
 	 * @param depth profondità del dendrogramma
 	 */
-	HierachicalClusterMiner(int depth) {
+	public HierachicalClusterMiner(int depth) {
 		dendrogram= new Dendrogram(depth);
 	}
 
@@ -23,7 +25,7 @@ class HierachicalClusterMiner {
 	 * @param data dataset su cui calcolare il clustering
 	 * @param distance interfaccia di calcolo distanza tra cluster
 	 */
-	void mine(Data data, ClusterDistance distance) {
+	public void mine(Data data, ClusterDistance distance) {
 		ClusterSet level0 = new ClusterSet(data.getNumberOfExample());
 		for (int i = 0; i < data.getNumberOfExample(); i++) {
 			Cluster c = new Cluster();

@@ -1,4 +1,6 @@
 package distance;
+import data.Data;
+import clustering.Cluster;
 /**
  * Interfaccia ClusterDistance
  * contiene metodo per
@@ -6,7 +8,7 @@ package distance;
  *
  * @author Team MAP Que Nada
  */
-interface ClusterDistance {
+public interface ClusterDistance {
 	/**
 	 * metodo distance
 	 *

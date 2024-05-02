@@ -1,4 +1,5 @@
 package clustering;
+import data.Data;
 /**
  * classe Cluster
  * modella un cluster come la collezione delle posizioni occupate
@@ -7,7 +8,7 @@ package clustering;
  *
  * @author Team MAP Que Nada
  */
-class Cluster {
+public class Cluster {
 	private Integer[] clusteredData =new Integer[0];
 
 	/**
@@ -33,7 +34,7 @@ class Cluster {
 	 *
 	 * @return dimensione del cluster
 	 */
-	int getSize() {
+	public int getSize() {
 		return clusteredData.length;
 	}
 
@@ -44,7 +45,7 @@ class Cluster {
 	 * @param i indice dell'elemento da restituire
 	 * @return elemento in posizione i del cluster
 	 */
-	int getElement(int i) {
+	public int getElement(int i) {
 		return clusteredData[i];
 	}
 
