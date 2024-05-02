@@ -99,7 +99,7 @@ class ClusterSet {
 		String str="";
 		for(int i=0;i<C.length;i++){
 			if (C[i]!=null){
-				str+="cluster"+i+":["+C[i]+"]\n";
+				str+="cluster"+i+":"+C[i]+"\n";
 			}
 		}
 		return str;
