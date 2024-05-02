@@ -103,7 +103,7 @@ class Data {
     public String toString() {
         String s = "";
         for (int i = 0; i < numberOfExamples; i++) {
-            s += i + ": [" + data[i] + "]\n";
+            s += i + ":[" + data[i] + "]\n";
         }
         return s;
     }
