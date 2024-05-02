@@ -1,3 +1,4 @@
+package distance;
 /**
  * classe AverageLinkDistance
  * Implementa l'interfaccia ClusterDistance per calcolare

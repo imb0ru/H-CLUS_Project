@@ -1,3 +1,4 @@
+package distance;
 /**
  * Interfaccia ClusterDistance
  * contiene metodo per

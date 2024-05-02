@@ -1,3 +1,4 @@
+package data;
 /**
  * Classe Example
  * modella le entità esempio inteso come vettore di valori reali

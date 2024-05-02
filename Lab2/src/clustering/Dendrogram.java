@@ -1,3 +1,4 @@
+package clustering;
 /**
  * classe Dendrogram
  * Modella un dendrogramma
