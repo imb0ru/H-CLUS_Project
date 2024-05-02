@@ -1,11 +1,12 @@
 package clustering;
+import data.Data;
 /**
  * classe Dendrogram
  * Modella un dendrogramma
  *
  * @author Team MAP Que Nada
  */
-class Dendrogram {
+public class Dendrogram {
     private ClusterSet[] tree; //modella il dendrogramma
 
     /**

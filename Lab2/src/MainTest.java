@@ -1,3 +1,6 @@
+import data.*;
+import clustering.*;
+import distance.*;
 /**
  * classe MainTest
  * Classe di test per il clustering

@@ -5,7 +5,7 @@ package data;
  *
  * @author Team MAP Que Nada
  */
-class Example {
+public class Example {
     private Double [] example; //vettore di valori reali
     /**
      * Costruttore, crea un'istanza di classe Example di dimensione length
@@ -35,7 +35,7 @@ class Example {
      * @param index indice del valore da prendere
      * @return value valore memorizzato in example in posizione index
      */
-    Double get(int index){
+    Double getExample(int index){
         return example[index];
     }
 
@@ -46,10 +46,10 @@ class Example {
      * @param  newE istanza di classe Example con cui calcolare la distanza
      * @return sum somma delle distanze tra i valori delle due istanze Example
      */
-     Double distance(Example newE){
+     public Double distance(Example newE){
         Double sum = 0.0;
         for(int i = 0; i < example.length; i++){
-            sum += Math.pow(example[i] - newE.get(i), 2);
+            sum += Math.pow(example[i] - newE.getExample(i), 2);
         }
         return sum;
     }
