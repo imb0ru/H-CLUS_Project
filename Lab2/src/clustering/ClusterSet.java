@@ -1,3 +1,4 @@
+package clustering;
 /**
  * classe ClusterSet
  * Implementa un insieme di cluster

@@ -1,3 +1,4 @@
+package clustering;
 /**
  * Classe HierachicalClusterMiner
  * modella il processo di clustering

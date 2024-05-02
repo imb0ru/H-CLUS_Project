@@ -1,3 +1,4 @@
+package distance;
 /**
  * classe SingleLinkDistance
  * Implementa il metodo distance dell'interfaccia

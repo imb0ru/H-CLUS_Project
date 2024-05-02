@@ -1,3 +1,4 @@
+package clustering;
 /**
  * classe Cluster
  * modella un cluster come la collezione delle posizioni occupate

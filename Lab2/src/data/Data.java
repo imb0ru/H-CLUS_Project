@@ -1,3 +1,4 @@
+package data;
 /**
  * classe Data
  * avvalora un oggetto data predefinito (fornito dal docente)
