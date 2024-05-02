@@ -55,7 +55,7 @@ class ClusterSet {
 	 * @param data dataset
 	 * @return insieme di cluster con i due cluster più vicini fusi
 	 */
-	ClusterSet mergeClosestClusters(ClusterDistance distance, data.Data data){
+	ClusterSet mergeClosestClusters(ClusterDistance distance, Data data){
 		if ( 2 <= lastClusterIndex ) {
 			double minD = Double.MAX_VALUE;
 			Cluster cluster1 = null;

@@ -6,7 +6,7 @@ import data.Data;
  *
  * @author Team MAP Que Nada
  */
-public class Dendrogram {
+class Dendrogram {
     private ClusterSet[] tree; //modella il dendrogramma
 
     /**
