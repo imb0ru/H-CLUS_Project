@@ -34,3 +34,4 @@ public class SingleLinkDistance implements ClusterDistance {
 		return min;
 	}
 }
+

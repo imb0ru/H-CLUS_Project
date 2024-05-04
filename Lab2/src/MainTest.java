@@ -28,14 +28,18 @@ public class MainTest {
 		int k; //era =5
 		do {
 			do {
-				System.out.print("Inserire la profondità desiderata del dendrogramma (<=" + data.getNumberOfExample() + ")\n> ");
-				k = Keyboard.readInt();
-				if (k <= 0 || k > data.getNumberOfExample())
-					System.out.println("Profondità non valida\n");
+				try {
+					System.out.print("Inserire la profondità desiderata del dendrogramma (<=" + data.getNumberOfExample() + ")\n> ");
+					k = Keyboard.readInt();
+					if (k <= 0 || k > data.getNumberOfExample())
+						throw new InvalidDepthException("Profondità non valida\n");
+				} catch (InvalidDepthException e) {
+					k = 0;
+				}
 			} while (k <= 0 || k > data.getNumberOfExample());
 			HierachicalClusterMiner clustering = new HierachicalClusterMiner(k);
 			System.out.println();
-			
+
 			int tipo_distanza;
 			do {
 				System.out.print("Scegli un tipo  di  misura  di distanza tra cluster calcolare:\n1) Single link distance\n2) Average link distance\n> ");

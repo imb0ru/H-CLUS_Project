@@ -5,7 +5,7 @@ package data;
  *
  * @author Team MAP Que Nada
  */
-public  class Data {
+public class Data {
     private Example[] data; //rappresenta il dataset
     private int numberOfExamples; //numero di esempi nel dataset
 
