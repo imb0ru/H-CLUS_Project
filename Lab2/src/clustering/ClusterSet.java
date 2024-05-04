@@ -1,5 +1,6 @@
 package clustering;
 import data.Data;
+import data.InvalidSizeException;
 import distance.ClusterDistance;
 /**
  * classe ClusterSet
@@ -55,41 +56,46 @@ class ClusterSet {
 	 * @param data dataset
 	 * @return insieme di cluster con i due cluster più vicini fusi
 	 */
-	ClusterSet mergeClosestClusters(ClusterDistance distance, Data data){
-		if ( 2 <= lastClusterIndex ) {
-			double minD = Double.MAX_VALUE;
-			Cluster cluster1 = null;
-			Cluster cluster2 = null;
+	ClusterSet mergeClosestClusters(ClusterDistance distance, Data data) throws InvalidSizeException, InvalidClustersNumberException {
+		if ( 2 <= lastClusterIndex )
+			throw new InvalidClustersNumberException("Non ci sono abbastanza cluster da fondere");
 
-			for (int i = 0; i < this.C.length; i++) {
-				Cluster c1 = get(i);
-				for(int j = i+1; j<this.C.length; j++){
-					Cluster c2 = get(j);
-					double d = distance.distance(c1, c2, data);
+		double minD = Double.MAX_VALUE;
+		Cluster cluster1 = null;
+		Cluster cluster2 = null;
+
+		for (int i = 0; i < this.C.length; i++) {
+			Cluster c1 = get(i);
+			for(int j = i+1; j<this.C.length; j++){
+				Cluster c2 = get(j);
+				double d = 0;
+				try {
+					d = distance.distance(c1, c2, data);
 					if (d < minD) {
 						minD = d;
 						cluster1 = c1;
 						cluster2 = c2;
 					}
+				} catch (data.InvalidSizeException e) {
+					j = this.C.length;
+					i = this.C.length;
+					throw e;
 				}
 			}
-			Cluster mergedCluster = cluster1.mergeCluster(cluster2);
-			ClusterSet finalClusterSet = new ClusterSet(this.C.length-1);
-			for(int i=0; i<this.C.length; i++){
-				Cluster c = get(i);
-				if(c!=cluster1) {
-					if (c != cluster2)
-						finalClusterSet.add(c);
-				}
-				else
-					finalClusterSet.add(mergedCluster);
+		}
+		Cluster mergedCluster = cluster1.mergeCluster(cluster2);
+		ClusterSet finalClusterSet = new ClusterSet(this.C.length-1);
+		for(int i=0; i<this.C.length; i++){
+			Cluster c = get(i);
+			if(c!=cluster1) {
+				if (c != cluster2)
+					finalClusterSet.add(c);
 			}
+			else
+				finalClusterSet.add(mergedCluster);
+		}
 
-			return finalClusterSet;
-		}
-		else {
-			return this;
-		}
+		return finalClusterSet;
 	}
 
 	/**

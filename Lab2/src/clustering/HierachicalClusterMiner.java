@@ -1,5 +1,6 @@
 package clustering;
 import data.Data;
+import data.InvalidSizeException;
 import distance.ClusterDistance;
 /**
  * Classe HierachicalClusterMiner
@@ -25,18 +26,30 @@ public class HierachicalClusterMiner {
 	 * @param data dataset su cui calcolare il clustering
 	 * @param distance interfaccia di calcolo distanza tra cluster
 	 */
-	public void mine(Data data, ClusterDistance distance) {
+	public void mine(Data data, ClusterDistance distance) throws InvalidDepthException, InvalidSizeException, InvalidClustersNumberException {
+		if (dendrogram.getDepth() <= 0 || dendrogram.getDepth() > data.getNumberOfExample())
+			throw new InvalidDepthException("Profondità non valida\n");
+
 		ClusterSet level0 = new ClusterSet(data.getNumberOfExample());
 		for (int i = 0; i < data.getNumberOfExample(); i++) {
 			Cluster c = new Cluster();
 			c.addData(i);
 			level0.add(c);
 		}
-		this.dendrogram.setClusterSet(level0, 0);
-		for (int i = 1; i < this.dendrogram.getDepth(); i++) {
-			ClusterSet nextlevel = this.dendrogram.getClusterSet(i - 1).mergeClosestClusters(distance, data);
-			this.dendrogram.setClusterSet(nextlevel, i);
+		dendrogram.setClusterSet(level0, 0);
+		for (int i = 1; i < dendrogram.getDepth(); i++) {
+            ClusterSet nextlevel = null;
+            try {
+                nextlevel = dendrogram.getClusterSet(i - 1).mergeClosestClusters(distance, data);
+				dendrogram.setClusterSet(nextlevel, i);
+			} catch (InvalidSizeException e) {
+				i = dendrogram.getDepth();
+                throw e;
+            } catch (InvalidClustersNumberException e) {
+				i = dendrogram.getDepth();
+				throw e;			}
 		}
+
 	}
 
 	/**

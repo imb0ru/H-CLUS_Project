@@ -1,7 +1,6 @@
 import data.*;
 import clustering.*;
 import distance.*;
-import static java.lang.Character.toLowerCase;
 
 /**
  * classe MainTest
@@ -16,59 +15,50 @@ public class MainTest {
 		Data data = new Data();
 		System.out.println(data);
 
-		double[][] distancematrix = data.distance();
-		System.out.println("Distance matrix:");
-		for (double[] doubles : distancematrix) {
-			for (int j = 0; j < distancematrix.length; j++)
-				System.out.printf("%.2f\t", doubles[j]);
+		double[][] distancematrix = null;
+		try {
+			distancematrix = data.distance();
+			System.out.println("Distance matrix:");
+			for (double[] doubles : distancematrix) {
+				for (int j = 0; j < distancematrix.length; j++)
+					System.out.printf("%.2f\t", doubles[j]);
+				System.out.println();
+			}
 			System.out.println();
+		} catch (InvalidSizeException e) {
+			System.out.println(e.getMessage());
 		}
+
+		int k;
+		System.out.print("Inserire la profondità desiderata del dendrogramma (<=" + data.getNumberOfExample() + ")\n> ");
+		k = Keyboard.readInt();
+		HierachicalClusterMiner clustering = new HierachicalClusterMiner(k);
 		System.out.println();
 
-		int k; //era =5
+		int distance_type;
 		do {
-			do {
-				try {
-					System.out.print("Inserire la profondità desiderata del dendrogramma (<=" + data.getNumberOfExample() + ")\n> ");
-					k = Keyboard.readInt();
-					if (k <= 0 || k > data.getNumberOfExample())
-						throw new InvalidDepthException("Profondità non valida\n");
-				} catch (InvalidDepthException e) {
-					k = 0;
-				}
-			} while (k <= 0 || k > data.getNumberOfExample());
-			HierachicalClusterMiner clustering = new HierachicalClusterMiner(k);
-			System.out.println();
+			System.out.print("Scegli un tipo  di  misura  di distanza tra cluster calcolare:\n1) Single link distance\n2) Average link distance\n> ");
+			distance_type = Keyboard.readInt();
+			if (distance_type != 1 && distance_type != 2)
+				System.out.println("tipo_distanza non valida\n");
+		} while (distance_type != 1 && distance_type != 2);
+		System.out.println();
 
-			int tipo_distanza;
-			do {
-				System.out.print("Scegli un tipo  di  misura  di distanza tra cluster calcolare:\n1) Single link distance\n2) Average link distance\n> ");
-				tipo_distanza = Keyboard.readInt();
-				if (tipo_distanza != 1 && tipo_distanza != 2)
-					System.out.println("tipo_distanza non valida\n");
-			} while (tipo_distanza != 1 && tipo_distanza != 2);
-			System.out.println();
+		ClusterDistance distance;
+		if (distance_type == 1) {
+			System.out.println("Single link distance");
+			distance = new SingleLinkDistance();
+		} else {
+			System.out.println("Average link distance");
+			distance = new AverageLinkDistance();
+		}
 
-			ClusterDistance distance;
-			if (tipo_distanza == 1) {
-				System.out.println("Single link distance");
-				distance = new SingleLinkDistance();
-				clustering.mine(data, distance);
-				System.out.println(clustering);
-				System.out.println(clustering.toString(data));
-			} else {
-				System.out.println("Average link distance");
-				distance = new AverageLinkDistance();
-				clustering.mine(data, distance);
-				System.out.println(clustering);
-				System.out.println(clustering.toString(data));
-			}
-
-			do{
-				System.out.print("Vuoi fare un altro clustering? (s/n)\n> ");
-				continua = toLowerCase(Keyboard.readChar());
-			} while (continua != 's' && continua != 'n');
-			System.out.println();
-		} while (continua == 's');
-	}
+		try {
+			clustering.mine(data, distance);
+			System.out.println(clustering);
+			System.out.println(clustering.toString(data));
+		} catch (InvalidDepthException | InvalidSizeException | InvalidClustersNumberException e) {
+			System.out.println(e.getMessage());
+		}
+    }
 }
