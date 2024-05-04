@@ -1,6 +1,8 @@
 package distance;
 import data.Data;
 import clustering.Cluster;
+import data.InvalidSizeException;
+
 /**
  * Interfaccia ClusterDistance
  * contiene metodo per
@@ -17,5 +19,5 @@ public interface ClusterDistance {
 	 * @param d dataset
 	 * @return double
 	 */
-	double distance(Cluster c1, Cluster c2, Data d);
+	double distance(Cluster c1, Cluster c2, Data d) throws InvalidSizeException;
 }

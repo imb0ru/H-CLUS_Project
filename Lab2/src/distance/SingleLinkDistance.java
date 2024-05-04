@@ -18,7 +18,7 @@ public class SingleLinkDistance implements ClusterDistance {
 	 * @param d dataset
 	 * @return min (un double)
 	 */
-	public double distance(Cluster c1, Cluster c2, Data d) {
+	public double distance(Cluster c1, Cluster c2, Data d) throws InvalidSizeException {
 		
 		double min=Double.MAX_VALUE;
 		
@@ -26,8 +26,15 @@ public class SingleLinkDistance implements ClusterDistance {
 		{
 			Example e1=d.getExample(c1.getElement(i));
 			for(int j=0; j<c2.getSize();j++) {
-				double distance=e1.distance(d.getExample(c2.getElement(j)));
-				if (distance<min)				
+                double distance= 0;
+                try {
+                    distance = e1.distance(d.getExample(c2.getElement(j)));
+                } catch (InvalidSizeException e) {
+					j = c2.getSize();
+					i = c1.getSize();
+					throw e;
+				}
+                if (distance<min)
 					min=distance;
 			}
 		}

@@ -79,13 +79,21 @@ public class Data {
      *
      * @return dist matrice delle distanze tra gli esempi del dataset
      */
-    public double[][] distance() {
+    public double[][] distance() throws InvalidSizeException {
         double[][] dist = new double[numberOfExamples][numberOfExamples];
         for (int i = 0; i < numberOfExamples; i++) {
             for (int j = i + 1; j < numberOfExamples; j++) {
-                double d = data[i].distance(data[j]);
-                dist[i][j] = d;
-                dist[j][i] = 0; // Riflessione nella metà inferiore
+
+                double d = 0;
+                try {
+                    d = data[i].distance(data[j]);
+                    dist[i][j] = d;
+                    dist[j][i] = 0; // Riflessione nella metà inferiore
+                } catch (InvalidSizeException e) {
+                    j = numberOfExamples; // Esci dal ciclo
+                    i = numberOfExamples; // Esci dal ciclo
+                    throw e;
+                }
             }
         }
         for (int i=0; i < numberOfExamples; i++) {
@@ -118,13 +126,20 @@ public class Data {
     public static void main(String[] args) {
         Data trainingSet = new Data();
         System.out.println(trainingSet);
-        double[][] distanceMatrix = trainingSet.distance();
-        System.out.println("Distance matrix:\n");
-        for (double[] doubles : distanceMatrix) {
-            for (int j = 0; j < distanceMatrix.length; j++)
-                System.out.printf("%.2f\t", doubles[j]); // Utilizzo String.format() per formattare il numero con due decimali e aggiungere il tab
-            System.out.println();
+        double[][] distanceMatrix = null;
+
+        try {
+            distanceMatrix = trainingSet.distance();
+            System.out.println("Distance matrix:\n");
+            for (double[] doubles : distanceMatrix) {
+                for (int j = 0; j < distanceMatrix.length; j++)
+                    System.out.printf("%.2f\t", doubles[j]); // Utilizzo String.format() per formattare il numero con due decimali e aggiungere il tab
+                System.out.println();
+            }
+        } catch (InvalidSizeException e) {
+            System.out.println(e.getMessage());
         }
+
     }
 
 
