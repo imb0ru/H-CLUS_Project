@@ -57,7 +57,7 @@ class ClusterSet {
 	 * @return insieme di cluster con i due cluster più vicini fusi
 	 */
 	ClusterSet mergeClosestClusters(ClusterDistance distance, Data data) throws InvalidSizeException, InvalidClustersNumberException {
-		if ( 2 <= lastClusterIndex )
+		if ( lastClusterIndex <= 1)
 			throw new InvalidClustersNumberException("Non ci sono abbastanza cluster da fondere");
 
 		double minD = Double.MAX_VALUE;
