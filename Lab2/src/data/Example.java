@@ -49,7 +49,7 @@ public class Example {
      */
      public double distance(Example newE) throws InvalidSizeException{
          if(example.length != newE.example.length)
-             throw new InvalidSizeException("Gli esempi hanno dimensioni diverse");
+             throw new InvalidSizeException("Gli esempi hanno dimensioni diverse!");
 
          double sum = 0.0;
          for(int i = 0; i < example.length; i++){
