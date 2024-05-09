@@ -13,7 +13,10 @@ class Dendrogram {
      * Costruttore
      * @param depth profondità del dendrogramma
      */
-    Dendrogram(int depth){
+    Dendrogram(int depth) throws InvalidDepthException {
+        if (depth <= 0) {
+            throw new InvalidDepthException("Profondità non valida!\n");
+        }
         tree=new ClusterSet[depth];
     }
 

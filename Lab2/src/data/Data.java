@@ -83,17 +83,10 @@ public class Data {
         double[][] dist = new double[numberOfExamples][numberOfExamples];
         for (int i = 0; i < numberOfExamples; i++) {
             for (int j = i + 1; j < numberOfExamples; j++) {
-
                 double d = 0;
-                try {
-                    d = data[i].distance(data[j]);
-                    dist[i][j] = d;
-                    dist[j][i] = 0; // Riflessione nella metà inferiore
-                } catch (InvalidSizeException e) {
-                    j = numberOfExamples; // Esci dal ciclo
-                    i = numberOfExamples; // Esci dal ciclo
-                    throw e;
-                }
+                d = data[i].distance(data[j]);
+                dist[i][j] = d;
+                dist[j][i] = 0; // Riflessione nella metà inferiore
             }
         }
         for (int i=0; i < numberOfExamples; i++) {
@@ -116,31 +109,4 @@ public class Data {
         }
         return s;
     }
-    /**
-     * metodo main
-     * Crea l'oggetto Data e lo stampa a video,
-     * poi calcola e stampa la matrice delle distanze Euclidee
-     * calcolate tra gli esempi memorizzati in data.
-     *
-     */
-    public static void main(String[] args) {
-        Data trainingSet = new Data();
-        System.out.println(trainingSet);
-        double[][] distanceMatrix = null;
-
-        try {
-            distanceMatrix = trainingSet.distance();
-            System.out.println("Distance matrix:\n");
-            for (double[] doubles : distanceMatrix) {
-                for (int j = 0; j < distanceMatrix.length; j++)
-                    System.out.printf("%.2f\t", doubles[j]); // Utilizzo String.format() per formattare il numero con due decimali e aggiungere il tab
-                System.out.println();
-            }
-        } catch (InvalidSizeException e) {
-            System.out.println(e.getMessage());
-        }
-
-    }
-
-
 }
