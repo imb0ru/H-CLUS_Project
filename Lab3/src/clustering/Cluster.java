@@ -13,29 +13,17 @@ import java.util.TreeSet;
  *
  * @author Team MAP Que Nada
  */
-public class Cluster implements Iterable<Integer>, Cloneable {
-	private Set<Integer> clusteredData = new TreeSet<>();
-
-	/**
-	 * metodo iterator
-	 * Restituisce un iteratore per gli elementi di Cluster
-	 *
-	 * @return un iteratore per la lista di valori interi
-	 */
-	@Override
-	public Iterator<Integer> iterator() {
-		return clusteredData.iterator();
-	}
+public class Cluster implements Iterable<Integer>, Cloneable{
+	private Set<Integer> clusteredData =new TreeSet<>();
 
 	/**
 	 * metodo addData
 	 * aggiunge l'indice di posizione id al cluster
-	 * controlla che l'indice non sia già presente nel cluster
 	 *
 	 * @param id indice da aggiungere al cluster
 	 */
-	void addData(int id) {
-		clusteredData.add(id); // TreeSet evita duplicati
+	void addData(int id){
+        clusteredData.add(id);
 	}
 
 	/**
@@ -49,23 +37,33 @@ public class Cluster implements Iterable<Integer>, Cloneable {
 	}
 
 	/**
+	 * metodo iterator
+	 * restituisce un iteratore per scorrere gli elementi del cluster
+	 *
+	 * @return clusteredData.iterator() iteratore per scorrere gli elementi del cluster
+	 */
+	public Iterator<Integer> iterator() {
+		return clusteredData.iterator();
+	}
+
+	/**
 	 * metodo clone
 	 * crea una copia del cluster
 	 *
 	 * @return copia del cluster
 	 */
 	@Override
-	public Object clone() throws CloneNotSupportedException {
+	public Cluster clone() throws CloneNotSupportedException {
+		Cluster clone = null;
 		try {
-			Cluster copy = (Cluster) super.clone();
-			copy.clusteredData = new TreeSet<>(this.clusteredData);
-			return copy;
+			clone = (Cluster) super.clone();
+			clone.clusteredData = (Set<Integer>) ((TreeSet<Integer>) this.clusteredData).clone();
 		} catch (CloneNotSupportedException e) {
-			throw new CloneNotSupportedException("Clonazione non supportata!");
+			throw new CloneNotSupportedException("Errore nella clonazione!");
 		}
+
+		return clone;
 	}
-
-
 
 	/**
 	 * metodo mergeCluster
@@ -74,9 +72,18 @@ public class Cluster implements Iterable<Integer>, Cloneable {
 	 * @param c cluster da unire al cluster corrente
 	 * @return newC cluster che è la fusione del cluster corrente e del cluster c
 	 */
-	Cluster mergeCluster(Cluster c) throws CloneNotSupportedException {
-		Cluster newC = (Cluster) this.clone();
-		newC.clusteredData.addAll(c.clusteredData);
+	Cluster mergeCluster(Cluster c) {
+		Cluster newC = new Cluster();
+		Iterator<Integer> it1 = this.iterator();
+		Iterator<Integer> it2 = c.iterator();
+
+		while (it1.hasNext()) {
+			newC.addData(it1.next());
+		}
+		while (it2.hasNext()) {
+			newC.addData(it2.next());
+		}
+
 		return newC;
 	}
 
@@ -87,16 +94,16 @@ public class Cluster implements Iterable<Integer>, Cloneable {
 	 *
 	 * @return str stringa contenente gli indici degli esempi raggruppati nel cluster
 	 */
-	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();
-		Iterator<Integer> iterator = clusteredData.iterator();
-		while (iterator.hasNext()) {
-			str.append(iterator.next());
-			if (iterator.hasNext()) {
-				str.append(",");
-			}
-		}
+		Iterator<Integer> it = this.iterator();
+
+		if (it.hasNext())
+			str.append(it.next());
+
+		while (it.hasNext())
+			str.append(",").append(it.next());
+
 		return str.toString();
 	}
 
@@ -107,13 +114,18 @@ public class Cluster implements Iterable<Integer>, Cloneable {
 	 * @param data oggetto di classe Data che modella il dataset su cui il clustering è calcolato
 	 * @return str stringa contenente gli esempi raggruppati nel cluster
 	 */
+
 	public String toString(Data data) {
 		StringBuilder str = new StringBuilder();
-		for (Integer id : clusteredData) {
-			str.append("<[").append(data.getExample(id)).append("]>");
-		}
+		Iterator<Integer> it = clusteredData.iterator();
+
+		while (it.hasNext())
+			str.append("<[").append(data.getExample(it.next())).append("]>");
+
 		return str.toString();
 	}
+
+
 
 
 

@@ -22,13 +22,23 @@ public class Example implements Iterable<Double>{
     }
 
     /**
-     * metodo set
-     * modifica example inserendo value
+     * metodo iterator
+     * restituisce un iteratore per scorrere gli elementi di example
      *
-     * @param value valore da inserire
+     * @return example.iterator() iteratore per scorrere gli elementi di example
      */
-    void add(Double value){
-        example.add(value);
+    public Iterator<Double> iterator(){
+        return example.iterator();
+    }
+
+    /**
+     * metodo add
+     * modifica example inserendo v in coda
+     *
+     * @param v valore da inserire
+     */
+    void add(Double v){
+        example.add(v);
     }
 
     /**
@@ -43,39 +53,26 @@ public class Example implements Iterable<Double>{
     }
 
     /**
-     * metodo iterator
-     * Restituisce un iteratore per gli elementi di example
-     *
-     * @return un iteratore per la lista di valori reali
-     */
-    @Override
-    public Iterator<Double> iterator() {
-        return example.iterator();
-    }
-
-    /**
      * metodo distance
      * calcola la distanza euclidea tra l'istanza this.Example e l'istanza newE.Example
      *
-     * @param newE istanza di classe Example con cui calcolare la distanza
+     * @param  newE istanza di classe Example con cui calcolare la distanza
      * @return sum somma delle distanze tra i valori delle due istanze Example
      */
-    public double distance(Example newE) throws InvalidSizeException {
-        if (this.example.size() != newE.example.size()) {
-            throw new InvalidSizeException("Gli esempi hanno dimensioni diverse!");
-        }
+     public double distance(Example newE) throws InvalidSizeException{
+         if(example.size() != newE.example.size())
+             throw new InvalidSizeException("Gli esempi hanno dimensioni diverse!");
 
-        double sum = 0.0;
-        Iterator<Double> iter1 = this.iterator();
-        Iterator<Double> iter2 = newE.iterator();
+         double sum = 0.0;
+         Iterator<Double> iterator1 = example.iterator();
+         Iterator<Double> iterator2 = newE.iterator();
 
-        while (iter1.hasNext() && iter2.hasNext()) {
-            double val1 = iter1.next();
-            double val2 = iter2.next();
-            sum += Math.pow(val1 - val2, 2);
-        }
+         while (iterator1.hasNext() && iterator2.hasNext()) {
+             double diff = iterator1.next() - iterator2.next();
+             sum += Math.pow(diff, 2);
+         }
 
-        return Math.sqrt(sum);
+         return sum;
     }
 
 /**
@@ -86,12 +83,15 @@ public class Example implements Iterable<Double>{
      */
     public String toString() {
         StringBuilder s = new StringBuilder();
+        Iterator<Double> iterator = iterator();
 
-        for (Double aDouble : this)
-            s.append(aDouble).append(",");
+        if (iterator.hasNext())
+            s.append(iterator.next());
+
+        while (iterator.hasNext())
+            s.append(",").append(iterator.next());
 
         return s.toString();
     }
-
 }
 

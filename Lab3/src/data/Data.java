@@ -1,6 +1,7 @@
 package data;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -61,13 +62,23 @@ public class Data {
 
     /**
      * metodo getExample
-     * restituisce l'elemento dell'istanza data nella posizione exampleIndex
+     * restituisce l'elemento dell'istanza data in posizione exampleIndex
      *
      * @param exampleIndex indice dell'elemento da restituire
-     * @return l'elemento in posizione exampleIndex
+     * @return data.get(exampleIndex) elemento in posizione exampleIndex
      */
-    public Example getExample(int exampleIndex) {
+    public Example getExample (int exampleIndex) {
         return data.get(exampleIndex);
+    }
+
+    /**
+     * metodo iterator
+     * restituisce un iteratore per scorrere gli elementi di data
+     *
+     * @return data.iterator() iteratore per scorrere gli elementi di data
+     */
+    public Iterator<Example> iterator(){
+        return data.iterator();
     }
 
     /**
@@ -80,17 +91,16 @@ public class Data {
      */
     public double[][] distance() throws InvalidSizeException {
         double[][] dist = new double[data.size()][data.size()];
-
         for (int i = 0; i < data.size(); i++) {
+            dist[i][i] = 0;
             for (int j = i + 1; j < data.size(); j++) {
-                double d = data.get(i).distance(data.get(j));
+                double d = 0;
+                d = data.get(i).distance(data.get(j));
                 dist[i][j] = d;
                 dist[j][i] = 0; // Riflessione nella metà inferiore
             }
         }
-        for (int i=0; i < data.size(); i++) {
-            dist[i][i] = 0;
-        }
+
         return dist;
     }
 
@@ -103,9 +113,12 @@ public class Data {
      */
     public String toString() {
         StringBuilder s = new StringBuilder();
-        for (int i = 0; i < data.size(); i++) {
-            s.append(i).append(":[").append(data.get(i)).append("]\n");
-        }
+        Iterator<Example> iterator = iterator();
+        int count = 0;
+
+        while(iterator.hasNext())
+            s.append(count++).append(":[").append(iterator.next().toString()).append("]\n");
+
         return s.toString();
     }
-}
+   }
