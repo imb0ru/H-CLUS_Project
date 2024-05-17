@@ -27,13 +27,7 @@ public class SingleLinkDistance implements ClusterDistance {
 			Example e1=d.getExample(c1.getElement(i));
 			for(int j=0; j<c2.getSize();j++) {
                 double distance= 0;
-                try {
-                    distance = e1.distance(d.getExample(c2.getElement(j)));
-                } catch (InvalidSizeException e) {
-					j = c2.getSize();
-					i = c1.getSize();
-					throw e;
-				}
+				distance = e1.distance(d.getExample(c2.getElement(j)));
                 if (distance<min)
 					min=distance;
 			}

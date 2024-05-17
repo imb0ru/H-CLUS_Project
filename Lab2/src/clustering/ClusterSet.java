@@ -56,7 +56,7 @@ class ClusterSet {
 	 * @param data dataset
 	 * @return insieme di cluster con i due cluster più vicini fusi
 	 */
-	ClusterSet mergeClosestClusters(ClusterDistance distance, Data data) throws InvalidSizeException, InvalidClustersNumberException {
+	ClusterSet mergeClosestClusters(ClusterDistance distance, Data data) throws InvalidClustersNumberException, InvalidSizeException {
 		if ( lastClusterIndex <= 1)
 			throw new InvalidClustersNumberException("Non ci sono abbastanza cluster da fondere");
 
@@ -69,17 +69,11 @@ class ClusterSet {
 			for(int j = i+1; j<this.C.length; j++){
 				Cluster c2 = get(j);
 				double d = 0;
-				try {
-					d = distance.distance(c1, c2, data);
-					if (d < minD) {
-						minD = d;
-						cluster1 = c1;
-						cluster2 = c2;
-					}
-				} catch (data.InvalidSizeException e) {
-					j = this.C.length;
-					i = this.C.length;
-					throw e;
+				d = distance.distance(c1, c2, data);
+				if (d < minD) {
+					minD = d;
+					cluster1 = c1;
+					cluster2 = c2;
 				}
 			}
 		}
