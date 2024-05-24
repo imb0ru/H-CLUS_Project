@@ -7,12 +7,22 @@ import java.io.*;
  * Classe MainTest
  * Classe di test per il clustering
  *
- * @author Team MAP Que Nada
+ * @autor Team MAP Que Nada
  */
 public class MainTest {
 	public static void main(String[] args) {
+		Data data = null;
+		while (data == null) {
+			System.out.print("Inserire il nome della tabella nel database:\n> ");
+			String tableName = Keyboard.readString();
+			try {
+				data = new Data(tableName);
+			} catch (NoDataException e) {
+				System.out.println("Errore nella creazione dell'oggetto Data: " + e.getMessage());
+			}
+		}
+
 		System.out.println("Data:");
-		Data data = new Data();
 		System.out.println(data);
 
 		double[][] distancematrix = null;
@@ -101,8 +111,7 @@ public class MainTest {
 						}
 					}
 				}
-			}
-			else {
+			} else {
 				System.out.println("Scelta non valida\n");
 				retry = 1;
 			}
