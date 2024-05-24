@@ -1,3 +1,5 @@
+package database;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -39,7 +41,6 @@ public class DbAccess {
         try {
             conn = DriverManager.getConnection(connectionString);
         } catch(SQLException e) {
-
             throw new DatabaseConnectionException(e.toString());
         }
     }

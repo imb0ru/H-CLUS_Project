@@ -17,7 +17,7 @@ public class Example implements Iterable<Double>{
      * Costruttore, crea un'istanza di classe Example
      *
      */
-    Example(){
+    public Example(){
         example = new LinkedList<>();
     }
 
@@ -37,7 +37,7 @@ public class Example implements Iterable<Double>{
      *
      * @param v valore da inserire
      */
-    void add(Double v){
+    public void add(Double v){
         example.add(v);
     }
 

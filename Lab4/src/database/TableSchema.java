@@ -1,3 +1,5 @@
+package database;
+
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -5,9 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-
-
 
 public class TableSchema {
 	private DbAccess db;
@@ -44,40 +43,29 @@ public class TableSchema {
 		mapSQL_JAVATypes.put("FLOAT","number");
 		mapSQL_JAVATypes.put("DOUBLE","number");
 
+		Connection con=db.getConnection();
+		DatabaseMetaData meta = con.getMetaData();
+	    ResultSet res = meta.getColumns(null, null, tableName, null);
 
-
-		 Connection con=db.getConnection();
-		 DatabaseMetaData meta = con.getMetaData();
-	     ResultSet res = meta.getColumns(null, null, tableName, null);
-
-	     while (res.next()) {
-
-	         if(mapSQL_JAVATypes.containsKey(res.getString("TYPE_NAME")))
-	        		 tableSchema.add(new Column(
-	        				 res.getString("COLUMN_NAME"),
-	        				 mapSQL_JAVATypes.get(res.getString("TYPE_NAME")))
-	        				 );
-
-
-
-	      }
-	      res.close();
-
-
-
+	    while (res.next()) {
+	        if(mapSQL_JAVATypes.containsKey(res.getString("TYPE_NAME")))
+	       		 tableSchema.add(new Column(
+	       				 res.getString("COLUMN_NAME"),
+	       				 mapSQL_JAVATypes.get(res.getString("TYPE_NAME")))
+	       				 );
 	    }
+	    res.close();
+	}
 
-
-		public int getNumberOfAttributes(){
+	public int getNumberOfAttributes(){
 			return tableSchema.size();
 		}
 
-		public Column getColumn(int index){
+	public Column getColumn(int index){
 			return tableSchema.get(index);
 		}
 
-
-	}
+}
 
 
 
