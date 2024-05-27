@@ -2,13 +2,16 @@ package clustering;
 import data.Data;
 import data.InvalidSizeException;
 import distance.ClusterDistance;
+
+import java.io.*;
+
 /**
  * Classe HierachicalClusterMiner
  * modella il processo di clustering
  *
  * @author Team MAP Que Nada
  */
-public class HierachicalClusterMiner {
+public class HierachicalClusterMiner implements Serializable {
 	private Dendrogram dendrogram;
 
 	/**
@@ -73,4 +76,23 @@ public class HierachicalClusterMiner {
 		return dendrogram.toString(data);
 	}
 
+	public static HierachicalClusterMiner loaHierachicalClusterMiner(String fileName) throws FileNotFoundException, IOException, ClassNotFoundException {
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName));
+			HierachicalClusterMiner hcm = (HierachicalClusterMiner) in.readObject();
+			hcm.dendrogram = (Dendrogram) in.readObject();
+			in.close();
+			return hcm;
+		}
+	}
+
+	public void Salva(String fileName) throws FileNotFoundException, IOException {
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName));
+			out.writeObject(this);
+			out.writeObject(dendrogram);
+			out.close();
+		}
+	}
 }
+

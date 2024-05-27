@@ -1,12 +1,13 @@
 package clustering;
 import data.Data;
+import java.io.*;
 /**
  * classe Dendrogram
  * Modella un dendrogramma
  *
  * @author Team MAP Que Nada
  */
-class Dendrogram {
+class Dendrogram implements Serializable {
     private ClusterSet[] tree; //modella il dendrogramma
 
     /**
