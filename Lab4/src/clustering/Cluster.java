@@ -1,9 +1,11 @@
 package clustering;
 import data.Data;
 
+import java.io.*;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
+
 
 /**
  * classe Cluster
@@ -13,7 +15,7 @@ import java.util.TreeSet;
  *
  * @author Team MAP Que Nada
  */
-public class Cluster implements Iterable<Integer>, Cloneable{
+public class Cluster implements Iterable<Integer>, Cloneable, Serializable {
 	private Set<Integer> clusteredData =new TreeSet<>();
 
 	/**

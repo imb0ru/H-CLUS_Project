@@ -2,13 +2,16 @@ package clustering;
 import data.Data;
 import data.InvalidSizeException;
 import distance.ClusterDistance;
+
+import java.io.*;
+
 /**
  * classe ClusterSet
  * Implementa un insieme di cluster
  *
  * @author Team MAP Que Nada
  */
-class ClusterSet {
+class ClusterSet implements Serializable {
 	private Cluster[] C;
 	private int lastClusterIndex=0;
 
