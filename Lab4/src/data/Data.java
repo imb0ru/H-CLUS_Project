@@ -31,12 +31,15 @@ public class Data {
         try {
             TableData tableData = new TableData(dbAccess);
             List<Example> examples = tableData.getDistinctTransazioni(tableName);
-            if (examples.isEmpty()) {
-                throw new NoDataException("La tabella " + tableName + " è vuota.");
-            }
             this.data.addAll(examples);
-        } catch (SQLException | DatabaseConnectionException | EmptySetException | MissingNumberException e) {
-            throw new NoDataException("Errore durante il recupero dei dati dalla tabella: " + e.getMessage());
+        } catch (DatabaseConnectionException e) {
+            throw new NoDataException("Errore di connessione al database: " + e.getMessage() + "\n");
+        } catch (EmptySetException e) {
+            throw new NoDataException("La tabella " + tableName + " è vuota: " + e.getMessage() + "\n");
+        } catch (MissingNumberException e) {
+            throw new NoDataException("Eccezione durante l'elaborazione dei dati: " + e.getMessage() + "\n");
+        } catch (SQLException e) {
+            throw new NoDataException("Errore SQL durante il recupero dei dati dalla tabella: " + e.getMessage() + "\n");
         }
     }
 

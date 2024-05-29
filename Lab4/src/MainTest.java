@@ -1,24 +1,27 @@
 import data.*;
 import clustering.*;
 import distance.*;
+
 import java.io.*;
 
 /**
  * Classe MainTest
  * Classe di test per il clustering
  *
- * @autor Team MAP Que Nada
+ * @author Team MAP Que Nada
  */
 public class MainTest {
 	public static void main(String[] args) {
 		Data data = null;
-		while (data == null) {
-			System.out.print("Inserire il nome della tabella nel database:\n> ");
-			String tableName = Keyboard.readString();
+		boolean validData = false;
+		while (!validData) {
 			try {
+				System.out.print("Inserisci il nome della tabella nel database:\n> ");
+				String tableName = Keyboard.readString();
 				data = new Data(tableName);
+				validData = true;
 			} catch (NoDataException e) {
-				System.out.println("Errore nella creazione dell'oggetto Data: " + e.getMessage());
+				System.out.println(e.getMessage());
 			}
 		}
 
@@ -39,82 +42,98 @@ public class MainTest {
 			System.out.println(e.getMessage());
 		}
 
-		int retry;
+		HierachicalClusterMiner clustering = null;
+		int choice;
 		do {
-			retry = 0;
-			System.out.print("Vuoi caricare un oggetto HierachicalClusterMiner precedentemente serializzato? (s/n)\n> ");
-			String choice = Keyboard.readString();
+			System.out.println("Scegli un'opzione:");
+			System.out.print("1) Carica un oggetto serializzato\n2) Crea un nuovo oggetto serializzato\n> ");
+			choice = Keyboard.readInt();
 
-			HierachicalClusterMiner clustering = null;
-
-			if (choice.equalsIgnoreCase("s")) {
-				System.out.print("Inserire il percorso del file serializzato:\n> ");
+			if (choice != 1 && choice != 2)
+				System.out.println("Scelta non valida.\n");
+		} while (choice != 1 && choice != 2);
+		if (choice == 1) {
+			boolean validChoice = false;
+			while (!validChoice) {
+				System.out.print("\nInserisci il percorso completo del file da caricare (es: /home/utente/test_clustering/cluster_miner.ser):\n> ");
 				String filePath = Keyboard.readString();
-				try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
-					clustering = (HierachicalClusterMiner) ois.readObject();
-					System.out.println("Oggetto HierachicalClusterMiner caricato correttamente.\n");
-				} catch (IOException | ClassNotFoundException e) {
-					System.out.println("Errore nel caricamento del file: " + e.getMessage());
-					retry = 1;
+				try {
+					clustering = HierachicalClusterMiner.loadHierachicalClusterMiner(filePath);
+					validChoice = true;
+					System.out.println("\nOggetto caricato con successo.\n");
+					System.out.println(clustering);
+					System.out.print(clustering.toString(data));
+				} catch (FileNotFoundException e) {
+					System.out.println("File non trovato: " + e.getMessage());
+				} catch (IOException e) {
+					System.out.println("Errore di input/output: " + e.getMessage());
+				} catch (ClassNotFoundException e) {
+					System.out.println("Classe non trovata: " + e.getMessage());
+				} catch (InvalidDepthException | IllegalArgumentException e) {
+					System.out.println(e.getMessage());
 				}
-			} else if (choice.equalsIgnoreCase("n")) {
+			}
+		} else {
+			int retry;
+			do {
+				retry = 0;
 				int k;
-				System.out.print("Inserire la profondità desiderata del dendrogramma (<=" + data.getNumberOfExample() + ")\n> ");
+				System.out.print("\nInserisci la profondità desiderata del dendrogramma (<=" + data.getNumberOfExample() + ")\n> ");
 				k = Keyboard.readInt();
 				try {
 					clustering = new HierachicalClusterMiner(k);
 				} catch (InvalidDepthException e) {
-					System.out.println(e.getMessage());
+					System.out.print(e.getMessage());
 					retry = 1;
 				}
-				System.out.println();
+			} while (retry == 1);
+			System.out.println();
 
-				if (retry == 0) {
-					int distance_type;
-
-					System.out.print("Scegli un tipo di misura di distanza tra cluster:\n1) Single link distance\n2) Average link distance\n> ");
-					distance_type = Keyboard.readInt();
-					if (distance_type != 1 && distance_type != 2) {
-						System.out.println("Scelta non valida\n");
-						retry = 1;
-					}
-					System.out.println();
-
-					if (retry == 0) {
-						ClusterDistance distance;
-						String distance_print = "";
-						if (distance_type == 1) {
-							distance_print = "Single link distance";
-							distance = new SingleLinkDistance();
-						} else {
-							distance_print = "Average link distance";
-							distance = new AverageLinkDistance();
-						}
-
-						try {
-							clustering.mine(data, distance);
-							System.out.println(distance_print);
-							System.out.println(clustering);
-							System.out.println(clustering.toString(data));
-
-							System.out.print("Inserire il percorso per salvare l'oggetto serializzato:\n> ");
-							String filePath = Keyboard.readString();
-							try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
-								oos.writeObject(clustering);
-								System.out.println("Oggetto HierachicalClusterMiner serializzato correttamente.\n");
-							} catch (IOException e) {
-								System.out.println("Errore nel salvataggio del file: " + e.getMessage());
-							}
-						} catch (InvalidDepthException | InvalidSizeException | InvalidClustersNumberException e) {
-							System.out.println(e.getMessage());
-							retry = 1;
-						}
-					}
+			int distance_type;
+			do{
+				System.out.print("Scegli un tipo di misura di distanza tra cluster calcolare:\n1) Single link distance\n2) Average link distance\n> ");
+				distance_type = Keyboard.readInt();
+				if (distance_type != 1 && distance_type != 2) {
+					System.out.println("Scelta non valida\n");
 				}
+			} while (distance_type != 1 && distance_type != 2);
+			System.out.println();
+
+			ClusterDistance distance;
+			String distance_print = "";
+			if (distance_type == 1) {
+				distance_print = "Single link distance";
+				distance = new SingleLinkDistance();
 			} else {
-				System.out.println("Scelta non valida\n");
-				retry = 1;
+				distance_print = "Average link distance";
+				distance = new AverageLinkDistance();
 			}
-		} while (retry == 1);
+
+			try {
+				clustering.mine(data, distance);
+				System.out.println(distance_print);
+				System.out.println(clustering);
+				System.out.print(clustering.toString(data));
+
+				String saveChoice;
+				do {
+					System.out.print("Vuoi salvare l'oggetto creato? (s/n)\n> ");
+					saveChoice = Keyboard.readString().trim().toLowerCase();
+					if (!saveChoice.equals("s") && !saveChoice.equals("n"))
+						System.out.println("Scelta non valida.\n");
+				}while (!saveChoice.equals("s") && !saveChoice.equals("n"));
+
+				if (saveChoice.equals("s")) {
+					String filePath;
+					System.out.print("\nInserisci il percorso e il nome del file (senza estensione) dove salvare l'oggetto:\n> ");
+					filePath = Keyboard.readString().trim();
+					clustering.salva(filePath);
+					System.out.println("\nOggetto salvato con successo.");
+				}
+			} catch (InvalidDepthException | InvalidSizeException | InvalidClustersNumberException | IOException e) {
+				System.out.println(e.getMessage());
+			}
+		}
 	}
 }
+

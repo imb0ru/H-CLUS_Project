@@ -20,9 +20,6 @@ public class HierachicalClusterMiner implements Serializable {
 	 * @param depth profondità del dendrogramma
 	 */
 	public HierachicalClusterMiner(int depth) throws InvalidDepthException {
-		if (depth <= 0) {
-			throw new InvalidDepthException("Profondità non valida!\n");
-		}
 		dendrogram= new Dendrogram(depth);
 	}
 
@@ -72,27 +69,60 @@ public class HierachicalClusterMiner implements Serializable {
 	 * @param data dataset di esempi
 	 * @return una rappresentazione testuale del dendrogramma
 	 */
-	public String toString(Data data) {
+	public String toString(Data data) throws InvalidDepthException {
 		return dendrogram.toString(data);
 	}
 
-	public static HierachicalClusterMiner loaHierachicalClusterMiner(String fileName) throws FileNotFoundException, IOException, ClassNotFoundException {
-		try {
-			ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName));
-			HierachicalClusterMiner hcm = (HierachicalClusterMiner) in.readObject();
-			hcm.dendrogram = (Dendrogram) in.readObject();
-			in.close();
-			return hcm;
+	/**
+	 * Metodo statico per caricare un'istanza di HierachicalClusterMiner da un file
+	 * @param fileName nome del file da cui caricare l'istanza
+	 * @return l'istanza caricata di HierachicalClusterMiner
+	 * @throws FileNotFoundException se il file non viene trovato
+	 * @throws IOException se si verifica un errore di input/output
+	 * @throws ClassNotFoundException se la classe dell'oggetto serializzato non viene trovata
+	 */
+	public static HierachicalClusterMiner loadHierachicalClusterMiner(String fileName) throws FileNotFoundException, IOException, ClassNotFoundException, IllegalArgumentException {
+		if (!fileName.endsWith(".ser")) {
+			throw new IllegalArgumentException("Il file specificato non ha l'estensione .ser. Riprova.\n");
+		}
+
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
+			return (HierachicalClusterMiner) ois.readObject();
 		}
 	}
 
-	public void Salva(String fileName) throws FileNotFoundException, IOException {
-		try {
-			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName));
-			out.writeObject(this);
-			out.writeObject(dendrogram);
-			out.close();
+	/**
+	 * Metodo per salvare l'istanza corrente di HierachicalClusterMiner su un file
+	 * @param fileName nome del file su cui salvare l'istanza
+	 * @throws FileNotFoundException se il file non viene trovato
+	 * @throws IOException se si verifica un errore di input/output
+	 */
+	public void salva(String fileName) throws FileNotFoundException, IOException {
+		fileName = fileName.replace("\\", File.separator).replace("/", File.separator);
+
+		if (fileName.contains("."))
+			throw new IOException("Errore: Non includere un'estensione nel nome del file. Riprova.\n");
+
+		if (fileName.matches(".*[<>:\"|?*].*"))
+			throw new IOException("Errore: Il percorso contiene caratteri non validi. Riprova.\n");
+
+		fileName += ".ser";
+		File file = new File(fileName);
+
+		if (file.exists())
+			throw new IOException("Errore: Il file esiste già. Riprova.\n");
+
+		File parentDir = file.getParentFile();
+		if (parentDir != null && !parentDir.exists()) {
+			if (parentDir.mkdirs())
+				System.out.println("Directory creata: " + parentDir.getAbsolutePath());
+			else
+				throw new IOException("Impossibile creare la directory: " + parentDir.getAbsolutePath() + "\n");
+		}
+		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
+			oos.writeObject(this);
 		}
 	}
+
 }
 
