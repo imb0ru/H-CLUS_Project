@@ -146,7 +146,7 @@ public class MainTest {
 			if (askToSaveObject()) {
 				saveClusteringObject(clustering);
 			}
-		} catch (InvalidDepthException | InvalidSizeException | InvalidClustersNumberException | IOException e) {
+		} catch (InvalidDepthException | InvalidSizeException | InvalidClustersNumberException e) {
 			System.out.println(e.getMessage());
 		}
 	}
@@ -154,7 +154,7 @@ public class MainTest {
 	private static int chooseDistanceType() {
 		int distanceType;
 		do {
-			System.out.print("Scegli un tipo di misura di distanza tra cluster calcolare:\n1) Single link distance\n2) Average link distance\n> ");
+			System.out.print("\nScegli un tipo di misura di distanza tra cluster calcolare:\n1) Single link distance\n2) Average link distance\n> ");
 			distanceType = Keyboard.readInt();
 			if (distanceType != 1 && distanceType != 2) {
 				System.out.println("Scelta non valida\n");
