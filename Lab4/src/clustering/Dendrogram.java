@@ -68,9 +68,6 @@ class Dendrogram implements Serializable {
      * @return una rappresentazione testuale del dendrogramma
      */
     public String toString(Data data) throws InvalidDepthException {
-        if (getDepth() > data.getNumberOfExample()) {
-            throw new InvalidDepthException("Il dendrogramma ha una profondità maggiore del numero di esempi nei dati!\n");
-        }
         String v="";
         for (int i=0;i<tree.length;i++)
             v+=("level"+i+":\n"+tree[i].toString(data)+"\n");

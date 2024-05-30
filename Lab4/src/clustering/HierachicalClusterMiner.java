@@ -24,13 +24,22 @@ public class HierachicalClusterMiner implements Serializable {
 	}
 
 	/**
+	 * metodo getDepth
+	 * Restituisce la profondità del dendrogramma
+	 * @return la profondità del dendrogramma
+	 */
+	public int getDepth() {
+		return dendrogram.getDepth();
+	}
+
+	/**
 	 * metodo mine
 	 * calcola il clustering del dataset data
 	 * @param data dataset su cui calcolare il clustering
 	 * @param distance interfaccia di calcolo distanza tra cluster
 	 */
 	public void mine(Data data, ClusterDistance distance) throws InvalidDepthException, InvalidSizeException, InvalidClustersNumberException {
-		if (dendrogram.getDepth() > data.getNumberOfExample()) {
+		if (getDepth() > data.getNumberOfExample()) {
 			throw new InvalidDepthException("Numero di Esempi maggiore della profondità del dendrogramma!\n");
 		}
 
@@ -41,13 +50,13 @@ public class HierachicalClusterMiner implements Serializable {
 			level0.add(c);
 		}
 		dendrogram.setClusterSet(level0, 0);
-		for (int i = 1; i < dendrogram.getDepth(); i++) {
+		for (int i = 1; i < getDepth(); i++) {
             ClusterSet nextlevel = null;
             try {
                 nextlevel = dendrogram.getClusterSet(i - 1).mergeClosestClusters(distance, data);
 				dendrogram.setClusterSet(nextlevel, i);
 			} catch (InvalidSizeException | InvalidClustersNumberException e) {
-				i = dendrogram.getDepth();
+				i = getDepth();
                 throw e;
             }
         }
