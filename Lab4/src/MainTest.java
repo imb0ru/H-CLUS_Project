@@ -7,114 +7,187 @@ import java.io.*;
  * Classe MainTest
  * Classe di test per il clustering
  *
- * @autor Team MAP Que Nada
+ * @author Team MAP Que Nada
  */
 public class MainTest {
 	public static void main(String[] args) {
-		Data data = null;
-		while (data == null) {
-			System.out.print("Inserire il nome della tabella nel database:\n> ");
-			String tableName = Keyboard.readString();
-			try {
-				data = new Data(tableName);
-			} catch (NoDataException e) {
-				System.out.println("Errore nella creazione dell'oggetto Data: " + e.getMessage());
-			}
-		}
+		Data data = loadData();
 
 		System.out.println("Data:");
 		System.out.println(data);
 
+		double[][] distancematrix = calculateDistanceMatrix(data);
+
+		if (distancematrix != null) {
+			printDistanceMatrix(distancematrix);
+		}
+
+		HierachicalClusterMiner clustering = chooseClusteringOption(data);
+
+		if (clustering != null) {
+			performClustering(data, clustering);
+		}
+	}
+
+	private static Data loadData() {
+		Data data = null;
+		boolean validData = false;
+		while (!validData) {
+			try {
+				System.out.print("Inserisci il nome della tabella nel database:\n> ");
+				String tableName = Keyboard.readString();
+				data = new Data(tableName);
+				validData = true;
+			} catch (NoDataException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return data;
+	}
+
+	private static double[][] calculateDistanceMatrix(Data data) {
 		double[][] distancematrix = null;
 		try {
 			distancematrix = data.distance();
-			System.out.println("Distance matrix:");
-			for (double[] doubles : distancematrix) {
-				for (int j = 0; j < distancematrix.length; j++)
-					System.out.printf("%.2f\t", doubles[j]);
-				System.out.println();
-			}
-			System.out.println();
 		} catch (InvalidSizeException e) {
 			System.out.println(e.getMessage());
 		}
+		return distancematrix;
+	}
 
+	private static void printDistanceMatrix(double[][] distancematrix) {
+		System.out.println("Distance matrix:");
+		for (double[] row : distancematrix) {
+			for (double value : row) {
+				System.out.printf("%.2f\t", value);
+			}
+			System.out.println();
+		}
+		System.out.println();
+	}
+
+	private static HierachicalClusterMiner chooseClusteringOption(Data data) {
+		int choice;
+		do {
+			System.out.println("Scegli un'opzione:");
+			System.out.print("1) Carica un oggetto serializzato\n2) Crea un nuovo oggetto serializzato\n> ");
+			choice = Keyboard.readInt();
+
+			if (choice != 1 && choice != 2) {
+				System.out.println("Scelta non valida.\n");
+			}
+		} while (choice != 1 && choice != 2);
+
+		if (choice == 1) {
+			return loadSerializedObject(data);
+		} else {
+			return createNewClusteringObject(data);
+		}
+	}
+
+	private static HierachicalClusterMiner loadSerializedObject(Data data) {
+		HierachicalClusterMiner clustering = null;
+		boolean validChoice = false;
+		while (!validChoice) {
+			System.out.print("\nInserisci il percorso completo del file da caricare (es: /home/utente/test_clustering/cluster_miner.ser):\n> ");
+			String filePath = Keyboard.readString();
+			try {
+				clustering = HierachicalClusterMiner.loadHierachicalClusterMiner(filePath);
+				if (clustering.getDepth() > data.getNumberOfExample()) {
+					System.out.println("Numero di esempi maggiore della profondità del dendrogramma!\n");
+				} else {
+					validChoice = true;
+					System.out.println("\nOggetto caricato con successo.\n");
+					System.out.println(clustering);
+					System.out.print(clustering.toString(data));
+				}
+			} catch (FileNotFoundException e) {
+				System.out.println("File non trovato: " + e.getMessage());
+			} catch (IOException e) {
+				System.out.println("Errore di input/output: " + e.getMessage());
+			} catch (ClassNotFoundException e) {
+				System.out.println("Classe non trovata: " + e.getMessage());
+			} catch (InvalidDepthException | IllegalArgumentException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return clustering;
+	}
+
+	private static HierachicalClusterMiner createNewClusteringObject(Data data) {
+		HierachicalClusterMiner clustering = null;
 		int retry;
 		do {
 			retry = 0;
-			System.out.print("Vuoi caricare un oggetto HierachicalClusterMiner precedentemente serializzato? (s/n)\n> ");
-			String choice = Keyboard.readString();
-
-			HierachicalClusterMiner clustering = null;
-
-			if (choice.equalsIgnoreCase("s")) {
-				System.out.print("Inserire il percorso del file serializzato:\n> ");
-				String filePath = Keyboard.readString();
-				try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
-					clustering = (HierachicalClusterMiner) ois.readObject();
-					System.out.println("Oggetto HierachicalClusterMiner caricato correttamente.\n");
-				} catch (IOException | ClassNotFoundException e) {
-					System.out.println("Errore nel caricamento del file: " + e.getMessage());
-					retry = 1;
-				}
-			} else if (choice.equalsIgnoreCase("n")) {
-				int k;
-				System.out.print("Inserire la profondità desiderata del dendrogramma (<=" + data.getNumberOfExample() + ")\n> ");
-				k = Keyboard.readInt();
-				try {
-					clustering = new HierachicalClusterMiner(k);
-				} catch (InvalidDepthException e) {
-					System.out.println(e.getMessage());
-					retry = 1;
-				}
-				System.out.println();
-
-				if (retry == 0) {
-					int distance_type;
-
-					System.out.print("Scegli un tipo di misura di distanza tra cluster:\n1) Single link distance\n2) Average link distance\n> ");
-					distance_type = Keyboard.readInt();
-					if (distance_type != 1 && distance_type != 2) {
-						System.out.println("Scelta non valida\n");
-						retry = 1;
-					}
-					System.out.println();
-
-					if (retry == 0) {
-						ClusterDistance distance;
-						String distance_print = "";
-						if (distance_type == 1) {
-							distance_print = "Single link distance";
-							distance = new SingleLinkDistance();
-						} else {
-							distance_print = "Average link distance";
-							distance = new AverageLinkDistance();
-						}
-
-						try {
-							clustering.mine(data, distance);
-							System.out.println(distance_print);
-							System.out.println(clustering);
-							System.out.println(clustering.toString(data));
-
-							System.out.print("Inserire il percorso per salvare l'oggetto serializzato:\n> ");
-							String filePath = Keyboard.readString();
-							try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
-								oos.writeObject(clustering);
-								System.out.println("Oggetto HierachicalClusterMiner serializzato correttamente.\n");
-							} catch (IOException e) {
-								System.out.println("Errore nel salvataggio del file: " + e.getMessage());
-							}
-						} catch (InvalidDepthException | InvalidSizeException | InvalidClustersNumberException e) {
-							System.out.println(e.getMessage());
-							retry = 1;
-						}
-					}
-				}
-			} else {
-				System.out.println("Scelta non valida\n");
+			int k;
+			System.out.print("\nInserisci la profondità desiderata del dendrogramma (<=" + data.getNumberOfExample() + ")\n> ");
+			k = Keyboard.readInt();
+			try {
+				clustering = new HierachicalClusterMiner(k);
+			} catch (InvalidDepthException e) {
+				System.out.print(e.getMessage());
 				retry = 1;
 			}
 		} while (retry == 1);
+		return clustering;
+	}
+
+	private static void performClustering(Data data, HierachicalClusterMiner clustering) {
+		int distanceType = chooseDistanceType();
+		ClusterDistance distance = createDistanceObject(distanceType);
+		String distancePrint = distanceType == 1 ? "Single link distance" : "Average link distance";
+
+		try {
+			clustering.mine(data, distance);
+			System.out.println(distancePrint);
+			System.out.println(clustering);
+			System.out.print(clustering.toString(data));
+
+			if (askToSaveObject()) {
+				saveClusteringObject(clustering);
+			}
+		} catch (InvalidDepthException | InvalidSizeException | InvalidClustersNumberException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	private static int chooseDistanceType() {
+		int distanceType;
+		do {
+			System.out.print("\nScegli un tipo di misura di distanza tra cluster calcolare:\n1) Single link distance\n2) Average link distance\n> ");
+			distanceType = Keyboard.readInt();
+			if (distanceType != 1 && distanceType != 2) {
+				System.out.println("Scelta non valida\n");
+			}
+		} while (distanceType != 1 && distanceType != 2);
+		return distanceType;
+	}
+
+	private static ClusterDistance createDistanceObject(int distanceType) {
+		return distanceType == 1 ? new SingleLinkDistance() : new AverageLinkDistance();
+	}
+
+	private static boolean askToSaveObject() {
+		String saveChoice;
+		do {
+			System.out.print("Vuoi salvare l'oggetto creato? (s/n)\n> ");
+			saveChoice = Keyboard.readString().trim().toLowerCase();
+			if (!saveChoice.equals("s") && !saveChoice.equals("n")) {
+				System.out.println("Scelta non valida.\n");
+			}
+		} while (!saveChoice.equals("s") && !saveChoice.equals("n"));
+		return saveChoice.equals("s");
+	}
+
+	private static void saveClusteringObject(HierachicalClusterMiner clustering) {
+		String filePath;
+		System.out.print("\nInserisci il percorso e il nome del file (senza estensione) dove salvare l'oggetto:\n> ");
+		filePath = Keyboard.readString().trim();
+		try {
+			clustering.salva(filePath);
+			System.out.println("\nOggetto salvato con successo.");
+		} catch (IOException e) {
+			System.out.println("Errore di salvataggio: " + e.getMessage());
+		}
 	}
 }

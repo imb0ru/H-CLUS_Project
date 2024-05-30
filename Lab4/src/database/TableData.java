@@ -45,7 +45,7 @@ public class TableData {
         rs = stmt.executeQuery(query);
 
         if (!rs.isBeforeFirst()) { // Verifica se il ResultSet è vuoto
-            throw new EmptySetException("La tabella " + table + " è vuota.");
+            throw new EmptySetException("La tabella " + table + " è vuota.\n");
         }
 
         while (rs.next()) {
@@ -53,7 +53,7 @@ public class TableData {
             for (int i = 0; i < schema.getNumberOfAttributes(); i++) {
                 TableSchema.Column column = schema.getColumn(i);
                 if (!column.isNumber()) {
-                    throw new MissingNumberException("Attributo non numerico trovato: " + column.getColumnName());
+                    throw new MissingNumberException("Attributo non numerico trovato: " + column.getColumnName() + "\n");
                 }
                 example.add(rs.getDouble(column.getColumnName()));
             }

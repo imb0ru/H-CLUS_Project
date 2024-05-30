@@ -14,7 +14,10 @@ class Dendrogram implements Serializable {
      * Costruttore
      * @param depth profondità del dendrogramma
      */
-    Dendrogram(int depth){
+    Dendrogram(int depth) throws InvalidDepthException {
+        if (depth <= 0) {
+            throw new InvalidDepthException("Profondità non valida!\n");
+        }
         tree=new ClusterSet[depth];
     }
 
@@ -64,7 +67,7 @@ class Dendrogram implements Serializable {
      * @param data dataset di esempi
      * @return una rappresentazione testuale del dendrogramma
      */
-    public String toString(Data data){
+    public String toString(Data data) throws InvalidDepthException {
         String v="";
         for (int i=0;i<tree.length;i++)
             v+=("level"+i+":\n"+tree[i].toString(data)+"\n");
