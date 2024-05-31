@@ -22,11 +22,7 @@ public class MainTest {
 			printDistanceMatrix(distancematrix);
 		}
 
-		HierachicalClusterMiner clustering = chooseClusteringOption(data);
-
-		if (clustering != null) {
-			performClustering(data, clustering);
-		}
+		chooseClusteringOption(data);
 	}
 
 	private static Data loadData() {
@@ -124,11 +120,13 @@ public class MainTest {
 			k = Keyboard.readInt();
 			try {
 				clustering = new HierachicalClusterMiner(k);
-			} catch (InvalidDepthException e) {
+                performClustering(data, clustering);
+            } catch (InvalidDepthException e) {
 				System.out.print(e.getMessage());
 				retry = 1;
 			}
 		} while (retry == 1);
+
 		return clustering;
 	}
 
@@ -181,7 +179,7 @@ public class MainTest {
 
 	private static void saveClusteringObject(HierachicalClusterMiner clustering) {
 		String filePath;
-		System.out.print("\nInserisci il percorso e il nome del file (senza estensione) dove salvare l'oggetto:\n> ");
+		System.out.print("\nInserisci il percorso e il nome del file (con estensione) dove salvare l'oggetto:\n> ");
 		filePath = Keyboard.readString().trim();
 		try {
 			clustering.salva(filePath);

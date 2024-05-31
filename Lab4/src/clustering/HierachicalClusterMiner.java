@@ -91,10 +91,6 @@ public class HierachicalClusterMiner implements Serializable {
 	 * @throws ClassNotFoundException se la classe dell'oggetto serializzato non viene trovata
 	 */
 	public static HierachicalClusterMiner loadHierachicalClusterMiner(String fileName) throws FileNotFoundException, IOException, ClassNotFoundException, IllegalArgumentException {
-		if (!fileName.endsWith(".ser")) {
-			throw new IllegalArgumentException("Il file specificato non ha l'estensione .ser. Riprova.\n");
-		}
-
 		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
 			return (HierachicalClusterMiner) ois.readObject();
 		}
@@ -109,13 +105,9 @@ public class HierachicalClusterMiner implements Serializable {
 	public void salva(String fileName) throws FileNotFoundException, IOException {
 		fileName = fileName.replace("\\", File.separator).replace("/", File.separator);
 
-		if (fileName.contains("."))
-			throw new IOException("Errore: Non includere un'estensione nel nome del file. Riprova.\n");
-
 		if (fileName.matches(".*[<>:\"|?*].*"))
 			throw new IOException("Errore: Il percorso contiene caratteri non validi. Riprova.\n");
 
-		fileName += ".ser";
 		File file = new File(fileName);
 
 		if (file.exists())
