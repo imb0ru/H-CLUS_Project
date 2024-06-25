@@ -8,10 +8,11 @@ import java.net.Socket;
 public class MainTest {
 
 	/**
+	 *
 	 * @param args
 	 */
-	private ObjectOutputStream out;
-	private ObjectInputStream in ; // stream con richieste del client
+	private final ObjectOutputStream out;
+	private final ObjectInputStream in ; // stream con richieste del client
 
 
 	public MainTest(String ip, int port) throws IOException{
@@ -21,7 +22,7 @@ public class MainTest {
 		System.out.println(socket);
 
 		out = new ObjectOutputStream(socket.getOutputStream());
-		in = new ObjectInputStream(socket.getInputStream());	; // stream con richieste del client
+		in = new ObjectInputStream(socket.getInputStream()); // stream con richieste del client
 	}
 
 	private int menu(){
@@ -72,7 +73,7 @@ public class MainTest {
 		System.out.println("Introdurre la profondit  del dendrogramma");
 		int depth=Keyboard.readInt();
 		out.writeObject(depth);
-		int dType=-1;
+		int dType; //rimosso -1 poichè il controllo viene fatto dopo l'inserimento tanto.
 		do {
 		System.out.println("Distanza: single-link (1), average-link (2):");
 		dType=Keyboard.readInt();
@@ -92,7 +93,7 @@ public class MainTest {
 	public static void main(String[] args) {
 		String ip=args[0];
 		int port = Integer.parseInt(args[1]);
-		MainTest main=null;
+		MainTest main; //inizializzato a null rimosso poichè lo fa da solo per gli oggetti.
 		try{
 			main=new MainTest(ip,port);
 
