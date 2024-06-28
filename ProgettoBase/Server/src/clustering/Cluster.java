@@ -17,6 +17,9 @@ import java.util.TreeSet;
  * @author Team MAP Que Nada
  */
 public class Cluster implements Iterable<Integer>, Cloneable, Serializable {
+	/**
+	 * Set di interi che rappresenta gli indici degli esempi raggruppati nel cluster
+	 */
 	private Set<Integer> clusteredData =new TreeSet<>();
 
 	/**

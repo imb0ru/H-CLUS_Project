@@ -19,6 +19,7 @@ public class HierachicalClusterMiner implements Serializable {
 	 * Costruttore
 	 * crea un'istanza di classe HierachicalClusterMiner con profondità depth
 	 * @param depth profondità del dendrogramma
+	 * @throws InvalidDepthException se la profondità è minore di 1
 	 */
 	public HierachicalClusterMiner(int depth) throws InvalidDepthException {
 		dendrogram= new Dendrogram(depth);
@@ -38,6 +39,9 @@ public class HierachicalClusterMiner implements Serializable {
 	 * calcola il clustering del dataset data
 	 * @param data dataset su cui calcolare il clustering
 	 * @param distance interfaccia di calcolo distanza tra cluster
+	 * @throws InvalidDepthException se la profondità del dendrogramma è minore del numero di esempi
+	 * @throws InvalidSizeException se la dimensione del cluster è minore di 2
+	 * @throws InvalidClustersNumberException se il numero di cluster è minore di 2
 	 */
 	public void mine(Data data, ClusterDistance distance) throws InvalidDepthException, InvalidSizeException, InvalidClustersNumberException {
 		if (getDepth() > data.getNumberOfExample()) {
@@ -77,6 +81,7 @@ public class HierachicalClusterMiner implements Serializable {
 	 * Metodo toString
 	 * Restituisce una rappresentazione testuale del dendrogramma
 	 * @param data dataset di esempi
+	 * @throws InvalidDepthException se la profondità del dendrogramma è minore del numero di esempi
 	 * @return una rappresentazione testuale del dendrogramma
 	 */
 	public String toString(Data data) throws InvalidDepthException {

@@ -25,7 +25,7 @@ public class Client {
      * Costruttore del client
      * @param ip indirizzo ip del server
      * @param port porta del server
-     * @throws IOException
+     * @throws IOException se ci sono errori di I/O durante la connessione al server
      */
     public Client(String ip, int port) throws IOException {
         InetAddress addr = InetAddress.getByName(ip); //ip

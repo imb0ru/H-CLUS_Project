@@ -47,6 +47,7 @@ public class Example implements Iterable<Double>{
      * calcola la distanza euclidea tra l'istanza this.Example e l'istanza newE.Example
      *
      * @param  newE istanza di classe Example con cui calcolare la distanza
+     * @throws InvalidSizeException se le due istanze hanno dimensioni diverse
      * @return sum somma delle distanze tra i valori delle due istanze Example
      */
      public double distance(Example newE) throws InvalidSizeException{

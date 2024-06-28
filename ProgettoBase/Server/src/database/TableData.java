@@ -33,6 +33,7 @@ public class TableData {
      * @throws SQLException In caso di errore nella interrogazione
      * @throws EmptySetException In caso di tabella vuota
      * @throws MissingNumberException In presenza di attributi non numerici
+     * @throws DatabaseConnectionException In caso di errore nella connessione al database
      */
     public List<Example> getDistinctTransazioni(String table) throws SQLException, EmptySetException, MissingNumberException, DatabaseConnectionException {
         List<Example> transazioni = new ArrayList<>();

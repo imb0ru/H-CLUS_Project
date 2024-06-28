@@ -6,7 +6,6 @@ import java.io.IOException;
  * Classe main del Client.
  */
 public class Main {
-
 	/**
 	 * Punto di partenza dell'applicazione lato client.
 	 *
