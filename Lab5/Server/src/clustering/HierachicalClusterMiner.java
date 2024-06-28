@@ -124,6 +124,5 @@ public class HierachicalClusterMiner implements Serializable {
 			oos.writeObject(this);
 		}
 	}
-
 }
 

@@ -4,7 +4,41 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9d03a39b-f483-487d-8ecb-07eef8242270" name="Changes" comment="" />
+    <list default="true" id="9d03a39b-f483-487d-8ecb-07eef8242270" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/mysql_connector_java_8_0_17.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Lab5.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/clustering/Cluster.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/clustering/ClusterSet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/clustering/Dendrogram.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/clustering/HierachicalClusterMiner.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/clustering/InvalidClustersNumberException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/clustering/InvalidDepthException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/data/Data.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/data/Example.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/data/InvalidSizeException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/data/NoDataException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/database/DatabaseConnectionException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/database/DbAccess.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/database/EmptySetException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/database/MissingNumberException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/database/TableData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/database/TableSchema.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/distance/AverageLinkDistance.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/distance/ClusterDistance.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/distance/SingleLinkDistance.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/server/ClientHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/server/Server.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -31,26 +65,59 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/marco/Desktop/Cartelle Desktop/Universita/Materie/2° Anno/2° Semestre/Metodi Avanzati Programmazione/MAP-Que-Nada/Lab5/Server",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "onboarding.tips.debug.path": "C:/Users/marco/Desktop/Cartelle Desktop/Universita/Materie/2° Anno/2° Semestre/Metodi Avanzati Programmazione/MAP-Que-Nada/Lab5/Server/src/Main.java",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MainTest.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/marco/Desktop/Cartelle Desktop/Universita/Materie/2° Anno/2° Semestre/Metodi Avanzati Programmazione/AnniPassati/Esercizi/Progetto/ProjectMAP&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/marco/Desktop/Cartelle Desktop/Universita/Materie/2° Anno/2° Semestre/Metodi Avanzati Programmazione/MAP-Que-Nada/Lab5/Server/src/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\marco\Desktop\Cartelle Desktop\Universita\Materie\2° Anno\2° Semestre\Metodi Avanzati Programmazione\MAP-Que-Nada\Lab5\Server" />
       <recent name="C:\Users\marco\Desktop\Cartelle Desktop\Universita\Materie\2° Anno\2° Semestre\Metodi Avanzati Programmazione\MAP-Que-Nada\Lab5\Server\src" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\marco\Desktop\Cartelle Desktop\Universita\Materie\2° Anno\2° Semestre\Metodi Avanzati Programmazione\MAP-Que-Nada\Lab5\Server" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="Server" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MainTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="server.MainTest" />
+      <module name="Server" />
+      <option name="PROGRAM_PARAMETERS" value="10000" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.MainTest" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -70,6 +137,12 @@
       <updated>1717150827594</updated>
       <workItem from="1717150828664" duration="20000" />
       <workItem from="1717150893417" duration="973000" />
+      <workItem from="1719559332598" duration="8195000" />
+      <workItem from="1719569236860" duration="585000" />
+      <workItem from="1719579176151" duration="83000" />
+      <workItem from="1719579505660" duration="792000" />
+      <workItem from="1719580336936" duration="367000" />
+      <workItem from="1719581336803" duration="802000" />
     </task>
     <servers />
   </component>

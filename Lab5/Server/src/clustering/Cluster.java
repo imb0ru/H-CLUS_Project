@@ -127,9 +127,4 @@ public class Cluster implements Iterable<Integer>, Cloneable, Serializable {
 
 		return str.toString();
 	}
-
-
-
-
-
 }

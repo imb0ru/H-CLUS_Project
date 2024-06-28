@@ -16,6 +16,7 @@ import java.util.Iterator;
  */
 
 public class AverageLinkDistance implements ClusterDistance {
+
     /**
      * metodo distance
      * restituisce la media delle distanze minime tra i cluster

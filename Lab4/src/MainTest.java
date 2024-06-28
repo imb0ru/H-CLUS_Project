@@ -81,7 +81,10 @@ public class MainTest {
 		}
 	}
 
-	private static HierachicalClusterMiner loadSerializedObject(Data data) {
+	private static HierachicalClusterMiner
+
+
+	loadSerializedObject(Data data) {
 		HierachicalClusterMiner clustering = null;
 		boolean validChoice = false;
 		while (!validChoice) {

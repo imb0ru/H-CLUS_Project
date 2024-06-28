@@ -14,6 +14,7 @@ import java.util.List;
  */
 public class TableData {
 
+    /** Connessione al database */
     private DbAccess db;
 
     /**

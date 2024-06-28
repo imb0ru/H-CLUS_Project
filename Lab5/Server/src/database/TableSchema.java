@@ -8,8 +8,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Classe TableSchema
+ * Modella lo schema di una tabella del database
+ */
 public class TableSchema {
+	/** Connessione al database */
 	private DbAccess db;
+
+	/**
+	 * Costruttore
+	 * Inizializza l'attributo db.
+	 *
+	 * @param db Connessione al database
+	 * @param tableName Nome della tabella
+	 * @throws SQLException In caso di errore nella interrogazione
+	 * @throws DatabaseConnectionException In caso di errore nella connessione al database
+	 */
 	public class Column{
 		private String name;
 		private String type;
@@ -29,6 +44,14 @@ public class TableSchema {
 	}
 	List<Column> tableSchema=new ArrayList<Column>();
 
+	/** Costruttore
+	 * Inizializza l'attributo db.
+	 *
+	 * @param db Connessione al database
+	 * @param tableName Nome della tabella
+	 * @throws SQLException In caso di errore nella interrogazione
+	 * @throws DatabaseConnectionException In caso di errore nella connessione al database
+	 */
 	public TableSchema(DbAccess db, String tableName) throws SQLException, DatabaseConnectionException{
 		this.db=db;
 		HashMap<String,String> mapSQL_JAVATypes=new HashMap<String, String>();
@@ -57,10 +80,21 @@ public class TableSchema {
 	    res.close();
 	}
 
+	/**
+	 * Restituisce il numero di attributi della tabella
+	 *
+	 * @return Numero di attributi della tabella
+	 */
 	public int getNumberOfAttributes(){
 			return tableSchema.size();
-		}
+	}
 
+	/**
+	 * Restituisce l'attributo in posizione index
+	 *
+	 * @param index Indice dell'attributo da restituire
+	 * @return Attributo in posizione index
+	 */
 	public Column getColumn(int index){
 			return tableSchema.get(index);
 		}

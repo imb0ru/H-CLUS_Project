@@ -75,5 +75,4 @@ class Dendrogram implements Serializable {
             v+=("level"+i+":\n"+tree[i].toString(data)+"\n");
         return v;
     }
-
 }

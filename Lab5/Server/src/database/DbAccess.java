@@ -11,14 +11,21 @@ import java.sql.SQLException;
  */
 public class DbAccess {
 
+    /** Nome del driver da utilizzare */
 	private String DRIVER_CLASS_NAME = "com.mysql.cj.jdbc.Driver";
+    /** Nome del DBMS da utilizzare */
     private  String DBMS = "jdbc:mysql";
+    /** Indirizzo del server da utilizzare */
     private  String SERVER = "localhost";
+    /** Nome del database da utilizzare */
     private  String DATABASE = "MapDB";
+    /** Porta del server da utilizzare */
     private  int PORT = 3306;
+    /** Nome utente per l'accesso al database */
     private  String USER_ID = "MapUser";
+    /** Password per l'accesso al database */
     private  String PASSWORD = "map";
-
+    /** Connessione al database */
     private Connection conn;
 
     /**
@@ -36,7 +43,6 @@ public class DbAccess {
         }
         String connectionString = DBMS + "://" + SERVER + ":" + PORT + "/" + DATABASE
                 + "?user=" + USER_ID + "&password=" + PASSWORD + "&serverTimezone=UTC";
-
 
         try {
             conn = DriverManager.getConnection(connectionString);

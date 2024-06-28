@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-
-
 /**
  * Classe Data
  * Avvalora un oggetto data predefinito (fornito dal docente)
