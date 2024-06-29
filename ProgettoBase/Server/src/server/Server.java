@@ -27,10 +27,12 @@ public class Server {
      * Metodo che serve per creare un istanza un nuovo Server, specificando
      * la porta in modo tale da rendere Singleton la classe Server.
      * Crea un nuovo server solo 1 volta, quelle successive non potrò più farlo.
+     *
+     * @param port che indica la porta sulla quale avviare il server
      */
-    public static void instanceMultiServer(){
+    public static void instanceMultiServer(int port){
         if(singleton == null)
-            singleton = new Server(2025);
+            singleton = new Server(port);
     }
 
     /**
