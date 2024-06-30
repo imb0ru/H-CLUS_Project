@@ -272,8 +272,8 @@ Il programma termina.
 
 Per accedere alla documentazione JavaDoc del progetto, fare clic sui link sottostanti:
 
-- [JavaDoc del Client](./Client/client_javadoc/index.html)
-- [JavaDoc del Server](./Server/server_javadoc/index.html)
+- [JavaDoc del Client](ProgettoBase/Client/client_javadoc/index.html)
+- [JavaDoc del Server](ProgettoBase/Server/server_javadoc/index.html)
 
 
 # 7. Contatti
