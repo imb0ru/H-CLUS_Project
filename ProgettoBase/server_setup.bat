@@ -2,8 +2,10 @@
 setlocal enabledelayedexpansion
 
 set sqlfile=%~dp0setup.sql
-set username=root :: modifica questo campo con l'username admin del database
-set password=root :: modifica questo campo con la password admin del database
+:: modifica questo campo con l'username admin del database
+set username=root
+:: modifica questo campo con la password admin del database
+set password=root
 set projectBasePath=%~dp0..
 set serverProjectPath=%~dp0\Server
 set serverSrcPath=%serverProjectPath%\src
@@ -12,7 +14,8 @@ set manifestFile=%serverProjectPath%\Manifest.txt
 set jarFile=%serverProjectPath%\server.jar
 set mainClass=Main
 set javadocOutputPath=%serverProjectPath%\server_javadoc
-set port=3333 :: modifica questo campo con la porta del server
+:: modifica questo campo con la porta del server
+set port=3333
 
 set "mysqlConnector=%projectBasePath%\mysql-connector-java-8.0.17.jar"
 
@@ -20,10 +23,10 @@ echo Esecuzione del file SQL...
 call mysql -u %username% -p%password% < %sqlfile% 2>nul
 
 if errorlevel 1 (
-    echo Si è verificato un errore durante l'esecuzione del file SQL.
+    echo Si e' verificato un errore durante l'esecuzione del file SQL.
     goto :end
 ) else (
-    echo Il file SQL è stato eseguito correttamente.
+    echo Il file SQL e' stato eseguito correttamente.
 )
 
 echo Compilazione del server...
@@ -51,10 +54,10 @@ set "classpath=%mysqlConnector%;%serverOutputPath%"
 call javac -cp "%classpath%" -d %serverOutputPath% -source 22 -target 22 -Xlint:none -nowarn !javaFiles! >nul 2>&1
 
 if errorlevel 1 (
-    echo Si è verificato un errore durante la compilazione del server.
+    echo Si e' verificato un errore durante la compilazione del server.
     goto :end
 ) else (
-    echo La compilazione del server è stata completata correttamente.
+    echo La compilazione del server e' stata completata correttamente.
     
     echo Main-Class: %mainClass% > %manifestFile%
 
@@ -62,10 +65,10 @@ if errorlevel 1 (
     jar cvfm %jarFile% %manifestFile% -C %serverOutputPath% . >nul 2>&1
 
     if errorlevel 1 (
-        echo Si è verificato un errore durante la creazione del file JAR.
+        echo Si e' verificato un errore durante la creazione del file JAR.
         goto :end
     ) else (
-        echo Il file JAR è stato creato correttamente.
+        echo Il file JAR e' stato creato correttamente.
 
         if exist %javadocOutputPath% (
             rd /s /q %javadocOutputPath%
@@ -75,19 +78,10 @@ if errorlevel 1 (
         javadoc -d %javadocOutputPath% -sourcepath %serverSrcPath% -subpackages clustering data database distance server %serverSrcPath%\Main.java >nul 2>&1
 
         if errorlevel 1 (
-            echo Si è verificato un errore durante la generazione della documentazione Javadoc.
+            echo Si e' verificato un errore durante la generazione della documentazione Javadoc.
             goto :end
         ) else (
-            echo La documentazione Javadoc è stata generata correttamente.
-
-            echo Esecuzione del file JAR con la porta %port%
-            java -cp "%mysqlConnector%;%jarFile%" %mainClass% %port%
-
-            if errorlevel 1 (
-                echo Si è verificato un errore durante l'esecuzione del file JAR.
-            ) else (
-                echo Il file JAR è stato eseguito correttamente.
-            )
+            echo La documentazione Javadoc e' stata generata correttamente.
         )
     )
 )

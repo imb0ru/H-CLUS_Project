@@ -1,8 +1,7 @@
-## MANUALE UTENTE H-CLUS
+# MANUALE UTENTE H-CLUS
 
-# INDICE
+## INDICE
 
----
 
 [1.Introduzione](#1-introduzione)
 - [1.2 Obiettivi](#12-obiettivi-del-progetto)
@@ -11,31 +10,32 @@
 - [2.1 Configurazione del server H-CLUS](#21-configurazione-del-server-h-clus)
 - [2.2 Configurazione del client H-CLUS](#22-configurazione-del-client-h-clus)
 
-[3. Istruzioni per l'uso](#3-istruzioni-per-luso)
+[3. Istruzioni per l'esecuzione](#3-istruzioni-per-lesecuzione)
+- [3.1 Esecuzione del server H-CLUS](#31-esecuzione-del-server-h-clus)
+- [3.2 Esecuzione del client H-CLUS](#32-esecuzione-del-client-h-clus)
 
-[4. Modello UML](#4-modello-uml)
+[4. Istruzioni per l'uso](#3-istruzioni-per-luso)
 
-[5. Riepilogo dei test](#5-riepilogo-dei-test)
+[5. Modello UML](#4-modello-uml)
 
-[6. Java doc](#6-javadoc)
+[6. Riepilogo dei test](#5-riepilogo-dei-test)
 
-[7. Contatti](#7-contatti)
+[7. Java doc](#6-javadoc)
 
----
+[8. Contatti](#7-contatti)
 
-# **1. Introduzione**
+
+## **1. Introduzione**
 
 Il progetto H-CLUS, sviluppato nell'ambito del corso di Metodi Avanzati di Programmazione (Anno Accademico 2023-24), si propone di implementare un sistema client-server per il clustering gerarchico di dati.
 
-## 1.2 Obiettivi del Progetto
+### 1.2 Obiettivi del Progetto
 
 L'obiettivo principale del progetto è la realizzazione di un sistema denominato "H-CLUS", il quale include le seguenti componenti:
 - **Server**: Modulo responsabile dell'applicazione di algoritmi di data mining per la scoperta di dendrogrammi di cluster di dati utilizzando tecniche di clustering agglomerativo.
 - **Client**: Un'applicazione Java che consente agli utenti di accedere ai servizi di scoperta remota offerti dal server e visualizzare i cluster di dati identificati.
 
----
-
-# **2. Istruzioni per l'installazione**
+## **2. Istruzioni per l'installazione**
 
 Per installare il software H-CLUS, è necessario seguire i seguenti passaggi:
 
@@ -49,8 +49,9 @@ Per installare il software H-CLUS, è necessario seguire i seguenti passaggi:
      - [Scarica MySQL Community Server](https://dev.mysql.com/downloads/mysql/)
      - [Scarica MySQL Workbench](https://dev.mysql.com/downloads/workbench/)
 
-## **2.1 Configurazione del server H-CLUS**
-   - Nella directory principale del progetto, individuare il file `server_setup.bat` (o il nome del file batch fornito) e seguire questi passaggi per eseguirlo:
+### **2.1 Configurazione del server H-CLUS**
+
+Nella directory principale del progetto, individuare il file `server_setup.bat` e seguire questi passaggi per eseguirlo:
 
 ### Esecuzione del file batch `server_setup.bat`
 
@@ -75,12 +76,10 @@ Il file batch eseguirà i seguenti passaggi:
 3. **Compilazione del server:** Compila i file sorgente Java presenti nella directory `src` e li posiziona nella directory `out`.
 4. **Creazione del file JAR:** Crea un file JAR eseguibile che include il server e tutte le dipendenze necessarie.
 5. **Generazione della documentazione Javadoc:** Genera la documentazione Javadoc per il progetto.
-6. **Esecuzione del server:** Esegue il file JAR del server con la porta specificata.
 
-Durante l'esecuzione, il file batch fornirà messaggi di feedback per indicare lo stato di ciascun passaggio e segnalerà eventuali errori incontrati.
+### **2.2 Configurazione del client H-CLUS**
 
-## **2.2 Configurazione del client H-CLUS**
-   - Nella directory principale del progetto, individuare il file `client_setup.bat` (o il nome del file batch fornito) e seguire questi passaggi per eseguirlo:
+Nella directory principale del progetto, individuare il file `client_setup.bat` e seguire questi passaggi per eseguirlo:
 
 ### Esecuzione del file batch `client_setup.bat`
 
@@ -104,13 +103,60 @@ Il file batch eseguirà i seguenti passaggi:
 2. **Compilazione del client:** Compila i file sorgente Java presenti nella directory `src` e li posiziona nella directory `out`.
 3. **Creazione del file JAR:** Crea un file JAR eseguibile che include il client e tutte le dipendenze necessarie.
 4. **Generazione della documentazione Javadoc:** Genera la documentazione Javadoc per il progetto.
-5. **Esecuzione del client:** Esegue il file JAR del client con l'indirizzo IP e la porta specificati.
 
-Durante l'esecuzione, il file batch fornirà messaggi di feedback per indicare lo stato di ciascun passaggio e segnalerà eventuali errori incontrati.
 
----
+## **3. Istruzioni per l'esecuzione**
 
-# **3. Istruzioni per l'uso**
+### **3.1 Esecuzione del server H-CLUS**
+
+Prima di eseguire il server, modificare il file `server_run.bat` sostituiendo i valori dei campi username, password e port con le informazioni appropriate per il database e la configurazione del server.
+
+Una volta completata la configurazione, è possibile eseguire il server utilizzando il file `server_run.bat`.
+
+### Esecuzione del file batch `server_run.bat`
+
+- **Metodo 1: Doppio clic**
+  - Individuare il file `server_run.bat` nella directory del progetto.
+  - Fare doppio clic sul file `server_run.bat` per eseguirlo.
+
+- **Metodo 2: Da terminale**
+  - Aprire un terminale o prompt dei comandi.
+  - Navigare alla directory dove si trova il file `server_run.bat`.
+  - Eseguire il comando:
+    ```sh
+    server_run.bat
+    ```
+**NB:** E' possibile avere aperto un unico **Server** alla volta, infatti il sistema impedirà di aprirne più di uno contemporaneamente. Per questo motivo fare attenzione quando si prova a chiudere il terminale del server: usare la combinazione __CTRL+C__ invece di chiudere direttamente il terminale perchè altrimenti il processo java rimarrà ancora in esecuzione (in quel caso bisogna terminare il processo dal task manager)! 
+
+### Descrizione delle funzionalità del file batch
+
+Il file batch eseguirà il file JAR del server con la porta specificata.
+
+### **3.2 Esecuzione del client H-CLUS**
+Prima di eseguire il client, modificare il file `client_run.bat` sostituendo il valore del campo port con l'informazione appropriata per la configurazione del server.
+
+Una volta completata la configurazione, è possibile eseguire il client utilizzando il file `client_run.bat`.
+
+### Esecuzione del file batch `client_run.bat`
+
+- **Metodo 1: Doppio clic**
+  - Individuare il file `client_run.bat` nella directory del progetto.
+  - Fare doppio clic sul file `client_run.bat` per eseguirlo.
+
+- **Metodo 2: Da terminale**
+  - Aprire un terminale o prompt dei comandi.
+  - Navigare alla directory dove si trova il file `client_run.bat`.
+  - Eseguire il comando:
+    ```sh
+    client_run.bat
+    ```
+E' possibile avviare più **Client** contemporaneamente.
+
+### Descrizione delle funzionalità del file batch
+
+Il file batch eseguirà il file JAR del client con l'indirizzo IP e la porta specificati.
+
+## **4. Istruzioni per l'uso**
 
 ### Schermata di avvio del programma:
 
@@ -262,13 +308,13 @@ Il programma termina.
 
 ---
 
-# 4. Modello UML
+## **5. Modello UML**
 
 
-# **5. Riepilogo dei test**
+## **6. Riepilogo dei test**
 
 
-# 6. JavaDoc
+## **7. JavaDoc**
 
 Per accedere alla documentazione JavaDoc del progetto, fare clic sui link sottostanti:
 
@@ -276,7 +322,7 @@ Per accedere alla documentazione JavaDoc del progetto, fare clic sui link sottos
 - [JavaDoc del Server](./Server/server_javadoc/index.html)
 
 
-# 7. Contatti
+## **8. Contatti**
 
 Per ulteriori informazioni, contattare:
 
