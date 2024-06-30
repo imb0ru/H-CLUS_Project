@@ -7,17 +7,19 @@
 [1.Introduzione](#1-introduzione)
 - [1.2 Obiettivi](#12-obiettivi-del-progetto)
 
-[2. Istruzioni per l'installazione](#2-Istruzioni-per-l'installazione)
+[2. Istruzioni per l'installazione](#2-istruzioni-per-linstallazione)
+- [2.1 Configurazione del server H-CLUS](#21-configurazione-del-server-h-clus)
+- [2.2 Configurazione del client H-CLUS](#22-configurazione-del-client-h-clus)
 
-[3. Istruzioni per l'uso](#3-istruzioni-per-l'uso)
+[3. Istruzioni per l'uso](#3-istruzioni-per-luso)
 
 [4. Modello UML](#4-modello-uml)
 
 [5. Riepilogo dei test](#5-riepilogo-dei-test)
 
-[6. Java doc](#6-Javadoc)
+[6. Java doc](#6-javadoc)
 
-[7. Contatti](#7-Contatti)
+[7. Contatti](#7-contatti)
 
 ---
 
@@ -106,6 +108,7 @@ Il file batch eseguirà i seguenti passaggi:
 
 Durante l'esecuzione, il file batch fornirà messaggi di feedback per indicare lo stato di ciascun passaggio e segnalerà eventuali errori incontrati.
 
+---
 
 # **3. Istruzioni per l'uso**
 
