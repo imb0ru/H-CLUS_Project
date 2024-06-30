@@ -37,11 +37,78 @@ L'obiettivo principale del progetto è la realizzazione di un sistema denominato
 
 Per installare il software H-CLUS, è necessario seguire i seguenti passaggi:
 
----
+1. **Scaricare e Installare Java Development Kit (JDK):**
+   - Assicurarsi di avere installato il JDK versione 11 o successiva. È possibile scaricarlo dal sito ufficiale di Oracle o utilizzare un'alternativa come OpenJDK.
+     - [Scarica JDK da Oracle](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
+     - [Scarica OpenJDK](https://openjdk.java.net/install/)
+
+2. **Scaricare e Installare MySQL:**
+   - Installare MySQL Community Server e MySQL Workbench. È possibile scaricarlo dal sito ufficiale di MySQL.
+     - [Scarica MySQL Community Server](https://dev.mysql.com/downloads/mysql/)
+     - [Scarica MySQL Workbench](https://dev.mysql.com/downloads/workbench/)
+
+## **2.1 Configurazione del server H-CLUS**
+   - Nella directory principale del progetto, individuare il file `server_setup.bat` (o il nome del file batch fornito) e seguire questi passaggi per eseguirlo:
+
+### Esecuzione del file batch `server_setup.bat`
+
+- **Metodo 1: Doppio clic**
+  - Individuare il file `server_setup.bat` nella directory del progetto.
+  - Fare doppio clic sul file `server_setup.bat` per eseguirlo.
+
+- **Metodo 2: Da terminale**
+  - Aprire un terminale o prompt dei comandi.
+  - Navigare alla directory dove si trova il file `server_setup.bat`.
+  - Eseguire il comando:
+    ```sh
+    server_setup.bat
+    ```
+
+### Descrizione delle funzionalità del file batch
+
+Il file batch eseguirà i seguenti passaggi:
+
+1. **Configurazione delle variabili di progetto:** Imposta variabili per i percorsi dei file e delle directory utilizzate nel progetto.
+2. **Esecuzione del file SQL:** Esegue uno script SQL per configurare il database utilizzando MySQL.
+3. **Compilazione del server:** Compila i file sorgente Java presenti nella directory `src` e li posiziona nella directory `out`.
+4. **Creazione del file JAR:** Crea un file JAR eseguibile che include il server e tutte le dipendenze necessarie.
+5. **Generazione della documentazione Javadoc:** Genera la documentazione Javadoc per il progetto.
+6. **Esecuzione del server:** Esegue il file JAR del server con la porta specificata.
+
+Durante l'esecuzione, il file batch fornirà messaggi di feedback per indicare lo stato di ciascun passaggio e segnalerà eventuali errori incontrati.
+
+## **2.2 Configurazione del client H-CLUS**
+   - Nella directory principale del progetto, individuare il file `client_setup.bat` (o il nome del file batch fornito) e seguire questi passaggi per eseguirlo:
+
+### Esecuzione del file batch `client_setup.bat`
+
+- **Metodo 1: Doppio clic**
+  - Individuare il file `client_setup.bat` nella directory del progetto.
+  - Fare doppio clic sul file `client_setup.bat` per eseguirlo.
+
+- **Metodo 2: Da terminale**
+  - Aprire un terminale o prompt dei comandi.
+  - Navigare alla directory dove si trova il file `client_setup.bat`.
+  - Eseguire il comando:
+    ```sh
+    client_setup.bat
+    ```
+
+### Descrizione delle funzionalità del file batch
+
+Il file batch eseguirà i seguenti passaggi:
+
+1. **Configurazione delle variabili di progetto:** Imposta variabili per i percorsi dei file e delle directory utilizzate nel progetto.
+2. **Compilazione del client:** Compila i file sorgente Java presenti nella directory `src` e li posiziona nella directory `out`.
+3. **Creazione del file JAR:** Crea un file JAR eseguibile che include il client e tutte le dipendenze necessarie.
+4. **Generazione della documentazione Javadoc:** Genera la documentazione Javadoc per il progetto.
+5. **Esecuzione del client:** Esegue il file JAR del client con l'indirizzo IP e la porta specificati.
+
+Durante l'esecuzione, il file batch fornirà messaggi di feedback per indicare lo stato di ciascun passaggio e segnalerà eventuali errori incontrati.
+
 
 # **3. Istruzioni per l'uso**
 
----
 ### Schermata di avvio del programma:
 
 <p style="text-align: center;">
@@ -194,15 +261,17 @@ Il programma termina.
 
 # 4. Modello UML
 
----
 
 # **5. Riepilogo dei test**
 
----
 
 # 6. JavaDoc
 
----
+Per accedere alla documentazione JavaDoc del progetto, fare clic sui link sottostanti:
+
+- [JavaDoc del Client](./Client/client_javadoc/index.html)
+- [JavaDoc del Server](./Server/server_javadoc/index.html)
+
 
 # 7. Contatti
 
@@ -212,4 +281,3 @@ Per ulteriori informazioni, contattare:
 - **Appice Lorenzo**: l.appice@studenti.uniba.it;
 - **De giglio Pietro**: p.degiglio5@studenti.uniba.it;
 
----

@@ -8,8 +8,8 @@ set manifestFile=%clientProjectPath%\Manifest.txt
 set jarFile=%clientProjectPath%\client.jar
 set mainClass=Main
 set javadocOutputPath=%clientProjectPath%\client_javadoc
-set address=0.0.0.0
-set port=3333
+set address=0.0.0.0 :: modifica questo campo con l'indirizzo del server
+set port=3333 :: modifica questo campo con la porta del server
 
 echo Compilazione del client...
 
