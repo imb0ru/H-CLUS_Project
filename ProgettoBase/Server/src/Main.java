@@ -19,10 +19,14 @@ public class Main {
         int port;
         try {
             port = Integer.parseInt(args[0]);
+            if (port < 0 || port > 65535) {
+                System.err.println("Numero di porta non valido: " + args[0]);
+                System.exit(1);
+            }
         } catch (NumberFormatException e) {
             System.err.println("Numero di porta non valido: " + args[0]);
             System.exit(1);
-            return; // To satisfy return type of main
+            return;
         }
 
         System.out.println("Server avviato sulla porta " + port);

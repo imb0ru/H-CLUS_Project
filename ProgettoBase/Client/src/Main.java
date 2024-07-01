@@ -43,8 +43,9 @@ public class Main {
 			System.exit(1);
 		}
 
-		int port = Integer.parseInt(args[1]);
+		int port;
 		try {
+			port = Integer.parseInt(args[1]);
 			if (port < 0 || port > 65535) {
 				System.err.println("Numero di porta non valido: " + args[1]);
 				System.exit(1);
@@ -52,6 +53,7 @@ public class Main {
 		} catch (NumberFormatException e) {
 			System.err.println("Numero di porta non valido: " + args[1]);
 			System.exit(1);
+			return;
 		}
 
 		try {
