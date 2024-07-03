@@ -14,15 +14,13 @@
 - [3.1 Esecuzione del server H-CLUS](#31-esecuzione-del-server-h-clus)
 - [3.2 Esecuzione del client H-CLUS](#32-esecuzione-del-client-h-clus)
 
-[4. Istruzioni per l'uso](#3-istruzioni-per-luso)
+[4. Istruzioni per l'uso](#4-istruzioni-per-luso)
 
-[5. Modello UML](#4-modello-uml)
+[5. Modello UML](#5-modello-uml)
 
-[6. Riepilogo dei test](#5-riepilogo-dei-test)
+[6. Java doc](#6-javadoc)
 
-[7. Java doc](#6-javadoc)
-
-[8. Contatti](#7-contatti)
+[7. Contatti](#7-contatti)
 
 
 ## **1. Introduzione**
@@ -311,10 +309,7 @@ Il programma termina.
 ## **5. Modello UML**
 
 
-## **6. Riepilogo dei test**
-
-
-## **7. JavaDoc**
+## **6. JavaDoc**
 
 Per accedere alla documentazione JavaDoc del progetto, fare clic sui link sottostanti:
 
@@ -322,7 +317,7 @@ Per accedere alla documentazione JavaDoc del progetto, fare clic sui link sottos
 - [JavaDoc del Server](./Server/server_javadoc/index.html)
 
 
-## **8. Contatti**
+## **7. Contatti**
 
 Per ulteriori informazioni, contattare:
 
