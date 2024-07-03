@@ -1,6 +1,5 @@
-package utils;
 //********************************************************************
-//  utils.Keyboard.java       Author: Lewis and Loftus
+//  Keyboard.java       Author: Lewis and Loftus
 //
 //  Facilitates keyboard input by abstracting details about input
 //  parsing, conversions, and exception handling.

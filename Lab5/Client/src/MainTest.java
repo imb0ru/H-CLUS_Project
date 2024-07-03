@@ -13,8 +13,6 @@ public class MainTest {
     private ObjectOutputStream out;
     /** in è lo stream di input per ricevere le risposte dal server */
     private ObjectInputStream in ;
-    /** socket è il socket per la connessione con il server */
-    private Socket socket;
 
     /** Costruttore della classe MainTest
      * @param ip è l'indirizzo ip del server
@@ -24,7 +22,7 @@ public class MainTest {
     public MainTest(String ip, int port) throws IOException {
         InetAddress addr = InetAddress.getByName(ip); //ip
         System.out.println("addr = " + addr);
-        socket = new Socket(addr, port); //Port
+        Socket socket = new Socket(addr, port); //Port
         System.out.println(socket);
 
         out = new ObjectOutputStream(socket.getOutputStream());
@@ -42,9 +40,6 @@ public class MainTest {
             System.out.println("(2) Apprendi Dendrogramma da Database");
             System.out.print("Risposta:");
             answer= Keyboard.readInt();
-
-            if(answer<=0 || answer>2)
-                System.out.println("Scelta non valida");
         }
         while(answer<=0 || answer>2);
         return answer;
@@ -99,8 +94,6 @@ public class MainTest {
         do {
             System.out.println("Distanza: single-link (1), average-link (2):");
             dType=Keyboard.readInt();
-            if(dType<=0 || dType>2)
-                System.out.println("Scelta non valida");
         }while (dType<=0 || dType>2);
         out.writeObject(dType);
 
@@ -113,18 +106,6 @@ public class MainTest {
         }
         else
             System.out.println(risposta); // stampo il messaggio di errore
-    }
-
-    /** closeConnection è il metodo che si occupa di chiudere la connessione con il server
-     */
-    public void closeConnection() {
-        try {
-            out.close();
-            in.close();
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /** main è il metodo che si occupa di creare un'istanza della classe MainTest e di chiamare i metodi per gestire la comunicazione con il server
@@ -145,9 +126,6 @@ public class MainTest {
                 main.mineDendrogramOnServer();
         } catch (IOException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
-        } finally{
-            if(main!=null)
-                main.closeConnection();
         }
     }
 }

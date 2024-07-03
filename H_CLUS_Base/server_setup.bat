@@ -49,7 +49,7 @@ if "%javaFiles%"=="" (
 )
 
 set "classpath=%mysqlConnector%;%serverOutputPath%"
-call javac -cp "%classpath%" -d %serverOutputPath% -source 22 -target 22 -Xlint:none -nowarn !javaFiles! >nul 2>&1
+call javac -cp "%classpath%" -d %serverOutputPath% -Xlint:none -nowarn !javaFiles! >nul 2>&1
 
 if errorlevel 1 (
     echo Si e' verificato un errore durante la compilazione del server.

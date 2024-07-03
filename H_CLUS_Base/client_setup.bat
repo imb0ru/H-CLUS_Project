@@ -6,7 +6,7 @@ set clientSrcPath=%clientProjectPath%\src
 set clientOutputPath=%clientProjectPath%\out
 set manifestFile=%clientProjectPath%\Manifest.txt
 set jarFile=%clientProjectPath%\client.jar
-set mainClass=Main
+set mainClass=MainTest
 set javadocOutputPath=%clientProjectPath%\client_javadoc
 
 echo Compilazione del client...
@@ -21,7 +21,7 @@ for /R "%clientSrcPath%" %%f in (*.java) do (
 )
 
 if defined javaFiles (
-    call javac -d %clientOutputPath% -source 22 -target 22 -Xlint:none -nowarn !javaFiles! >nul 2>&1
+    call javac -d %clientOutputPath% -Xlint:none -nowarn !javaFiles! >nul 2>&1
 
     if errorlevel 1 (
         echo Si e' verificato un errore durante la compilazione del client.
@@ -45,7 +45,7 @@ if defined javaFiles (
             )
 
             echo Generazione della documentazione Javadoc
-            javadoc -d %javadocOutputPath% -sourcepath %clientSrcPath% -subpackages utils client %clientSrcPath%\Main.java >nul 2>&1
+            javadoc -d %javadocOutputPath% -sourcepath %clientSrcPath% %clientSrcPath%\MainTest.java %clientSrcPath%\Keyboard.java >nul 2>&1
 
             if errorlevel 1 (
                 echo Si e' verificato un errore durante la generazione della documentazione Javadoc.

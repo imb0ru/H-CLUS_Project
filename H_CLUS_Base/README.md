@@ -38,14 +38,34 @@ L'obiettivo principale del progetto è la realizzazione di un sistema denominato
 Per installare il software H-CLUS, è necessario seguire i seguenti passaggi:
 
 1. **Scaricare e Installare Java Development Kit (JDK):**
-   - Assicurarsi di avere installato il JDK versione 11 o successiva. È possibile scaricarlo dal sito ufficiale di Oracle o utilizzare un'alternativa come OpenJDK.
+   - Assicurarsi di avere installato il JDK versione 11 o successiva. È possibile scaricarlo dal sito ufficiale di Oracle.
      - [Scarica JDK da Oracle](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
-     - [Scarica OpenJDK](https://openjdk.java.net/install/)
 
 2. **Scaricare e Installare MySQL:**
-   - Installare MySQL Community Server e MySQL Workbench. È possibile scaricarlo dal sito ufficiale di MySQL.
+   - Installare MySQL Community Server. È possibile scaricarlo dal sito ufficiale di MySQL.
      - [Scarica MySQL Community Server](https://dev.mysql.com/downloads/mysql/)
-     - [Scarica MySQL Workbench](https://dev.mysql.com/downloads/workbench/)
+
+3. **Inserire MySQL tra le variabili d'ambiente:**
+  - Aprire il menu `Start` e cercare "variabili d'ambiente".
+
+  - Selezionare `Modifica le variabili d'ambiente di sistema`.
+
+  - Nella finestra `Proprietà del sistema`, cliccare su `Variabili d'ambiente...`.
+
+  - Nella sezione `Variabili di sistema`, cercare e selezionare la variabile `Path`, quindi cliccare su `Modifica...`.
+
+  - Cliccare su `Nuovo` e aggiungere il percorso della cartella `bin` di MySQL. Il percorso predefinito è solitamente: `C:\Program Files\MySQL\MySQL Server [versione]\bin`
+
+  - Cliccare su `OK` per chiudere tutte le finestre aperte.
+
+4. **Verificare l'installazione**
+
+  - Aprire un nuovo prompt dei comandi.
+
+  - Digitare `mysql --version` e premere `Invio`.
+
+  - Se MySQL è stato aggiunto correttamente al `PATH`, vedrai la versione di MySQL installata.
+
 
 ### **2.1 Configurazione del server H-CLUS**
 
