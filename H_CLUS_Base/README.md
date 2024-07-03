@@ -49,7 +49,11 @@ Per installare il software H-CLUS, è necessario seguire i seguenti passaggi:
 
 ### **2.1 Configurazione del server H-CLUS**
 
-Nella directory principale del progetto, individuare il file `server_setup.bat` e seguire questi passaggi per eseguirlo:
+Nella directory principale del progetto, individuare il file `server_setup.bat`. 
+
+Prima di avviare il file `server_setup.bat`, modificare il file sostituendo i valori dei campi username e password con le credenziali del proprio account amministratore di MySQL.
+
+Infine, seguire questi passaggi per eseguirlo:
 
 ### Esecuzione del file batch `server_setup.bat`
 
@@ -107,10 +111,13 @@ Il file batch eseguirà i seguenti passaggi:
 
 ### **3.1 Esecuzione del server H-CLUS**
 
-Prima di eseguire il server, modificare il file `server_run.bat` sostituiendo i valori dei campi username, password e port con le informazioni appropriate per il database e la configurazione del server.
+Nella directory principale del progetto, individuare il file `server_run.bat`. 
 
-Una volta completata la configurazione, è possibile eseguire il server utilizzando il file `server_run.bat`.
+Prima di avviare il file `server_run.bat`, modificare il file sostituendo il valore del campo port col numero di porta sul quale avviare il server.
 
+Lasciare invariati il campo se si preferisce utilizzare il valore di default.
+
+Infine, seguire questi passaggi per eseguirlo:
 ### Esecuzione del file batch `server_run.bat`
 
 - **Metodo 1: Doppio clic**
@@ -131,7 +138,11 @@ Una volta completata la configurazione, è possibile eseguire il server utilizza
 Il file batch eseguirà il file JAR del server con la porta specificata.
 
 ### **3.2 Esecuzione del client H-CLUS**
-Prima di eseguire il client, modificare il file `client_run.bat` sostituendo il valore del campo port con l'informazione appropriata per la configurazione del server.
+Nella directory principale del progetto, individuare il file `client_run.bat`. 
+
+Prima di eseguire il client, modificare il file `client_run.bat` sostituendo i valori dei campi address e port con l'indirizzo ip e la porta del server avviato in precedenza.
+
+Lasciare invariati i campi se si preferisce utilizzare i valori di default.
 
 Una volta completata la configurazione, è possibile eseguire il client utilizzando il file `client_run.bat`.
 
