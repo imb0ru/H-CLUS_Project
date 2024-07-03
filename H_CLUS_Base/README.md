@@ -339,7 +339,42 @@ Il programma termina.
 
 ## **5. Modello UML**
 
+### UML CLIENT
+<p style="text-align: center;">
+    <img src="./assets/Client uml.png" alt="">
+</p>
 
+### UML SERVER COMPLETO
+<p style="text-align: center;">
+    <img src="./assets/Server Completo uml.png" alt="">
+</p>
+
+### UML PACKAGE SERVER
+<p style="text-align: center;">
+    <img src="./assets/Server package uml.png" alt="">
+</p>
+
+### UML PACKAGE CLUSTERING
+<p style="text-align: center;">
+    <img src="./assets/clustering package uml.png" alt="">
+</p>
+
+### UML PACKAGE DISTANCE
+<p style="text-align: center;">
+    <img src="./assets/Distance package uml.png" alt="">
+</p>
+
+### UML PACKAGE DATA
+<p style="text-align: center;">
+    <img src="./assets/Data package uml.png" alt="">
+</p>
+
+### UML PACKAGE DATABASE 
+<p style="text-align: center;">
+    <img src="./assets/Database package uml.png" alt="">
+</p>
+
+---
 ## **6. JavaDoc**
 
 Per accedere alla documentazione JavaDoc del progetto, fare clic sui link sottostanti:
