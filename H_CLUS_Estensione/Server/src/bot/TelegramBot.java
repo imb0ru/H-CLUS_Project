@@ -123,6 +123,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         } else {
             this.sendMessage(chatId, risposta);
             this.sendMessage(chatId, "Inserire il nome dell'archivio (comprensivo di estensione):");
+            session.out.writeObject(2);
             session.state = "LOAD_FILE";
         }
 
