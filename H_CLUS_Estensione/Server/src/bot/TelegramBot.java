@@ -7,6 +7,8 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
+
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -16,7 +18,7 @@ public class TelegramBot extends TelegramLongPollingBot {
     private final String botToken;
     private final String serverIp;
     private final int serverPort;
-    private Map<String, ClientSession> userSessions = new HashMap();
+    private Map<String, ClientSession> userSessions = new HashMap<>();
 
     public TelegramBot(String botToken, String serverIp, int serverPort) {
         this.botToken = botToken;
@@ -40,8 +42,7 @@ public class TelegramBot extends TelegramLongPollingBot {
             try {
                 this.handleMessage(chatId, receivedMessage);
             } catch (ClassNotFoundException | IOException var5) {
-                Exception e = var5;
-                e.printStackTrace();
+                var5.printStackTrace();
             }
         }
 
@@ -107,8 +108,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         try {
             this.execute(message);
         } catch (TelegramApiException var5) {
-            TelegramApiException e = var5;
-            e.printStackTrace();
+            var5.printStackTrace();
         }
 
     }
@@ -131,10 +131,8 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     private void handleLoadData(String chatId, String tableName) throws IOException, ClassNotFoundException {
         ClientSession session = this.getSession(chatId);
-        System.out.println("Sending table name: " + tableName);
         session.out.writeObject(tableName);
         String risposta = (String)session.in.readObject();
-        System.out.println("Received response: " + risposta);
         if (risposta.equals("OK")) {
             this.sendMessage(chatId, "Scegli una opzione:\n1. Carica Dendrogramma da File\n2. Apprendi Dendrogramma da Database");
             session.state = "MENU";
@@ -147,7 +145,7 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     }
 
-    private void handleDepth(String chatId, String depthStr) throws IOException, ClassNotFoundException {
+    private void handleDepth(String chatId, String depthStr) throws IOException {
         int depth = Integer.parseInt(depthStr);
         ClientSession session = this.getSession(chatId);
         session.out.writeObject(depth);
@@ -183,16 +181,26 @@ public class TelegramBot extends TelegramLongPollingBot {
     }
 
     private void handleSaveFile(String chatId, String fileName) throws IOException, ClassNotFoundException {
+        if (!isValidFileName(fileName)) {
+            this.sendMessage(chatId, "Nome non valido,assicurati che il nome del file termini con una delle seguenti estensioni: .txt, .csv, .json, .xml");
+            this.sendMessage(chatId, "Inserire il nome dell'archivio (comprensivo di estensione):");
+            return;
+        }
         ClientSession session = this.getSession(chatId);
         session.out.writeObject(fileName);
-        String risposta = (String)session.in.readObject();
+        String risposta = (String) session.in.readObject();
         if (risposta.equals("OK")) {
-            this.sendMessage(chatId, (String)session.in.readObject());
+            this.sendMessage(chatId, (String) session.in.readObject());
         } else {
             this.sendMessage(chatId, risposta);
         }
 
         session.state = "START";
+    }
+
+    private boolean isValidFileName(String fileName) {
+        String regex = "^[\\w,\\s-]+\\.(txt|csv|json|xml)$";
+        return Pattern.matches(regex, fileName);
     }
 
     private ClientSession getSession(String chatId) throws IOException {
