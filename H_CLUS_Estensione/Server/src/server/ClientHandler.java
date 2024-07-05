@@ -9,158 +9,130 @@ import data.NoDataException;
 import distance.AverageLinkDistance;
 import distance.ClusterDistance;
 import distance.SingleLinkDistance;
-import org.telegram.telegrambots.meta.TelegramBotsApi;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import org.telegram.telegrambots.meta.TelegramBotsApi;
 
-/**
-* Gestore client per gestire le connessioni con i client.
-*/
 class ClientHandler extends Thread {
     private final Socket clientSocket;
     private final ObjectOutputStream out;
     private final ObjectInputStream in;
-    private Data data; // Memorizza l'oggetto Data caricato
+    private Data data;
     TelegramBotsApi bot;
 
-    /**
-    * Costruttore per il gestore client.
-     *
-     * @param socket il socket del client
-     * @throws IOException se si verifica un errore di I/O
-     */
     public ClientHandler(Socket socket, TelegramBotsApi bot) throws IOException {
         this.clientSocket = socket;
-        this.out = new ObjectOutputStream(clientSocket.getOutputStream());
-        this.in = new ObjectInputStream(clientSocket.getInputStream());
+        this.out = new ObjectOutputStream(this.clientSocket.getOutputStream());
+        this.in = new ObjectInputStream(this.clientSocket.getInputStream());
         this.bot = bot;
         this.start();
     }
 
-    /**
-     * Metodo che gestisce le richieste del client.
-     */
-    @Override
     public void run() {
         try {
-            while (true) {
-                int requestType = (int) in.readObject();
-
-                switch (requestType) {
-                    case 0:
-                        // Carica dati dal database
-                        handleLoadData();
-                        break;
-                    case 1:
-                        // Esegui clustering
-                        handleClustering();
-                        break;
-                    case 2:
-                        // Carica il dendrogram da file
-                        handleLoadDendrogramFromFile();
-                        break;
-                    default:
-                        out.writeObject("Tipo di richiesta non valido");
-                        break;
+            while(true) {
+                Object request = this.in.readObject();
+                if (request instanceof Integer) {
+                    int requestType = (Integer)request;
+                    switch (requestType) {
+                        case 0:
+                            this.handleLoadData();
+                            break;
+                        case 1:
+                            this.handleClustering();
+                            break;
+                        case 2:
+                            this.handleLoadDendrogramFromFile();
+                            break;
+                        default:
+                            this.out.writeObject("Tipo di richiesta non valido");
+                    }
+                } else {
+                    this.out.writeObject("Tipo di richiesta non valido");
                 }
             }
-        } catch (IOException e) {
-            System.out.println("Disconnessione client: " + clientSocket);
-        } catch (ClassNotFoundException e) {
+        } catch (IOException var12) {
+            System.out.println("Disconnessione client: " + String.valueOf(this.clientSocket));
+        } catch (ClassNotFoundException var13) {
+            ClassNotFoundException e = var13;
             System.out.println(e.getMessage());
-        }
-        finally {
+        } finally {
             try {
-                clientSocket.close();
-                out.close();
-                in.close();
-            } catch (IOException e) {
+                this.clientSocket.close();
+                this.out.close();
+                this.in.close();
+            } catch (IOException var11) {
                 System.err.println("Errore nella chiusura del socket o degli ObjectStream");
             }
+
         }
+
     }
 
-    /**
-     * Gestisce il caricamento dei dati dal database.
-     *
-     * @throws IOException se si verifica un errore di I/O
-     * @throws ClassNotFoundException se la classe non è trovata
-     */
     private void handleLoadData() throws IOException, ClassNotFoundException {
-        String tableName = (String) in.readObject();
+        String tableName = (String)this.in.readObject();
+
         try {
             this.data = new Data(tableName);
-            out.writeObject("OK");
-        } catch (NoDataException e) {
-            out.writeObject(e.getMessage());
+            this.out.writeObject("OK");
+        } catch (NoDataException var3) {
+            NoDataException e = var3;
+            this.out.writeObject(e.getMessage());
         }
+
     }
 
-    /**
-     * Gestisce l'operazione di clustering.
-     *
-     * @throws IOException se si verifica un errore di I/O
-     * @throws ClassNotFoundException se la classe non è trovata
-     */
     private void handleClustering() throws IOException, ClassNotFoundException {
-        if (data == null) {
-            out.writeObject("Dati non caricati");
-            return;
-        }
+        if (this.data == null) {
+            this.out.writeObject("Dati non caricati");
+        } else {
+            int depth = (Integer)this.in.readObject();
+            int distanceType = (Integer)this.in.readObject();
 
-        int depth = (int) in.readObject();
-        int distanceType = (int) in.readObject();
+            try {
+                HierachicalClusterMiner clustering = new HierachicalClusterMiner(depth);
+                ClusterDistance distance = distanceType == 1 ? new SingleLinkDistance() : new AverageLinkDistance();
+                clustering.mine(this.data, (ClusterDistance)distance);
+                this.out.writeObject("OK");
+                this.out.writeObject(clustering.toString(this.data));
+                String fileName = (String)this.in.readObject();
+                clustering.salva(fileName);
+                this.out.writeObject("OK");
+                this.out.writeObject("Salvataggio effettuato con successo!");
+            } catch (InvalidClustersNumberException | IOException | InvalidDepthException | InvalidSizeException var6) {
+                Exception e = var6;
+                this.out.writeObject(e.getMessage());
+            }
 
-        try {
-            HierachicalClusterMiner clustering = new HierachicalClusterMiner(depth);
-            ClusterDistance distance = distanceType == 1 ? new SingleLinkDistance() : new AverageLinkDistance();
-
-            clustering.mine(data, distance);
-
-            out.writeObject("OK");
-            out.writeObject(clustering.toString(data));
-
-            String fileName = (String) in.readObject();
-            clustering.salva(fileName);
-            out.writeObject("OK");
-            out.writeObject("Salvataggio effettuato con successo!");
-        } catch (InvalidSizeException | InvalidClustersNumberException | IOException |
-                 InvalidDepthException e) {
-            out.writeObject(e.getMessage());
         }
     }
 
-    /**
-     * Gestisce il caricamento del dendrogram da un file.
-     *
-     * @throws IOException se si verifica un errore di I/O
-     * @throws ClassNotFoundException se la classe non è trovata
-     */
     private void handleLoadDendrogramFromFile() throws IOException, ClassNotFoundException {
-        String fileName = (String) in.readObject();
+        String fileName = (String)this.in.readObject();
+
         try {
             HierachicalClusterMiner clustering = HierachicalClusterMiner.loadHierachicalClusterMiner(fileName);
-
-            if (data == null) {
-                out.writeObject("Dati non caricati");
+            if (this.data == null) {
+                this.out.writeObject("Dati non caricati");
                 return;
             }
 
-            if (clustering.getDepth() > data.getNumberOfExample()) {
-                out.writeObject("Numero di esempi maggiore della profondità del dendrogramma!");
+            if (clustering.getDepth() > this.data.getNumberOfExample()) {
+                this.out.writeObject("Numero di esempi maggiore della profondità del dendrogramma!");
             } else {
-                out.writeObject("OK");
-                out.writeObject(clustering.toString(data));
+                this.out.writeObject("OK");
+                this.out.writeObject(clustering.toString(this.data));
             }
-        } catch (FileNotFoundException e) {
-            out.writeObject("File non trovato: " + e.getMessage());
-        } catch (IOException | ClassNotFoundException | InvalidDepthException e) {
-            out.writeObject(e.getMessage());
+        } catch (FileNotFoundException var3) {
+            FileNotFoundException e = var3;
+            this.out.writeObject("File non trovato: " + e.getMessage());
+        } catch (ClassNotFoundException | InvalidDepthException | IOException var4) {
+            Exception e = var4;
+            this.out.writeObject(e.getMessage());
         }
+
     }
 }
-

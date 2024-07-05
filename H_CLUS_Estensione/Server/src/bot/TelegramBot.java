@@ -1,10 +1,5 @@
 package bot;
 
-import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -12,15 +7,16 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
+import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-/**
- * Classe che rappresenta il client che si connette al server per richiedere la costruzione di un dendrogramma tramite bot Telegram
- */
 public class TelegramBot extends TelegramLongPollingBot {
     private final String botToken;
     private final String serverIp;
     private final int serverPort;
-    private Map<String, ClientSession> userSessions = new HashMap<>();
+    private Map<String, ClientSession> userSessions = new HashMap();
 
     public TelegramBot(String botToken, String serverIp, int serverPort) {
         this.botToken = botToken;
@@ -28,33 +24,31 @@ public class TelegramBot extends TelegramLongPollingBot {
         this.serverPort = serverPort;
     }
 
-    @Override
     public String getBotUsername() {
         return "HCLUS_Bot";
     }
 
-    @Override
     public String getBotToken() {
-        return botToken;
+        return this.botToken;
     }
 
-    @Override
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
             String chatId = update.getMessage().getChatId().toString();
             String receivedMessage = update.getMessage().getText();
 
             try {
-                handleMessage(chatId, receivedMessage);
-            } catch (IOException | ClassNotFoundException e) {
+                this.handleMessage(chatId, receivedMessage);
+            } catch (ClassNotFoundException | IOException var5) {
+                Exception e = var5;
                 e.printStackTrace();
             }
         }
+
     }
 
     private void handleMessage(String chatId, String receivedMessage) throws IOException, ClassNotFoundException {
-        ClientSession session = getSession(chatId);
-
+        ClientSession session = this.getSession(chatId);
         if (session.state == null) {
             session.state = "START";
         }
@@ -62,129 +56,141 @@ public class TelegramBot extends TelegramLongPollingBot {
         switch (session.state) {
             case "START":
                 if (receivedMessage.equals("/start")) {
-                    sendMessage(chatId, "Benvenuto! Io sono H-CLUS_Bot, il tuo assistente per la costruzione di dendrogrammi. Utilizzo il metodo gerarchico agglomerativo per costruire il dendrogramma.");
-                    sendMessage(chatId, "Sei connesso al socket " + InetAddress.getByName(serverIp) + ":" + serverPort);
+                    this.sendMessage(chatId, "Benvenuto! Io sono H-CLUS_Bot, il tuo assistente per la costruzione di dendrogrammi. Utilizzo il metodo gerarchico agglomerativo per costruire il dendrogramma.");
+                    String var10002 = String.valueOf(InetAddress.getByName(this.serverIp));
+                    this.sendMessage(chatId, "Sei connesso al socket " + var10002 + ":" + this.serverPort);
                     session.out.writeObject(0);
-                    sendMessage(chatId, "Inserisci il nome della tabella del database:");
+                    this.sendMessage(chatId, "Inserisci il nome della tabella del database:");
                     session.state = "LOAD_DATA";
                 }
                 break;
             case "MENU":
                 if (receivedMessage.equals("1")) {
                     session.out.writeObject(2);
-                    sendMessage(chatId, "Inserire il nome dell'archivio (comprensivo di estensione):");
+                    this.sendMessage(chatId, "Inserire il nome dell'archivio (comprensivo di estensione):");
                     session.state = "LOAD_FILE";
                 } else if (receivedMessage.equals("2")) {
                     session.out.writeObject(1);
-                    sendMessage(chatId, "Introdurre la profondità del dendrogramma:");
+                    this.sendMessage(chatId, "Introdurre la profondità del dendrogramma:");
                     session.state = "ENTER_DEPTH";
                 } else {
-                    sendMessage(chatId, "Scelta non valida. Scegli una opzione:\n1. Carica Dendrogramma da File\n2. Apprendi Dendrogramma da Database");
+                    this.sendMessage(chatId, "Scelta non valida. Scegli una opzione:\n1. Carica Dendrogramma da File\n2. Apprendi Dendrogramma da Database");
                     session.state = "MENU";
                 }
                 break;
             case "LOAD_FILE":
-                handleLoadDendrogramFromFile(chatId, receivedMessage);
+                this.handleLoadDendrogramFromFile(chatId, receivedMessage);
                 break;
             case "LOAD_DATA":
-                handleLoadData(chatId, receivedMessage);
+                this.handleLoadData(chatId, receivedMessage);
                 break;
             case "ENTER_DEPTH":
-                handleDepth(chatId, receivedMessage);
+                this.handleDepth(chatId, receivedMessage);
                 break;
             case "ENTER_DISTANCE":
-                handleDistance(chatId, receivedMessage);
+                this.handleDistance(chatId, receivedMessage);
                 break;
             case "SAVE_FILE":
-                handleSaveFile(chatId, receivedMessage);
+                this.handleSaveFile(chatId, receivedMessage);
                 break;
             default:
-                sendMessage(chatId, "Comando non valido.");
-                break;
+                this.sendMessage(chatId, "Comando non valido.");
         }
+
     }
 
     private void sendMessage(String chatId, String text) {
         SendMessage message = new SendMessage();
         message.setChatId(chatId);
         message.setText(text);
+
         try {
-            execute(message);
-        } catch (TelegramApiException e) {
+            this.execute(message);
+        } catch (TelegramApiException var5) {
+            TelegramApiException e = var5;
             e.printStackTrace();
         }
+
     }
 
     private void handleLoadDendrogramFromFile(String chatId, String fileName) throws IOException, ClassNotFoundException {
-        ClientSession session = getSession(chatId);
+        ClientSession session = this.getSession(chatId);
         session.out.writeObject(fileName);
-        String risposta = (String) (session.in.readObject());
+        String risposta = (String)session.in.readObject();
         if (risposta.equals("OK")) {
-            sendMessage(chatId, (String) session.in.readObject());
+            this.sendMessage(chatId, (String)session.in.readObject());
             session.state = "START";
         } else {
-            sendMessage(chatId, risposta);
-            sendMessage(chatId, "Inserire il nome dell'archivio (comprensivo di estensione):");
+            this.sendMessage(chatId, risposta);
+            this.sendMessage(chatId, "Inserire il nome dell'archivio (comprensivo di estensione):");
             session.state = "LOAD_FILE";
         }
+
     }
 
     private void handleLoadData(String chatId, String tableName) throws IOException, ClassNotFoundException {
-        ClientSession session = getSession(chatId);
+        ClientSession session = this.getSession(chatId);
+        System.out.println("Sending table name: " + tableName);
         session.out.writeObject(tableName);
-        String risposta = (String) (session.in.readObject());
+        String risposta = (String)session.in.readObject();
+        System.out.println("Received response: " + risposta);
         if (risposta.equals("OK")) {
-            sendMessage(chatId, "Scegli una opzione:\n1. Carica Dendrogramma da File\n2. Apprendi Dendrogramma da Database");
+            this.sendMessage(chatId, "Scegli una opzione:\n1. Carica Dendrogramma da File\n2. Apprendi Dendrogramma da Database");
             session.state = "MENU";
         } else {
-            sendMessage(chatId, risposta);
-            sendMessage(chatId, "Nome tabella:");
+            this.sendMessage(chatId, risposta);
+            this.sendMessage(chatId, "Nome tabella:");
+            session.out.writeObject(0);
             session.state = "LOAD_DATA";
         }
+
     }
 
     private void handleDepth(String chatId, String depthStr) throws IOException, ClassNotFoundException {
         int depth = Integer.parseInt(depthStr);
-        ClientSession session = getSession(chatId);
+        ClientSession session = this.getSession(chatId);
         session.out.writeObject(depth);
-        sendMessage(chatId, "Distanza: single-link (1), average-link (2):");
+        this.sendMessage(chatId, "Distanza: single-link (1), average-link (2):");
         session.state = "ENTER_DISTANCE";
     }
 
     private void handleDistance(String chatId, String distanceStr) throws IOException, ClassNotFoundException {
         int distance = Integer.parseInt(distanceStr);
-        ClientSession session = getSession(chatId);
+        ClientSession session = this.getSession(chatId);
         session.out.writeObject(distance);
-        String risposta = (String) (session.in.readObject());
+        String risposta = (String)session.in.readObject();
         if (risposta.equals("OK")) {
-            sendMessage(chatId, (String) session.in.readObject());
-            sendMessage(chatId, "Inserire il nome dell'archivio (comprensivo di estensione):");
+            this.sendMessage(chatId, (String)session.in.readObject());
+            this.sendMessage(chatId, "Inserire il nome dell'archivio (comprensivo di estensione):");
             session.state = "SAVE_FILE";
         } else {
-            sendMessage(chatId, risposta);
-            sendMessage(chatId, "Introdurre la profondità del dendrogramma:");
+            this.sendMessage(chatId, risposta);
+            this.sendMessage(chatId, "Introdurre la profondità del dendrogramma:");
             session.state = "ENTER_DEPTH";
         }
+
     }
 
     private void handleSaveFile(String chatId, String fileName) throws IOException, ClassNotFoundException {
-        ClientSession session = getSession(chatId);
+        ClientSession session = this.getSession(chatId);
         session.out.writeObject(fileName);
-        String risposta = (String) (session.in.readObject());
+        String risposta = (String)session.in.readObject();
         if (risposta.equals("OK")) {
-            sendMessage(chatId, (String) session.in.readObject());
+            this.sendMessage(chatId, (String)session.in.readObject());
         } else {
-            sendMessage(chatId, risposta);
+            this.sendMessage(chatId, risposta);
         }
+
         session.state = "START";
     }
 
     private ClientSession getSession(String chatId) throws IOException {
-        if (!userSessions.containsKey(chatId)) {
-            ClientSession session = new ClientSession(serverIp, serverPort);
-            userSessions.put(chatId, session);
+        if (!this.userSessions.containsKey(chatId)) {
+            ClientSession session = new ClientSession(this.serverIp, this.serverPort);
+            this.userSessions.put(chatId, session);
         }
-        return userSessions.get(chatId);
+
+        return (ClientSession)this.userSessions.get(chatId);
     }
 
     static class ClientSession {
@@ -195,8 +201,8 @@ public class TelegramBot extends TelegramLongPollingBot {
 
         public ClientSession(String serverIp, int serverPort) throws IOException {
             this.socket = new Socket(InetAddress.getByName(serverIp), serverPort);
-            this.out = new ObjectOutputStream(socket.getOutputStream());
-            this.in = new ObjectInputStream(socket.getInputStream());
+            this.out = new ObjectOutputStream(this.socket.getOutputStream());
+            this.in = new ObjectInputStream(this.socket.getInputStream());
             this.state = null;
         }
     }

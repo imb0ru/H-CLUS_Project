@@ -1,79 +1,70 @@
 package server;
 
+import bot.TelegramBot;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import bot.TelegramBot;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
-/**
- * Classe che gestisce il server
- */
 public class Server {
-    /** La porta del server */
     private final int PORT;
-    /** Singleton */
     private static Server singleton = null;
-    /** Telegram Bot */
     private static TelegramBotsApi bot;
 
-    /**
-     * Costruttore di classe, inizializza la porta e il bot e invoca run()
-     *
-     * @param port che indica la porta alla quale connettersi
-     */
     private Server(int port) {
         this.PORT = port;
-        run();
+        this.run();
     }
 
-    /**
-     * Metodo che serve per creare un istanza un nuovo Server, specificando
-     * la porta e il token del bot telegram in modo tale da rendere Singleton la classe Server.
-     * Crea un nuovo server solo 1 volta, quelle successive non potrò più farlo.
-     *
-     * @param port che indica la porta sulla quale avviare il server
-     */
-    public static void instanceMultiServer(String token, int port){
-        if(singleton == null) {
+    public static void instanceMultiServer(String token, int port) {
+        if (singleton == null) {
             try {
-                 bot = new TelegramBotsApi(DefaultBotSession.class);
-                 bot.registerBot(new TelegramBot(token, "localhost", port));
-            } catch (TelegramApiException e) {
+                bot = new TelegramBotsApi(DefaultBotSession.class);
+                bot.registerBot(new TelegramBot(token, "localhost", port));
+            } catch (TelegramApiException var3) {
+                TelegramApiException e = var3;
                 e.printStackTrace();
             }
+
             singleton = new Server(port);
         }
+
     }
 
-    /**
-     * Crea un oggetto istanza della classe ServerSocket che pone in attesa di
-     * richiesta di connessioni da parte del client. A ogni nuova richiesta di
-     * connessione si crea un istanza ServerOneClient sfruttando cosi il MultiThreading
-     */
     private void run() {
         try {
-            ServerSocket s = new ServerSocket(PORT);
-            try (s) {
-                System.out.println("Started: " + s);
-                while (true) {
+            ServerSocket s = new ServerSocket(this.PORT);
+            ServerSocket var2 = s;
+
+            try {
+                System.out.println("Started: " + String.valueOf(s));
+
+                while(true) {
                     Socket socket = s.accept();
-                    System.out.println("Connessione client: " + socket);
+                    System.out.println("Connessione client: " + String.valueOf(socket));
 
                     try {
                         new ClientHandler(socket, bot);
-                    } catch (IOException e) {
-                        System.out.println("Errore nella creazione del socket: " + socket);
+                    } catch (IOException var6) {
+                        System.out.println("Errore nella creazione del socket: " + String.valueOf(socket));
                         socket.close();
                     }
                 }
+            } catch (Throwable var7) {
+                if (s != null) {
+                    try {
+                        var2.close();
+                    } catch (Throwable var5) {
+                        var7.addSuppressed(var5);
+                    }
+                }
+
+                throw var7;
             }
-            // ServerSocket, serve se ci fanno un kill del thread dall'esterno
-        } catch (IOException e) {
+        } catch (IOException var8) {
             System.out.println("Errore...");
         }
     }
 }
-
