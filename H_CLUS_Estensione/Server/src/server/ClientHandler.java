@@ -54,17 +54,16 @@ class ClientHandler extends Thread {
                     this.out.writeObject("Tipo di richiesta non valido");
                 }
             }
-        } catch (IOException var12) {
-            System.out.println("Disconnessione client: " + String.valueOf(this.clientSocket));
-        } catch (ClassNotFoundException var13) {
-            ClassNotFoundException e = var13;
+        } catch (IOException e) {
+            System.out.println("Disconnessione client: " + this.clientSocket);
+        } catch (ClassNotFoundException e) {
             System.out.println(e.getMessage());
         } finally {
             try {
                 this.clientSocket.close();
                 this.out.close();
                 this.in.close();
-            } catch (IOException var11) {
+            } catch (IOException e) {
                 System.err.println("Errore nella chiusura del socket o degli ObjectStream");
             }
 
@@ -78,8 +77,7 @@ class ClientHandler extends Thread {
         try {
             this.data = new Data(tableName);
             this.out.writeObject("OK");
-        } catch (NoDataException var3) {
-            NoDataException e = var3;
+        } catch (NoDataException e) {
             this.out.writeObject(e.getMessage());
         }
 
@@ -95,15 +93,14 @@ class ClientHandler extends Thread {
             try {
                 HierachicalClusterMiner clustering = new HierachicalClusterMiner(depth);
                 ClusterDistance distance = distanceType == 1 ? new SingleLinkDistance() : new AverageLinkDistance();
-                clustering.mine(this.data, (ClusterDistance)distance);
+                clustering.mine(this.data, distance);
                 this.out.writeObject("OK");
                 this.out.writeObject(clustering.toString(this.data));
                 String fileName = (String)this.in.readObject();
                 clustering.salva(fileName);
                 this.out.writeObject("OK");
                 this.out.writeObject("Salvataggio effettuato con successo!");
-            } catch (InvalidClustersNumberException | IOException | InvalidDepthException | InvalidSizeException var6) {
-                Exception e = var6;
+            } catch (InvalidClustersNumberException | IOException | InvalidDepthException | InvalidSizeException e) {
                 this.out.writeObject(e.getMessage());
             }
 
@@ -126,11 +123,9 @@ class ClientHandler extends Thread {
                 this.out.writeObject("OK");
                 this.out.writeObject(clustering.toString(this.data));
             }
-        } catch (FileNotFoundException var3) {
-            FileNotFoundException e = var3;
+        } catch (FileNotFoundException e) {
             this.out.writeObject("File non trovato: " + e.getMessage());
-        } catch (ClassNotFoundException | InvalidDepthException | IOException var4) {
-            Exception e = var4;
+        } catch (ClassNotFoundException | InvalidDepthException | IOException e) {
             this.out.writeObject(e.getMessage());
         }
 

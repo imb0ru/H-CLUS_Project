@@ -18,7 +18,7 @@ public class TelegramBot extends TelegramLongPollingBot {
     private final String botToken;
     private final String serverIp;
     private final int serverPort;
-    private Map<String, ClientSession> userSessions = new HashMap<>();
+    private final Map<String, ClientSession> userSessions = new HashMap<>();  //con final non rischiamo di reassegnarla per sbaglio
 
     public TelegramBot(String botToken, String serverIp, int serverPort) {
         this.botToken = botToken;
@@ -41,8 +41,8 @@ public class TelegramBot extends TelegramLongPollingBot {
 
             try {
                 this.handleMessage(chatId, receivedMessage);
-            } catch (ClassNotFoundException | IOException var5) {
-                var5.printStackTrace();
+            } catch (ClassNotFoundException | IOException e) {
+                e.printStackTrace();
             }
         }
 
@@ -107,8 +107,8 @@ public class TelegramBot extends TelegramLongPollingBot {
 
         try {
             this.execute(message);
-        } catch (TelegramApiException var5) {
-            var5.printStackTrace();
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
         }
 
     }
@@ -209,7 +209,7 @@ public class TelegramBot extends TelegramLongPollingBot {
             this.userSessions.put(chatId, session);
         }
 
-        return (ClientSession)this.userSessions.get(chatId);
+        return this.userSessions.get(chatId);
     }
 
     static class ClientSession {

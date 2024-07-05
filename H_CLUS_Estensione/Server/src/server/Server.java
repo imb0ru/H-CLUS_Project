@@ -23,8 +23,7 @@ public class Server {
             try {
                 bot = new TelegramBotsApi(DefaultBotSession.class);
                 bot.registerBot(new TelegramBot(token, "localhost", port));
-            } catch (TelegramApiException var3) {
-                TelegramApiException e = var3;
+            } catch (TelegramApiException e) {
                 e.printStackTrace();
             }
 
@@ -36,32 +35,30 @@ public class Server {
     private void run() {
         try {
             ServerSocket s = new ServerSocket(this.PORT);
-            ServerSocket var2 = s;
-
             try {
-                System.out.println("Started: " + String.valueOf(s));
+                System.out.println("Started: " + s);
 
                 while(true) {
                     Socket socket = s.accept();
-                    System.out.println("Connessione client: " + String.valueOf(socket));
+                    System.out.println("Connessione client: " + socket);
 
                     try {
                         new ClientHandler(socket, bot);
-                    } catch (IOException var6) {
-                        System.out.println("Errore nella creazione del socket: " + String.valueOf(socket));
+                    } catch (IOException e) {
+                        System.out.println("Errore nella creazione del socket: " + socket);
                         socket.close();
                     }
                 }
-            } catch (Throwable var7) {
+            } catch (Throwable e) {
                 if (s != null) {
                     try {
-                        var2.close();
-                    } catch (Throwable var5) {
-                        var7.addSuppressed(var5);
+                        s.close();
+                    } catch (Throwable e1) {
+                        e.addSuppressed(e1);
                     }
                 }
 
-                throw var7;
+                throw e;
             }
         } catch (IOException var8) {
             System.out.println("Errore...");
