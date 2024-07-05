@@ -156,7 +156,17 @@ public class TelegramBot extends TelegramLongPollingBot {
     }
 
     private void handleDistance(String chatId, String distanceStr) throws IOException, ClassNotFoundException {
-        int distance = Integer.parseInt(distanceStr);
+        int distance;
+        try {
+            distance = Integer.parseInt(distanceStr);
+        } catch (NumberFormatException e) {
+            this.sendMessage(chatId, "Il valore inserito non è un numero valido. Scegli una opzione:\n1. Single-link\n2. Average-link");
+            return;
+        }
+        if (distance != 1 && distance != 2) {
+            this.sendMessage(chatId, "Scelta non valida. Scegli una opzione:\n1. Single-link\n2. Average-link");
+            return;
+        }
         ClientSession session = this.getSession(chatId);
         session.out.writeObject(distance);
         String risposta = (String)session.in.readObject();
@@ -170,7 +180,6 @@ public class TelegramBot extends TelegramLongPollingBot {
             this.sendMessage(chatId, "Introdurre la profondità del dendrogramma:");
             session.state = "ENTER_DEPTH";
         }
-
     }
 
     private void handleSaveFile(String chatId, String fileName) throws IOException, ClassNotFoundException {
