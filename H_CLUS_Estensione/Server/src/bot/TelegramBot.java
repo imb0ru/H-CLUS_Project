@@ -166,6 +166,7 @@ public class TelegramBot extends TelegramLongPollingBot {
             session.state = "SAVE_FILE";
         } else {
             this.sendMessage(chatId, risposta);
+            session.out.writeObject(1);
             this.sendMessage(chatId, "Introdurre la profondità del dendrogramma:");
             session.state = "ENTER_DEPTH";
         }
