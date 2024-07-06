@@ -31,7 +31,7 @@ Il progetto H-CLUS, sviluppato nell'ambito del corso di Metodi Avanzati di Progr
 
 L'obiettivo principale del progetto è la realizzazione di un sistema denominato "H-CLUS", il quale include le seguenti componenti:
 - **Server**: Modulo responsabile dell'applicazione di algoritmi di data mining per la scoperta di dendrogrammi di cluster di dati utilizzando tecniche di clustering agglomerativo.
-- **Client**: Un'applicazione Java che consente agli utenti di accedere ai servizi di scoperta remota offerti dal server e visualizzare i cluster di dati identificati.
+- **Client**: Un Bot Telegram che consente agli utenti di accedere ai servizi di scoperta remota offerti dal server e visualizzare i cluster di dati identificati.
 
 ## **2. Istruzioni per l'installazione**
 
@@ -99,33 +99,19 @@ Il file batch eseguirà i seguenti passaggi:
 4. **Creazione del file JAR:** Crea un file JAR eseguibile che include il server e tutte le dipendenze necessarie.
 5. **Generazione della documentazione Javadoc:** Genera la documentazione Javadoc per il progetto.
 
-### **2.2 Configurazione del client H-CLUS**
+### **2.2 Configurazione del Bot H-CLUS**
 
-Nella directory principale del progetto, individuare il file `client_setup.bat` e seguire questi passaggi per eseguirlo:
+Una volta recati nell'applicazione "Telegram" cercare come utente: @HCLUS_Bot .
 
-### Esecuzione del file batch `client_setup.bat`
+N.B: E' possibile avere più chat attive del **Bot** contemporaneamente.
 
-- **Metodo 1: Doppio clic**
-  - Individuare il file `client_setup.bat` nella directory del progetto.
-  - Fare doppio clic sul file `client_setup.bat` per eseguirlo.
+### Esecuzione del bot @HCLUS_Bot
 
-- **Metodo 2: Da terminale**
-  - Aprire un terminale o prompt dei comandi.
-  - Navigare alla directory dove si trova il file `client_setup.bat`.
-  - Eseguire il comando:
-    ```sh
-    client_setup.bat
-    ```
+- **Metodo 1: Da tastiera**
+    - Scrivere il comando **/start** in chat.
 
-### Descrizione delle funzionalità del file batch
-
-Il file batch eseguirà i seguenti passaggi:
-
-1. **Configurazione delle variabili di progetto:** Imposta variabili per i percorsi dei file e delle directory utilizzate nel progetto.
-2. **Compilazione del client:** Compila i file sorgente Java presenti nella directory `src` e li posiziona nella directory `out`.
-3. **Creazione del file JAR:** Crea un file JAR eseguibile che include il client e tutte le dipendenze necessarie.
-4. **Generazione della documentazione Javadoc:** Genera la documentazione Javadoc per il progetto.
-
+- **Metodo 2: Da menu**
+    - Cliccare il pulsante **/start** nel menu della chat.
 
 ## **3. Istruzioni per l'esecuzione**
 
@@ -156,34 +142,6 @@ Infine, seguire questi passaggi per eseguirlo:
 ### Descrizione delle funzionalità del file batch
 
 Il file batch eseguirà il file JAR del server con la porta specificata.
-
-### **3.2 Esecuzione del client H-CLUS**
-Nella directory principale del progetto, individuare il file `client_run.bat`. 
-
-Prima di eseguire il client, modificare il file `client_run.bat` sostituendo i valori dei campi address e port con l'indirizzo ip e la porta del server avviato in precedenza.
-
-Lasciare invariati i campi se si preferisce utilizzare i valori di default.
-
-Una volta completata la configurazione, è possibile eseguire il client utilizzando il file `client_run.bat`.
-
-### Esecuzione del file batch `client_run.bat`
-
-- **Metodo 1: Doppio clic**
-  - Individuare il file `client_run.bat` nella directory del progetto.
-  - Fare doppio clic sul file `client_run.bat` per eseguirlo.
-
-- **Metodo 2: Da terminale**
-  - Aprire un terminale o prompt dei comandi.
-  - Navigare alla directory dove si trova il file `client_run.bat`.
-  - Eseguire il comando:
-    ```sh
-    client_run.bat
-    ```
-E' possibile avviare più **Client** contemporaneamente.
-
-### Descrizione delle funzionalità del file batch
-
-Il file batch eseguirà il file JAR del client con l'indirizzo IP e la porta specificati.
 
 ## **4. Istruzioni per l'uso**
 
