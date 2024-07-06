@@ -13,12 +13,12 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/mysql-connector-java-8.0.17.jar!/" />
+          <root url="file://$MODULE_DIR$/dependences" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/dependences" recursive="false" />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="mysql-connector-java-8.0.17" level="project" />
   </component>
 </module>
