@@ -15,7 +15,7 @@ set jarFile=%serverProjectPath%\server.jar
 set mainClass=Main
 set javadocOutputPath=%serverProjectPath%\server_javadoc
 
-set "mysqlConnector=%projectBasePath%\mysql-connector-java-8.0.17.jar"
+set "dependences=%serverProjectPath%\dependences"
 
 echo Esecuzione del file SQL...
 call mysql -u %username% -p%password% < %sqlfile% 2>nul
@@ -48,7 +48,11 @@ if "%javaFiles%"=="" (
     goto :end
 )
 
-set "classpath=%mysqlConnector%;%serverOutputPath%"
+set "classpath=%serverOutputPath%"
+for %%j in ("%dependences%\*.jar") do (
+    set "classpath=!classpath!;%%j"
+)
+
 call javac -cp "%classpath%" -d %serverOutputPath% -Xlint:none -nowarn !javaFiles! >nul 2>&1
 
 if errorlevel 1 (
