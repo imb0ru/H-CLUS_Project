@@ -135,7 +135,7 @@ Nella directory principale del progetto, individuare il file `server_run.bat`.
 
 Prima di avviare il file `server_run.bat`, modificare il file sostituendo il valore del campo port col numero di porta sul quale avviare il server.
 
-Lasciare invariati il campo se si preferisce utilizzare il valore di default.
+Lasciare invariato il campo se si preferisce utilizzare il valore di default.
 
 Infine, seguire questi passaggi per eseguirlo:
 ### Esecuzione del file batch `server_run.bat`
