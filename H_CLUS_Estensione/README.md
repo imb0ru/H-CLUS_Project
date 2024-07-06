@@ -336,7 +336,6 @@ Il programma termina.
 
 Per accedere alla documentazione JavaDoc del progetto, fare clic sui link sottostanti:
 
-- [JavaDoc del Bot](./Client/client_javadoc/index.html)
 - [JavaDoc del Server](./Server/server_javadoc/index.html)
 
 
