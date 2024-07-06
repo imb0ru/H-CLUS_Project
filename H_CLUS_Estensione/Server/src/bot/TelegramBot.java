@@ -146,7 +146,13 @@ public class TelegramBot extends TelegramLongPollingBot {
     }
 
     private void handleDepth(String chatId, String depthStr) throws IOException {
-        int depth = Integer.parseInt(depthStr);
+        int depth;
+        try {
+            depth = Integer.parseInt(depthStr);
+        } catch (NumberFormatException e) {
+            this.sendMessage(chatId, "Profondità non valida.\n Inserisci la profondità del dendrogramma (da 1 a 5):");
+            return;
+        }
         ClientSession session = this.getSession(chatId);
         session.out.writeObject(depth);
         this.sendMessage(chatId, "Scegli il tipo di distanza:\n1. single-link\n2. average-link");
