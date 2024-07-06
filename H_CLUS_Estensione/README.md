@@ -8,11 +8,10 @@
 
 [2. Istruzioni per l'installazione](#2-istruzioni-per-linstallazione)
 - [2.1 Configurazione del server H-CLUS](#21-configurazione-del-server-h-clus)
-- [2.2 Configurazione del client H-CLUS](#22-configurazione-del-client-h-clus)
 
 [3. Istruzioni per l'esecuzione](#3-istruzioni-per-lesecuzione)
 - [3.1 Esecuzione del server H-CLUS](#31-esecuzione-del-server-h-clus)
-- [3.2 Esecuzione del client H-CLUS](#32-esecuzione-del-client-h-clus)
+- [3.2 Esecuzione del bot telegram H-CLUS](#32-esecuzione-del-bot-telegram-h-clus)
 
 [4. Istruzioni per l'uso](#4-istruzioni-per-luso)
 
@@ -99,20 +98,6 @@ Il file batch eseguirà i seguenti passaggi:
 4. **Creazione del file JAR:** Crea un file JAR eseguibile che include il server e tutte le dipendenze necessarie.
 5. **Generazione della documentazione Javadoc:** Genera la documentazione Javadoc per il progetto.
 
-### **2.2 Configurazione del Bot H-CLUS**
-
-Una volta recati nell'applicazione "Telegram" cercare come utente: @HCLUS_Bot .
-
-N.B: E' possibile avere più chat attive del **Bot** contemporaneamente.
-
-### Esecuzione del bot @HCLUS_Bot
-
-- **Metodo 1: Da tastiera**
-    - Scrivere il comando **/start** in chat.
-
-- **Metodo 2: Da menu**
-    - Cliccare il pulsante **/start** nel menu della chat.
-
 ## **3. Istruzioni per l'esecuzione**
 
 ### **3.1 Esecuzione del server H-CLUS**
@@ -121,7 +106,7 @@ Nella directory principale del progetto, individuare il file `server_run.bat`.
 
 Prima di avviare il file `server_run.bat`, modificare il file sostituendo il valore del campo port col numero di porta sul quale avviare il server.
 
-Lasciare invariati il campo se si preferisce utilizzare il valore di default.
+Lasciare invariato il campo se si preferisce utilizzare il valore di default.
 
 Infine, seguire questi passaggi per eseguirlo:
 ### Esecuzione del file batch `server_run.bat`
@@ -142,6 +127,20 @@ Infine, seguire questi passaggi per eseguirlo:
 ### Descrizione delle funzionalità del file batch
 
 Il file batch eseguirà il file JAR del server con la porta specificata.
+
+### **3.2 Esecuzione del Bot Telegram H-CLUS**
+
+Una volta recati nell'applicazione "Telegram" cercare come utente: @HCLUS_Bot .
+
+N.B: E' possibile avere più chat attive del **Bot** contemporaneamente.
+
+### Esecuzione del bot @HCLUS_Bot
+
+- **Metodo 1: Da tastiera**
+    - Scrivere il comando **/start** in chat.
+
+- **Metodo 2: Da menu**
+    - Cliccare il pulsante **/start** nel menu della chat.
 
 ## **4. Istruzioni per l'uso**
 
