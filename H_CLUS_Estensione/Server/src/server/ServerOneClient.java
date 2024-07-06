@@ -9,21 +9,21 @@ import data.NoDataException;
 import distance.AverageLinkDistance;
 import distance.ClusterDistance;
 import distance.SingleLinkDistance;
-import java.io.FileNotFoundException;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 
-class ClientHandler extends Thread {
+class ServerOneClient extends Thread {
     private final Socket clientSocket;
     private final ObjectOutputStream out;
     private final ObjectInputStream in;
     private Data data;
     TelegramBotsApi bot;
 
-    public ClientHandler(Socket socket, TelegramBotsApi bot) throws IOException {
+    public ServerOneClient(Socket socket, TelegramBotsApi bot) throws IOException {
         this.clientSocket = socket;
         this.out = new ObjectOutputStream(this.clientSocket.getOutputStream());
         this.in = new ObjectInputStream(this.clientSocket.getInputStream());
@@ -123,8 +123,6 @@ class ClientHandler extends Thread {
                 this.out.writeObject("OK");
                 this.out.writeObject(clustering.toString(this.data));
             }
-        } catch (FileNotFoundException e) {
-            this.out.writeObject("File non trovato: " + e.getMessage());
         } catch (ClassNotFoundException | InvalidDepthException | IOException e) {
             this.out.writeObject(e.getMessage());
         }

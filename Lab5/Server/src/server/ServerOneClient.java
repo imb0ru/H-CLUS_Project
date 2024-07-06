@@ -16,7 +16,7 @@ import clustering.InvalidClustersNumberException;
 /**
 * Classe che gestisce le connessioni con i client.
 */
-class ClientHandler extends Thread {
+class ServerOneClient extends Thread {
     /** Il socket del client */
     private final Socket clientSocket;
 
@@ -35,7 +35,7 @@ class ClientHandler extends Thread {
      * @param socket il socket del client
      * @throws IOException se si verifica un errore di I/O
      */
-     public ClientHandler(Socket socket) throws IOException {
+     public ServerOneClient(Socket socket) throws IOException {
             this.clientSocket = socket;
             this.out = new ObjectOutputStream(clientSocket.getOutputStream());
             this.in = new ObjectInputStream(clientSocket.getInputStream());

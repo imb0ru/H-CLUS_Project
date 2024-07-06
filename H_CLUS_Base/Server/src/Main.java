@@ -1,4 +1,4 @@
-import server.Server;
+import server.MultiServer;
 
 /**
  * Classe main del Server.
@@ -30,6 +30,6 @@ public class Main {
         }
 
         System.out.println("Server avviato sulla porta " + port);
-        Server.instanceMultiServer(port);
+        MultiServer.instanceMultiServer(port);
     }
 }

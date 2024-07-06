@@ -14,6 +14,8 @@ import java.io.*;
 public class HierachicalClusterMiner implements Serializable {
 	/** dendrogramma */
 	private final Dendrogram dendrogram;
+	/** percorso della directory di salvataggio/caricamento degli oggetti serializzati */
+	private static final String DIRECTORY_PATH = "./saved/";
 
 	/**
 	 * Costruttore
@@ -95,10 +97,17 @@ public class HierachicalClusterMiner implements Serializable {
 	 * @throws FileNotFoundException se il file non viene trovato
 	 * @throws IOException se si verifica un errore di input/output
 	 * @throws ClassNotFoundException se la classe dell'oggetto serializzato non viene trovata
+	 * @throws IllegalArgumentException se il nome del file è nullo o vuoto
 	 */
-	public static HierachicalClusterMiner loadHierachicalClusterMiner(String fileName) throws FileNotFoundException, IOException, ClassNotFoundException, IllegalArgumentException {
-		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
+	public static HierachicalClusterMiner loadHierachicalClusterMiner(String fileName) throws IOException, ClassNotFoundException, IllegalArgumentException {
+		if (fileName == null || fileName.trim().isEmpty()) {
+			throw new IllegalArgumentException("Il nome del file non può essere nullo o vuoto");
+		}
+		String filePath = DIRECTORY_PATH + fileName;
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
 			return (HierachicalClusterMiner) ois.readObject();
+		} catch (FileNotFoundException e) {
+			throw new FileNotFoundException("File non trovato: " + fileName);
 		}
 	}
 
@@ -107,29 +116,44 @@ public class HierachicalClusterMiner implements Serializable {
 	 * @param fileName nome del file su cui salvare l'istanza
 	 * @throws FileNotFoundException se il file non viene trovato
 	 * @throws IOException se si verifica un errore di input/output
+	 * @throws IllegalArgumentException se il nome del file è nullo o vuoto
 	 */
-	public void salva(String fileName) throws FileNotFoundException, IOException {
+	public void salva(String fileName) throws FileNotFoundException, IOException, IllegalArgumentException {
+		final String invalidRegex = ".*[<>:\"|?*].*";
+		final String validRegex = "^[\\w,\\s-]+\\.(txt|csv|json|xml|dat|bin|ser)$";
+		if (fileName == null || fileName.trim().isEmpty()) {
+			throw new IllegalArgumentException("Il nome del file non può essere nullo o vuoto");
+		}
 		fileName = fileName.replace("\\", File.separator).replace("/", File.separator);
 
-		if (fileName.matches(".*[<>:\"|?*].*"))
+		if (fileName.matches(invalidRegex)) {
 			throw new IOException("Errore: Il percorso contiene caratteri non validi. Riprova.\n");
+		}
 
-		File file = new File(fileName);
+		if(!fileName.matches(validRegex)){
+			throw new IOException("Errore: Estensione del file non valida. Assicurati che il nome del file termini con una delle seguenti estensioni: .txt, .csv, .json, .xml, .dat, .bin, .ser\n");
+		}
 
-		if (file.exists())
+		String filePath = DIRECTORY_PATH + fileName;
+		File file = new File(filePath);
+
+		if (file.exists()) {
 			throw new IOException("Errore: Il file esiste già. Riprova.\n");
+		}
 
 		File parentDir = file.getParentFile();
 		if (parentDir != null && !parentDir.exists()) {
-			if (parentDir.mkdirs())
+			if (parentDir.mkdirs()) {
 				System.out.println("Directory creata: " + parentDir.getAbsolutePath());
-			else
+			} else {
 				throw new IOException("Impossibile creare la directory: " + parentDir.getAbsolutePath() + "\n");
+			}
 		}
-		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
+		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
 			oos.writeObject(this);
 		}
 	}
+
 
 }
 

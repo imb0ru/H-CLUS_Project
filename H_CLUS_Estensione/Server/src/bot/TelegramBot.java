@@ -181,21 +181,18 @@ public class TelegramBot extends TelegramLongPollingBot {
     }
 
     private void handleSaveFile(String chatId, String fileName) throws IOException, ClassNotFoundException {
-        if (!isValidFileName(fileName)) {
-            this.sendMessage(chatId, "Nome non valido,assicurati che il nome del file termini con una delle seguenti estensioni: .txt, .csv, .json, .xml, .dat, .bin, .ser");
-            this.sendMessage(chatId, "Inserire il nome dell'archivio (comprensivo di estensione):");
-            return;
-        }
         ClientSession session = this.getSession(chatId);
         session.out.writeObject(fileName);
         String risposta = (String) session.in.readObject();
         if (risposta.equals("OK")) {
             this.sendMessage(chatId, (String) session.in.readObject());
+            session.state = "START";
         } else {
             this.sendMessage(chatId, risposta);
+            this.sendMessage(chatId, "Inserire il nome dell'archivio (comprensivo di estensione):");
+            session.state = "SAVE_FILE";
         }
 
-        session.state = "START";
     }
 
     private boolean isValidFileName(String fileName) {

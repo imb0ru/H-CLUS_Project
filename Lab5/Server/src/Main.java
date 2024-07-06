@@ -1,4 +1,4 @@
-import server.Server;
+import server.MultiServer;
 /**
  * Classe main del Server.
  * Punto di partenza dell'applicazione lato server.
@@ -10,6 +10,6 @@ public class Main {
      * @param args argomenti passati da terminale (non vengono gestiti)
      */
     public static void main(String[] args) {
-        Server.instanceMultiServer();
+        MultiServer.instanceMultiServer();
     }
 }

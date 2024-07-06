@@ -1,41 +1,44 @@
 package server;
 
-import java.io.*;
-import java.net.*;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 /**
  * Classe che gestisce il server
  */
-public class Server {
+public class MultiServer {
     /** La porta del server */
     private final int PORT;
     /** Singleton */
-    private static Server singleton = null;
+    private static MultiServer singleton = null;
 
     /**
      * Costruttore di classe, inizializza la porta e invoca run()
      *
      * @param port che indica la porta alla quale connettersi
      */
-    private Server(int port) {
+    private MultiServer(int port) {
         this.PORT = port;
         run();
     }
 
     /**
-     * Metodo che serve per istanziare un nuovo Server, specificando
+     * Metodo che serve per creare un istanza un nuovo Server, specificando
      * la porta in modo tale da rendere Singleton la classe Server.
-     * Istanzio un nuovo server solo 1 volta, quelle successive non potrò più farlo.
+     * Crea un nuovo server solo 1 volta, quelle successive non potrò più farlo.
+     *
+     * @param port che indica la porta sulla quale avviare il server
      */
-    public static void instanceMultiServer(){
+    public static void instanceMultiServer(int port){
         if(singleton == null)
-            singleton = new Server(2025);
+            singleton = new MultiServer(port);
     }
 
     /**
-     * Istanzia un oggetto istanza della classe ServerSocket che pone in attesa di
-     * richiesta di connessioni da parte del client. A ogni nuova richiesta
-     * connessione si istanzia ServerOneClient sfruttando cosi il MultiThreading
+     * Crea un oggetto istanza della classe ServerSocket che pone in attesa di
+     * richiesta di connessioni da parte del client. A ogni nuova richiesta di
+     * connessione si crea un istanza ServerOneClient sfruttando cosi il MultiThreading
      */
     private void run() {
         try {
@@ -47,13 +50,14 @@ public class Server {
                     System.out.println("Connessione client: " + socket);
 
                     try {
-                        new ClientHandler(socket);
+                        new ServerOneClient(socket);
                     } catch (IOException e) {
-                        System.out.println("Errore nell'istanziazione del socket: " + socket);
+                        System.out.println("Errore nella creazione del socket: " + socket);
                         socket.close();
                     }
                 }
             }
+            // ServerSocket, serve se ci fanno un kill del thread dall'esterno
         } catch (IOException e) {
             System.out.println("Errore...");
         }

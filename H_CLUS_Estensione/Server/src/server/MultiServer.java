@@ -8,12 +8,12 @@ import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
-public class Server {
+public class MultiServer {
     private final int PORT;
-    private static Server singleton = null;
+    private static MultiServer singleton = null;
     private static TelegramBotsApi bot;
 
-    private Server(int port) {
+    private MultiServer(int port) {
         this.PORT = port;
         this.run();
     }
@@ -27,7 +27,7 @@ public class Server {
                 e.printStackTrace();
             }
 
-            singleton = new Server(port);
+            singleton = new MultiServer(port);
         }
 
     }
@@ -43,7 +43,7 @@ public class Server {
                     System.out.println("Connessione client: " + socket);
 
                     try {
-                        new ClientHandler(socket, bot);
+                        new ServerOneClient(socket, bot);
                     } catch (IOException e) {
                         System.out.println("Errore nella creazione del socket: " + socket);
                         socket.close();
