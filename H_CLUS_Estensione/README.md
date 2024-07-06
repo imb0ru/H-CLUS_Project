@@ -296,9 +296,9 @@ Il programma termina.
 
 ## **5. Modello UML**
 
-### UML CLIENT
+### UML BOT TELEGRAM
 <p style="text-align: center;">
-    <img src="./assets/Client uml.png" alt="">
+    <img src="./assets/Bot uml.png" alt="">
 </p>
 
 ### UML SERVER COMPLETO
@@ -336,7 +336,7 @@ Il programma termina.
 
 Per accedere alla documentazione JavaDoc del progetto, fare clic sui link sottostanti:
 
-- [JavaDoc del Client](./Client/client_javadoc/index.html)
+- [JavaDoc del Bot](./Client/client_javadoc/index.html)
 - [JavaDoc del Server](./Server/server_javadoc/index.html)
 
 
