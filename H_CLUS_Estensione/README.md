@@ -149,18 +149,10 @@ N.B: E' possibile avere più chat attive del **Bot** contemporaneamente.
 <p style="text-align: center;">
     <img src="./assets/Avvio.jpeg" alt="">
 </p>
-addr indica l'indirizzo ip a cui si è connessi.
-
-Socket invece ha 3 campi: 
-- addr: nome del dispotivo/indirizzo locale
-- Port: la porta del server
-- localport: la porta locale
-
-Nome tabella: Inserire il nome della tabella su cui si vuole lavorare, in questo caso exampletab.
 
 ---
 ### Inserimento tabella errato:
-Inserimento di un nome di tabella errato (nel nostro caso prova):
+Inserimento di un nome di tabella errato:
 
 <p style="text-align: center;">
     <img src="./assets/Tabella inesistente.jpeg" alt="">
@@ -169,22 +161,18 @@ Il programma ci dirà che la tabella non è stata trovata e ci dara la possibili
 
 ---
 ### Inserimento nome tabella:
-Inserimento del nome della tabella (nel nostro caso exampletab):
+Inserimento del nome della tabella:
 
 <p style="text-align: center;">
     <img src="./assets/Inserimento tabella.jpeg" alt="">
 </p>
-Dopo aver inserito il nome della tabella ci compare a video una scelta.
 
 ---
 ### Scelta diversa da 1 o 2:
-Inserimento di una scelta diversa da 1 o 2 (nel nostro caso 3):
+Inserimento di una scelta diversa da 1 o 2:
 <p style="text-align: center;">
     <img src="./assets/Scelta diversa.jpeg" alt="">
 </p>
-
-Come notiamo, inserendo una scelta diversa da 1 o 2 ci stamperà a video un messaggio di errore.
-Con scritto "Scelta non valida e andrà a chiederci di nuovo la scelta poichè non è stata valida.
 
 ---
 ### Scelta 1: 
@@ -194,24 +182,21 @@ Se inseriamo 1 avremo scelto il caricamento del dendrogramma da file:
 <p style="text-align: center;">
     <img src="./assets/Scelta 1.jpeg" alt="">
 </p>
-Ci verrà richiesto di inserire il nome dell'archivio con la relativa estensione
 
 ---
 ### Inserimento nome file errato:
-Inserimento del nome del file (nel nostro caso error, un file che non esiste):
+Inserimento del nome del file che non esiste:
 
 <p style="text-align: center;">
     <img src="./assets/File error.jpeg" alt="">
 </p>
-Il programma ci dirà che il file non è stato trovare e terminerà l'esecuzione.
 
 ---
 ### Inserimento file corretto:
-Inserimento del nome del file (nel nostro caso example.txt):
+Inserimento del nome del file:
 <p style="text-align: center;">
     <img src="./assets/File corretto.jpeg" alt="">
 </p>
-Il programma ci darà a video il dendrogramma e terminerà l'esecuzione.
 
 ---
 ### Scelta 2:
@@ -221,17 +206,13 @@ Se inseriamo 2 avremo scelto l'opzione apprendi dendrogramma dal database:
     <img src="./assets/Scelta 2.jpeg" alt="">
 </p>
 
-Ci comparirà successivamente l'inserimento della profondità del dendrogramma desiderata
-
 ---
 ### Inserimento profondità errato:
-Inserimento di una profondità errata (nel nostro caso 0):
+Inserimento di una profondità errata:
 
 <p style="text-align: center;">
     <img src="./assets/prof errata.jpeg" alt="">
 </p>
-
-il programam ci chiederà comunque le opzioni per calcolare la distanza ma una volta inserita ci dirà che la profondità è errata e il programma termina l'esecuzione.
 
 ---
 ### Inserimento profondità corretto:
@@ -241,56 +222,47 @@ Se inseriamo una profondità corretta (da 1 a 5):
     <img src="./assets/prof corretta.jpeg" alt="">
 </p>
 
-Ci verrà chiesto il tipo di distanza desiderata.
 
 ---
 ### Inserimento distanza errata:
-Se inseriamo una scelta errata (nel nostro caso 3):
+Se inseriamo una scelta errata:
 
 <p style="text-align: center;">
     <img src="./assets/Distanza errata.jpeg" alt="">
 </p>
 
-In questo caso ci dirà che la scelta non è valida e ci chiederà di nuovo la scelta.
-
 ---
 ### Inserimento distanza 1:
-Se inseriamo una scelta corretta (1 o 2), in questo caso 1:
+Se inseriamo una scelta corretta (1 o 2):
 
 <p style="text-align: center;">
     <img src="./assets/Scelta 1d.jpeg" alt="">
 </p>
 
-Ci darà a video il dendrogramma e ci chiederà il nome dell'archivio in cui salvarlo.
-
 ---
 ### Inserimento nome file:
-Inserimento del nome del file (nel nostro caso example.txt):
+Inserimento del nome del file:
 
 <p style="text-align: center;">
     <img src="./assets/Nome archivios.jpeg" alt="">
 </p>
 
-Il programma termina.
-
 ---
 ### Inserimento distanza 2:
-Se inseriamo una scelta corretta (1 o 2), in questo caso 2:
+Se inseriamo una scelta corretta (1 o 2):
 
 <p style="text-align: center;">
     <img src="./assets/Scelta 2d.jpeg" alt="">
 </p>
 
-Ci darà a video il dendrogramma e ci chiederà il nome dell'archivio in cui salvarlo.
 
 ---
 ### Inserimento nome file:
-Inserimento del nome del file (nel nostro caso examplea.txt):
+Inserimento del nome del file:
 
 <p style="text-align: center;">
     <img src="./assets/Nome archivio2.jpeg" alt="">
 </p>
-Il programma termina.
 
 ---
 
