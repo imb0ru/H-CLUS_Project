@@ -10,7 +10,6 @@ set port=3333
 
 set "dependences=%serverProjectPath%\dependences"
 
-:: Costruisci il classpath includendo il file JAR del server e i file JAR nella cartella dependences
 set "classpath=%jarFile%"
 for %%j in ("%dependences%\*.jar") do (
     set "classpath=!classpath!;%%j"
