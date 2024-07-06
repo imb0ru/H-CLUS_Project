@@ -37,7 +37,7 @@ public class Data {
         } catch (MissingNumberException e) {
             throw new NoDataException("Eccezione durante l'elaborazione dei dati\n");
         } catch (SQLException e) {
-            throw new NoDataException("Errore SQL durante il recupero dei dati dalla tabella\n");
+            throw new NoDataException("Errore SQL durante il recupero dei dati dalla tabella, tabella non esistente\n");
         }
     }
 

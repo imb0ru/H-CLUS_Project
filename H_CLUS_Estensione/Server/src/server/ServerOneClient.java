@@ -68,7 +68,6 @@ class ServerOneClient extends Thread {
             }
 
         }
-
     }
 
     private void handleLoadData() throws IOException, ClassNotFoundException {

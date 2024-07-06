@@ -61,18 +61,18 @@ public class TelegramBot extends TelegramLongPollingBot {
                     String var10002 = String.valueOf(InetAddress.getByName(this.serverIp));
                     this.sendMessage(chatId, "Sei connesso al socket " + var10002 + ":" + this.serverPort);
                     session.out.writeObject(0);
-                    this.sendMessage(chatId, "Inserisci il nome della tabella del database:");
+                    this.sendMessage(chatId, "Inserisci il nome della tabella del database da caricare,scegliere uno tra i seguenti:\n- exampletab;");
                     session.state = "LOAD_DATA";
                 }
                 break;
             case "MENU":
                 if (receivedMessage.equals("1")) {
                     session.out.writeObject(2);
-                    this.sendMessage(chatId, "Inserire il nome dell'archivio (comprensivo di estensione):");
+                    this.sendMessage(chatId, "Inserisci il nome dell'archivio con estensione: \nnomefile.(txt, csv, json, xml,dat, bin, ser)");
                     session.state = "LOAD_FILE";
                 } else if (receivedMessage.equals("2")) {
                     session.out.writeObject(1);
-                    this.sendMessage(chatId, "Introdurre la profondità del dendrogramma:");
+                    this.sendMessage(chatId, "Inserisci la profondità del dendrogramma (da 1 a 5):");
                     session.state = "ENTER_DEPTH";
                 } else {
                     this.sendMessage(chatId, "Scelta non valida. Scegli una opzione:\n1. Carica Dendrogramma da File\n2. Apprendi Dendrogramma da Database");
@@ -100,6 +100,7 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     }
 
+
     private void sendMessage(String chatId, String text) {
         SendMessage message = new SendMessage();
         message.setChatId(chatId);
@@ -116,13 +117,13 @@ public class TelegramBot extends TelegramLongPollingBot {
     private void handleLoadDendrogramFromFile(String chatId, String fileName) throws IOException, ClassNotFoundException {
         ClientSession session = this.getSession(chatId);
         session.out.writeObject(fileName);
-        String risposta = (String)session.in.readObject();
+        String risposta = (String) session.in.readObject();
         if (risposta.equals("OK")) {
-            this.sendMessage(chatId, (String)session.in.readObject());
+            this.sendMessage(chatId, (String) session.in.readObject());
             session.state = "START";
         } else {
             this.sendMessage(chatId, risposta);
-            this.sendMessage(chatId, "Inserire il nome dell'archivio (comprensivo di estensione):");
+            this.sendMessage(chatId, "Inserisci il nome dell'archivio con estensione: \nnomefile.(txt, csv, json, xml,dat, bin, ser)");
             session.out.writeObject(2);
             session.state = "LOAD_FILE";
         }
@@ -132,13 +133,13 @@ public class TelegramBot extends TelegramLongPollingBot {
     private void handleLoadData(String chatId, String tableName) throws IOException, ClassNotFoundException {
         ClientSession session = this.getSession(chatId);
         session.out.writeObject(tableName);
-        String risposta = (String)session.in.readObject();
+        String risposta = (String) session.in.readObject();
         if (risposta.equals("OK")) {
             this.sendMessage(chatId, "Scegli una opzione:\n1. Carica Dendrogramma da File\n2. Apprendi Dendrogramma da Database");
             session.state = "MENU";
         } else {
             this.sendMessage(chatId, risposta);
-            this.sendMessage(chatId, "Nome tabella:");
+            this.sendMessage(chatId, "Inserisci il nome della tabella del database da caricare,scegliere uno tra i seguenti:\n- exampletab;");
             session.out.writeObject(0);
             session.state = "LOAD_DATA";
         }
@@ -149,7 +150,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         int depth = Integer.parseInt(depthStr);
         ClientSession session = this.getSession(chatId);
         session.out.writeObject(depth);
-        this.sendMessage(chatId, "Distanza: single-link (1), average-link (2):");
+        this.sendMessage(chatId, "Scegli il tipo di distanza:\n1. single-link\n2. average-link");
         session.state = "ENTER_DISTANCE";
     }
 
@@ -158,7 +159,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         try {
             distance = Integer.parseInt(distanceStr);
         } catch (NumberFormatException e) {
-            this.sendMessage(chatId, "Il valore inserito non è un numero valido. Scegli una opzione:\n1. Single-link\n2. Average-link");
+            this.sendMessage(chatId, "Scelta non valida. Scegli una opzione:\n1. Single-link\n2. Average-link");
             return;
         }
         if (distance != 1 && distance != 2) {
@@ -167,15 +168,15 @@ public class TelegramBot extends TelegramLongPollingBot {
         }
         ClientSession session = this.getSession(chatId);
         session.out.writeObject(distance);
-        String risposta = (String)session.in.readObject();
+        String risposta = (String) session.in.readObject();
         if (risposta.equals("OK")) {
-            this.sendMessage(chatId, (String)session.in.readObject());
-            this.sendMessage(chatId, "Inserire il nome dell'archivio (comprensivo di estensione):");
+            this.sendMessage(chatId, (String) session.in.readObject());
+            this.sendMessage(chatId, "Inserisci il nome dell'archivio con estensione: \nnomefile.(txt, csv, json, xml,dat, bin, ser)");
             session.state = "SAVE_FILE";
         } else {
             this.sendMessage(chatId, risposta);
             session.out.writeObject(1);
-            this.sendMessage(chatId, "Introdurre la profondità del dendrogramma:");
+            this.sendMessage(chatId, "Inserisci la profondità del dendrogramma (da 1 a 5):");
             session.state = "ENTER_DEPTH";
         }
     }
@@ -186,10 +187,11 @@ public class TelegramBot extends TelegramLongPollingBot {
         String risposta = (String) session.in.readObject();
         if (risposta.equals("OK")) {
             this.sendMessage(chatId, (String) session.in.readObject());
+            this.sendMessage(chatId, "Il mio lavoro qui è finito, digita /start per iniziare una nuova sessione.");
             session.state = "START";
         } else {
             this.sendMessage(chatId, risposta);
-            this.sendMessage(chatId, "Inserire il nome dell'archivio (comprensivo di estensione):");
+            this.sendMessage(chatId, "Inserisci il nome dell'archivio con estensione: \nnomefile.(txt, csv, json, xml,dat, bin, ser):");
             session.state = "SAVE_FILE";
         }
 
