@@ -130,7 +130,7 @@ Il file batch eseguirà il file JAR del server con la porta specificata.
 
 ### **3.2 Esecuzione del Bot Telegram H-CLUS**
 
-Una volta recati nell'applicazione "Telegram" cercare come utente: @HCLUS_Bot .
+Una volta recati nell'applicazione "Telegram" cercare come utente: @HCLUS_Bot oppure accedere al bot tramite questo [link](https://t.me/HCLUS_Bot).
 
 N.B: E' possibile avere più chat attive del **Bot** contemporaneamente.
 
