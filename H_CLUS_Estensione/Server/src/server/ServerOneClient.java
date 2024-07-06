@@ -16,6 +16,10 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 
+/**
+ * Gestisce la comunicazione con un singolo client attraverso un socket
+ * e processa le richieste del client in un thread separato.
+ */
 class ServerOneClient extends Thread {
     private final Socket clientSocket;
     private final ObjectOutputStream out;
@@ -23,6 +27,14 @@ class ServerOneClient extends Thread {
     private Data data;
     TelegramBotsApi bot;
 
+
+    /**
+     * Costruisce l'oggetto e avvia il thread per la gestione del client.
+     *
+     * @param socket Il socket del client.
+     * @param bot    L'istanza di TelegramBotsApi.
+     * @throws IOException Se c'è un errore nell'aprire gli stream.
+     */
     public ServerOneClient(Socket socket, TelegramBotsApi bot) throws IOException {
         this.clientSocket = socket;
         this.out = new ObjectOutputStream(this.clientSocket.getOutputStream());
@@ -31,6 +43,9 @@ class ServerOneClient extends Thread {
         this.start();
     }
 
+    /**
+     * Gestisce le richieste del client in un ciclo continuo.
+     */
     public void run() {
         try {
             while(true) {
@@ -70,6 +85,12 @@ class ServerOneClient extends Thread {
         }
     }
 
+    /**
+     * Carica i dati dalla tabella del database.
+     *
+     * @throws IOException            Se c'è un errore nella lettura o nella scrittura.
+     * @throws ClassNotFoundException Se il tipo di oggetto ricevuto non è {@code String}.
+     */
     private void handleLoadData() throws IOException, ClassNotFoundException {
         String tableName = (String)this.in.readObject();
 
@@ -82,6 +103,12 @@ class ServerOneClient extends Thread {
 
     }
 
+    /**
+     * Esegue il clustering sui dati e salva il dendrogramma.
+     *
+     * @throws IOException            Se c'è un errore nella lettura, esecuzione del clustering o salvataggio.
+     * @throws ClassNotFoundException Se il tipo di oggetto ricevuto non è {@code Integer} o {@code String}.
+     */
     private void handleClustering() throws IOException, ClassNotFoundException {
         if (this.data == null) {
             this.out.writeObject("Dati non caricati");
@@ -106,6 +133,12 @@ class ServerOneClient extends Thread {
         }
     }
 
+    /**
+     * Carica un dendrogramma da un file.
+     *
+     * @throws IOException            Se c'è un errore nella lettura del file o nella comunicazione.
+     * @throws ClassNotFoundException Se il tipo di oggetto ricevuto non è {@code String}.
+     */
     private void handleLoadDendrogramFromFile() throws IOException, ClassNotFoundException {
         String fileName = (String)this.in.readObject();
 

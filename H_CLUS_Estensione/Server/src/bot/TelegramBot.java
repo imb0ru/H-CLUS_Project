@@ -7,33 +7,59 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+
+
+/**
+ * TelegramBot gestisce la comunicazione tra l'utente e il server per la costruzione di dendrogrammi.
+ */
 public class TelegramBot extends TelegramLongPollingBot {
     private final String botToken;
     private final String serverIp;
     private final int serverPort;
     private final Map<String, ClientSession> userSessions = new HashMap<>();
 
+    /**
+     * Costruttore per TelegramBot.
+     *
+     * @param botToken  Il token del bot.
+     * @param serverIp  L'indirizzo IP del server.
+     * @param serverPort    La porta del server.
+     */
     public TelegramBot(String botToken, String serverIp, int serverPort) {
         this.botToken = botToken;
         this.serverIp = serverIp;
         this.serverPort = serverPort;
     }
 
+    /**
+     * Ottiene il nome utente del bot.
+     *
+     * @return Il nome utente del bot.
+     */
     public String getBotUsername() {
         return "HCLUS_Bot";
     }
 
+    /**
+     * Ottiene il token del bot.
+     *
+     * @return Il token del bot.
+     */
     public String getBotToken() {
         return this.botToken;
     }
 
+    /**
+     * Metodo chiamato quando viene ricevuto un aggiornamento.
+     *
+     * @param update L'aggiornamento ricevuto da Telegram.
+     */
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
             String chatId = update.getMessage().getChatId().toString();
@@ -52,6 +78,14 @@ public class TelegramBot extends TelegramLongPollingBot {
         }
     }
 
+    /**
+     * Gestisce i messaggi ricevuti dall'utente.
+     *
+     * @param chatId          L'ID della chat.
+     * @param receivedMessage Il messaggio ricevuto.
+     * @throws IOException              Se si verifica un errore di I/O.
+     * @throws ClassNotFoundException   Se una classe non viene trovata.
+     */
     private void handleMessage(String chatId, String receivedMessage) throws IOException, ClassNotFoundException {
         ClientSession session = this.getSession(chatId);
         if (session.state == null) {
@@ -103,6 +137,12 @@ public class TelegramBot extends TelegramLongPollingBot {
         }
     }
 
+    /**
+     * Invia un messaggio all'utente tramite bot Telegram.
+     *
+     * @param chatId L'ID della chat a cui inviare il messaggio.
+     * @param text   Il testo del messaggio da inviare.
+     */
     private void sendMessage(String chatId, String text) {
         SendMessage message = new SendMessage();
         message.setChatId(chatId);
@@ -115,6 +155,14 @@ public class TelegramBot extends TelegramLongPollingBot {
         }
     }
 
+    /**
+     * Gestisce il caricamento di un dendrogramma da file.
+     *
+     * @param chatId  L'ID della chat.
+     * @param fileName Il nome del file da cui caricare il dendrogramma.
+     * @throws IOException              Se si verifica un errore di I/O.
+     * @throws ClassNotFoundException   Se una classe non viene trovata.
+     */
     private void handleLoadDendrogramFromFile(String chatId, String fileName) throws IOException, ClassNotFoundException {
         ClientSession session = this.getSession(chatId);
         session.out.writeObject(fileName);
@@ -130,6 +178,14 @@ public class TelegramBot extends TelegramLongPollingBot {
         }
     }
 
+    /**
+     * Gestisce il caricamento dei dati per la costruzione del dendrogramma da un database.
+     *
+     * @param chatId    L'ID della chat.
+     * @param tableName Il nome della tabella del database da cui caricare i dati.
+     * @throws IOException              Se si verifica un errore di I/O.
+     * @throws ClassNotFoundException   Se una classe non viene trovata.
+     */
     private void handleLoadData(String chatId, String tableName) throws IOException, ClassNotFoundException {
         ClientSession session = this.getSession(chatId);
         session.out.writeObject(tableName);
@@ -145,6 +201,13 @@ public class TelegramBot extends TelegramLongPollingBot {
         }
     }
 
+    /**
+     * Gestisce l'inserimento della profondità del dendrogramma.
+     *
+     * @param chatId    L'ID della chat.
+     * @param depthStr  La stringa rappresentante la profondità del dendrogramma.
+     * @throws IOException Se si verifica un errore di I/O.
+     */
     private void handleDepth(String chatId, String depthStr) throws IOException {
         int depth;
         try {
@@ -159,6 +222,14 @@ public class TelegramBot extends TelegramLongPollingBot {
         session.state = "ENTER_DISTANCE";
     }
 
+    /**
+     * Gestisce la scelta del tipo di distanza per la costruzione del dendrogramma.
+     *
+     * @param chatId       L'ID della chat.
+     * @param distanceStr  La stringa rappresentante la scelta del tipo di distanza.
+     * @throws IOException              Se si verifica un errore di I/O.
+     * @throws ClassNotFoundException   Se una classe non viene trovata.
+     */
     private void handleDistance(String chatId, String distanceStr) throws IOException, ClassNotFoundException {
         int distance;
         try {
@@ -186,6 +257,14 @@ public class TelegramBot extends TelegramLongPollingBot {
         }
     }
 
+    /**
+     * Gestisce il salvataggio del file contenente il dendrogramma.
+     *
+     * @param chatId   L'ID della chat.
+     * @param fileName Il nome del file in cui salvare il dendrogramma.
+     * @throws IOException              Se si verifica un errore di I/O.
+     * @throws ClassNotFoundException   Se una classe non viene trovata.
+     */
     private void handleSaveFile(String chatId, String fileName) throws IOException, ClassNotFoundException {
         ClientSession session = this.getSession(chatId);
         session.out.writeObject(fileName);
@@ -201,6 +280,13 @@ public class TelegramBot extends TelegramLongPollingBot {
         }
     }
 
+    /**
+     * Ottiene la sessione attiva per una specifica chat.
+     *
+     * @param chatId L'ID della chat.
+     * @return La sessione associata alla chat.
+     * @throws IOException Se si verifica un errore di I/O.
+     */
     private ClientSession getSession(String chatId) throws IOException {
         if (!this.userSessions.containsKey(chatId)) {
             ClientSession session = new ClientSession(this.serverIp, this.serverPort);
@@ -209,6 +295,12 @@ public class TelegramBot extends TelegramLongPollingBot {
         return this.userSessions.get(chatId);
     }
 
+    /**
+     * Chiude la sessione per una specifica chat.
+     *
+     * @param chatId L'ID della chat.
+     * @throws IOException Se si verifica un errore di I/O.
+     */
     private void closeSession(String chatId) throws IOException {
         ClientSession session = this.userSessions.remove(chatId);
         if (session != null) {
@@ -218,12 +310,22 @@ public class TelegramBot extends TelegramLongPollingBot {
         }
     }
 
+    /**
+     * Classe interna che rappresenta la sessione del client con il server.
+     */
     static class ClientSession {
         Socket socket;
         ObjectOutputStream out;
         ObjectInputStream in;
         String state;
 
+        /**
+         * Costruttore per ClientSession.
+         *
+         * @param serverIp   L'indirizzo IP del server.
+         * @param serverPort La porta del server.
+         * @throws IOException Se si verifica un errore di I/O.
+         */
         public ClientSession(String serverIp, int serverPort) throws IOException {
             this.socket = new Socket(InetAddress.getByName(serverIp), serverPort);
             this.out = new ObjectOutputStream(this.socket.getOutputStream());
