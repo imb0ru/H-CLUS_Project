@@ -208,6 +208,8 @@ public class TelegramBot extends TelegramLongPollingBot {
         String risposta = (String) session.in.readObject();
         if (risposta.equals("OK")) {
             this.sendMessage(chatId, (String) session.in.readObject());
+            this.sendMessage(chatId, "Il mio lavoro qui è finito, digita /start per iniziare una nuova sessione.");
+            this.closeSession(chatId);
             session.state = "START";
         } else {
             this.sendMessage(chatId, risposta);
