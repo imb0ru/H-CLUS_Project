@@ -4,6 +4,7 @@ import data.InvalidSizeException;
 import distance.ClusterDistance;
 
 import java.io.*;
+import java.nio.file.FileAlreadyExistsException;
 
 /**
  * Classe HierachicalClusterMiner
@@ -15,7 +16,7 @@ public class HierachicalClusterMiner implements Serializable {
 	/** dendrogramma */
 	private final Dendrogram dendrogram;
 	/** percorso della directory di salvataggio/caricamento degli oggetti serializzati */
-	private static final String DIRECTORY_PATH = "./Server/saved/";
+	private static final String DIRECTORY_PATH = "./saved/";
 
 	/**
 	 * Costruttore
@@ -134,23 +135,28 @@ public class HierachicalClusterMiner implements Serializable {
 			throw new IOException("Errore: Estensione del file non valida. Assicurati che il nome del file termini con una delle seguenti estensioni: .txt, .csv, .json, .xml, .dat, .bin, .ser\n");
 		}
 
+		File directory = new File(DIRECTORY_PATH);
+		if (!directory.exists()) {
+			directory.mkdirs();
+		}
+
 		String filePath = DIRECTORY_PATH + fileName;
 		File file = new File(filePath);
 
-		if (file.exists()) {
-			throw new IOException("Errore: Il file esiste già. Riprova.\n");
-		}
-
-		File parentDir = file.getParentFile();
-		if (parentDir != null && !parentDir.exists()) {
-			if (parentDir.mkdirs()) {
-				System.out.println("Directory creata: " + parentDir.getAbsolutePath());
-			} else {
-				throw new IOException("Impossibile creare la directory: " + parentDir.getAbsolutePath() + "\n");
+		if(!file.exists()) {
+			File parentDir = file.getParentFile();
+			if (parentDir != null && !parentDir.exists()) {
+				if (parentDir.mkdirs()) {
+					System.out.println("Directory creata: " + parentDir.getAbsolutePath());
+				} else {
+					throw new IOException("Impossibile creare la directory: " + parentDir.getAbsolutePath() + "\n");
+				}
 			}
-		}
-		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
-			oos.writeObject(this);
+			try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
+				oos.writeObject(this);
+			}
+		} else {
+			throw new FileAlreadyExistsException("Il file esiste già: " + fileName);
 		}
 	}
 

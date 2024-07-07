@@ -1,0 +1,14 @@
+
+HCLUS_Bot è un sistema di data mining per la scoperta di un dendrogramma di cluster di dati utilizzando un algoritmo di clustering agglomerativo.
+
+- Data Mining:
+Il data mining è l'esplorazione e analisi di grandi quantità di dati per scoprire pattern significativi e conoscenze utili, utile per estrarre informazioni nascoste dai dati.
+
+- Dendrogramma:
+Un dendrogramma è un diagramma ad albero che mostra le relazioni di somiglianza tra elementi in un set di dati, con rami che indicano livelli di somiglianza.
+
+- Cluster:
+Un cluster è un gruppo di oggetti simili tra loro e differenti da quelli di altri gruppi, utilizzato nel data mining per identificare pattern nei dati.
+
+- Clustering Agglomerativo:
+Il clustering agglomerativo è un tipo di clustering gerarchico che inizia con ogni punto dati come singolo cluster, unendo i cluster più simili fino a formare un unico cluster, rappresentato da un dendrogramma.

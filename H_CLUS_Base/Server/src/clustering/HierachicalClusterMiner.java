@@ -15,7 +15,7 @@ public class HierachicalClusterMiner implements Serializable {
 	/** dendrogramma */
 	private final Dendrogram dendrogram;
 	/** percorso della directory di salvataggio/caricamento degli oggetti serializzati */
-	private static final String DIRECTORY_PATH = "./Server/saved/";
+	private static final String DIRECTORY_PATH = "./saved/";
 
 
 	/**

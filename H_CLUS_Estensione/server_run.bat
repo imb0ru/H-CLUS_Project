@@ -11,14 +11,22 @@ set port=3333
 
 set "dependences=%serverProjectPath%\dependences"
 
-:: Costruisci il classpath includendo il file JAR del server e i file JAR nella cartella dependences
 set "classpath=%jarFile%"
 for %%j in ("%dependences%\*.jar") do (
     set "classpath=!classpath!;%%j"
 )
 
-echo Esecuzione del file JAR con la porta %port%
-java -cp "!classpath!" %mainClass% %botToken% %port%
+for /f "tokens=2 delims=:" %%f in ('ipconfig ^| findstr /i "indirizzo ipv4"') do (
+    for /f "tokens=1 delims= " %%g in ("%%f") do (
+        set ip=%%g
+    )
+)
+
+:: Imposta la directory di lavoro corrente su serverProjectPath
+cd /d %serverProjectPath%
+
+echo Esecuzione del file JAR con l' IP %ip% e la porta %port%
+java -cp "!classpath!" %mainClass% %botToken% %ip% %port%
 
 if errorlevel 1 (
     echo Si e' verificato un errore durante l'esecuzione del file JAR.

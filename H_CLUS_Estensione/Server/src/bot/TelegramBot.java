@@ -5,14 +5,22 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import database.DbAccess;
+import database.DatabaseConnectionException;
 
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-
 
 
 /**
@@ -64,17 +72,51 @@ public class TelegramBot extends TelegramLongPollingBot {
         if (update.hasMessage() && update.getMessage().hasText()) {
             String chatId = update.getMessage().getChatId().toString();
             String receivedMessage = update.getMessage().getText();
+            String serverProjectPath = System.getProperty("user.dir");
+            String infoFilePath = serverProjectPath + "/info.txt";
+            String helpFilePath = serverProjectPath + "/help.txt";
 
             try {
-                if (receivedMessage.equals("/end")) {
-                    this.closeSession(chatId);
-                    this.sendMessage(chatId, "Connessione terminata. Digita /start per iniziare una nuova sessione.");
-                } else {
-                    this.handleMessage(chatId, receivedMessage);
+                switch (receivedMessage) {
+                    case "/end" -> {
+                        if (this.userSessions.containsKey(chatId)) {
+                            this.closeSession(chatId);
+                            this.sendMessage(chatId, "Connessione terminata. Digita /start per iniziare una nuova sessione.");
+                        } else {
+                            this.sendMessage(chatId, "Nessuna sessione attiva. Digita /start per iniziare una nuova sessione.");
+                        }
+                    }
+                    case "/info" -> this.sendFileContent(chatId, infoFilePath);
+                    case "/start" -> this.handleMessage(chatId, receivedMessage);
+                    case "/help" -> this.sendFileContent(chatId, helpFilePath);
+                    default -> {
+                        if(this.userSessions.containsKey(chatId)) {
+                            this.handleMessage(chatId, receivedMessage);
+                        } else {
+                            this.sendMessage(chatId, "Comando non valido. Digita /start per iniziare una nuova sessione.");
+                        }
+                    }
                 }
             } catch (ClassNotFoundException | IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    /**
+     * Invia il contenuto di un file all'utente tramite bot Telegram.
+     *
+     * @param chatId    L'ID della chat.
+     * @param filePath  Il percorso del file da leggere.
+     */
+    private void sendFileContent(String chatId, String filePath) {
+        try {
+            List<String> lines = Files.readAllLines(Paths.get(filePath));
+            String content = String.join("\n", lines);
+            this.sendMessage(chatId, content);
+        } catch (IOException e) {
+            e.printStackTrace();
+            this.sendMessage(chatId, "Errore durante la lettura del file.");
         }
     }
 
@@ -96,10 +138,11 @@ public class TelegramBot extends TelegramLongPollingBot {
             case "START":
                 if (receivedMessage.equals("/start")) {
                     this.sendMessage(chatId, "Benvenuto! Io sono H-CLUS_Bot, il tuo assistente per la costruzione di dendrogrammi. Utilizzo il metodo gerarchico agglomerativo per costruire il dendrogramma.");
-                    String var10002 = String.valueOf(InetAddress.getByName(this.serverIp));
-                    this.sendMessage(chatId, "Sei connesso al socket " + var10002 + ":" + this.serverPort);
+                    this.sendMessage(chatId, "Sei connesso al socket " + this.serverIp.replace(".", ".\u200B") + ":" + this.serverPort);
                     session.out.writeObject(0);
-                    this.sendMessage(chatId, "Inserisci il nome della tabella del database da caricare, scegliere uno tra i seguenti:\n- exampletab;");
+                    List<String> tableNames = getTableNames();
+                    this.sendMessage(chatId,"Tabelle disponibili nel database:\n" + String.join("\n- ", tableNames));
+                    this.sendMessage(chatId, "Inserisci il nome della tabella del database da caricare.");
                     session.state = "LOAD_DATA";
                 }
                 break;
@@ -195,7 +238,7 @@ public class TelegramBot extends TelegramLongPollingBot {
             session.state = "MENU";
         } else {
             this.sendMessage(chatId, risposta);
-            this.sendMessage(chatId, "Inserisci il nome della tabella del database da caricare, scegliere uno tra i seguenti:\n- exampletab;");
+            this.sendMessage(chatId, "Inserisci il nome della tabella del database da caricare.");
             session.out.writeObject(0);
             session.state = "LOAD_DATA";
         }
@@ -267,11 +310,13 @@ public class TelegramBot extends TelegramLongPollingBot {
      */
     private void handleSaveFile(String chatId, String fileName) throws IOException, ClassNotFoundException {
         ClientSession session = this.getSession(chatId);
+        session.out.writeObject(3);
         session.out.writeObject(fileName);
         String risposta = (String) session.in.readObject();
         if (risposta.equals("OK")) {
             this.sendMessage(chatId, (String) session.in.readObject());
             this.sendMessage(chatId, "Il mio lavoro qui è finito, digita /start per iniziare una nuova sessione.");
+            this.closeSession(chatId);
             session.state = "START";
         } else {
             this.sendMessage(chatId, risposta);
@@ -308,6 +353,30 @@ public class TelegramBot extends TelegramLongPollingBot {
             session.in.close();
             session.socket.close();
         }
+    }
+
+    /**
+     * Recupera i nomi delle tabelle dal database.
+     *
+     * @return Una lista dei nomi delle tabelle.
+     */
+    private List<String> getTableNames() {
+        List<String> tableNames = new ArrayList<>();
+        DbAccess dbAccess = new DbAccess();
+        try {
+            dbAccess.initConnection();
+            DatabaseMetaData meta = dbAccess.getConnection().getMetaData();
+            ResultSet rs = meta.getTables(null, null, "%", new String[]{"TABLE"});
+
+            while (rs.next()) {
+                tableNames.add(rs.getString("TABLE_NAME"));
+            }
+            rs.close();
+            dbAccess.closeConnection();
+        } catch (DatabaseConnectionException | SQLException e) {
+            e.printStackTrace();
+        }
+        return tableNames;
     }
 
     /**

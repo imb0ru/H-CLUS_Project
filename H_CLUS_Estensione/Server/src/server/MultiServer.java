@@ -35,11 +35,11 @@ public class MultiServer {
      * @param token Il token per autenticare il bot su Telegram.
      * @param port  La porta sulla quale il server ascolta le connessioni dei client.
      */
-    public static void instanceMultiServer(String token, int port) {
+    public static void instanceMultiServer(String token, String address, int port) {
         if (singleton == null) {
             try {
                 bot = new TelegramBotsApi(DefaultBotSession.class);
-                bot.registerBot(new TelegramBot(token, "localhost", port));
+                bot.registerBot(new TelegramBot(token, address, port));
             } catch (TelegramApiException e) {
                 e.printStackTrace();
             }

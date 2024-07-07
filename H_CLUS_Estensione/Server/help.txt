@@ -1,0 +1,6 @@
+Comandi disponibili:
+
+- /start  Inizializza la connessione al server
+- /end    Termina la connessione al server
+- /info   Restituisce informazioni sul bot
+- /help   Restituisce questo messaggio
