@@ -89,6 +89,9 @@ class ClusterSet implements Serializable {
 				}
 			}
 		}
+		if (cluster1 == null || cluster2 == null) {
+			throw new InvalidClustersNumberException("Non ci sono abbastanza cluster validi da fondere");
+		}
 		Cluster mergedCluster = cluster1.mergeCluster(cluster2);
 		ClusterSet finalClusterSet = new ClusterSet(this.C.length-1);
 		for(int i=0; i<this.C.length; i++){

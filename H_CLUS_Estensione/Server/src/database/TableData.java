@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class TableData {
     /** Connessione al database */
-    private DbAccess db;
+    private final DbAccess db;
 
     /**
      * Inizializza l’attributo db.
@@ -38,8 +38,8 @@ public class TableData {
     public List<Example> getDistinctTransazioni(String table) throws SQLException, EmptySetException, MissingNumberException, DatabaseConnectionException {
         List<Example> transazioni = new ArrayList<>();
         Connection con = db.getConnection();
-        Statement stmt = null;
-        ResultSet rs = null;
+        Statement stmt;
+        ResultSet rs;
         TableSchema schema = new TableSchema(db, table);
 
         stmt = con.createStatement();
