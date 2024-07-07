@@ -4,6 +4,7 @@ import data.InvalidSizeException;
 import distance.ClusterDistance;
 
 import java.io.*;
+import java.nio.file.FileAlreadyExistsException;
 
 /**
  * Classe HierachicalClusterMiner
@@ -100,13 +101,19 @@ public class HierachicalClusterMiner implements Serializable {
 	 * @throws ClassNotFoundException se la classe dell'oggetto serializzato non viene trovata
 	 * @throws IllegalArgumentException se il nome del file è nullo o vuoto
 	 */
-	public static HierachicalClusterMiner loadHierachicalClusterMiner(String fileName) throws FileNotFoundException, IOException, ClassNotFoundException, IllegalArgumentException {
+	public static HierachicalClusterMiner loadHierachicalClusterMiner(String fileName) throws IOException, ClassNotFoundException, IllegalArgumentException {
 		if (fileName == null || fileName.trim().isEmpty()) {
 			throw new IllegalArgumentException("Il nome del file non può essere nullo o vuoto");
 		}
 		String filePath = DIRECTORY_PATH + fileName;
+		File file = new File(filePath);
+		if (!file.exists()) {
+			throw new FileNotFoundException("File non trovato: " + fileName);
+		}
 		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
 			return (HierachicalClusterMiner) ois.readObject();
+		} catch (FileNotFoundException e) {
+			throw new FileNotFoundException("File non trovato: " + fileName);
 		}
 	}
 
@@ -118,31 +125,41 @@ public class HierachicalClusterMiner implements Serializable {
 	 * @throws IllegalArgumentException se il nome del file è nullo o vuoto
 	 */
 	public void salva(String fileName) throws FileNotFoundException, IOException, IllegalArgumentException {
+		final String invalidRegex = "[<>:\"|?*]";
+		final String validRegex = "^[\\w,\\s-]+\\.(txt|csv|json|xml|dat|bin|ser)$";
+
 		if (fileName == null || fileName.trim().isEmpty()) {
 			throw new IllegalArgumentException("Il nome del file non può essere nullo o vuoto");
 		}
+
+		if (fileName.matches(invalidRegex)) {
+			throw new IOException("Errore: Il nome del file contiene caratteri non validi.");
+		}
+
+		if (!fileName.matches(validRegex)) {
+			throw new IOException("Errore: Estensione del file non valida. Assicurati che il nome del file termini con una delle seguenti estensioni: .txt, .csv, .json, .xml, .dat, .bin, .ser");
+		}
+
 		fileName = fileName.replace("\\", File.separator).replace("/", File.separator);
 
-		if (fileName.matches(".*[<>:\"|?*].*")) {
-			throw new IOException("Errore: Il percorso contiene caratteri non validi. Riprova.\n");
+		File directory = new File(DIRECTORY_PATH);
+		if (!directory.exists() && !directory.mkdirs()) {
+			throw new IOException("Impossibile creare la directory: " + DIRECTORY_PATH);
 		}
 
 		String filePath = DIRECTORY_PATH + fileName;
 		File file = new File(filePath);
 
 		if (file.exists()) {
-			throw new IOException("Errore: Il file esiste già. Riprova.\n");
+			throw new FileAlreadyExistsException("Errore. Il file esiste già: " + fileName);
 		}
 
 		File parentDir = file.getParentFile();
-		if (parentDir != null && !parentDir.exists()) {
-			if (parentDir.mkdirs()) {
-				System.out.println("Directory creata: " + parentDir.getAbsolutePath());
-			} else {
-				throw new IOException("Impossibile creare la directory: " + parentDir.getAbsolutePath() + "\n");
-			}
+		if (parentDir != null && !parentDir.exists() && !parentDir.mkdirs()) {
+			throw new IOException("Impossibile creare la directory: " + parentDir.getAbsolutePath());
 		}
-		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
+
+		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
 			oos.writeObject(this);
 		}
 	}

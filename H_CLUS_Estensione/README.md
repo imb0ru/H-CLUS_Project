@@ -142,6 +142,16 @@ N.B: E' possibile avere più chat attive del **Bot** contemporaneamente.
 - **Metodo 2: Da menu**
     - Cliccare il pulsante **/start** nel menu della chat.
 
+### Chiusura della connessione con il server
+È possibile chiudere la connessione al server in modo controllato prima di completare le operazioni di mining. 
+
+Per farlo:
+- **Metodo 1: Da tastiera**
+    - Scrivere il comando **/end** in chat.
+
+- **Metodo 2: Da menu**
+    - Cliccare il pulsante **/end** nel menu della chat.
+
 ## **4. Istruzioni per l'uso**
 
 ### Schermata di avvio del programma:

@@ -48,6 +48,7 @@ class ServerOneClient extends Thread {
      */
     public void run() {
         try {
+            HierachicalClusterMiner clustering = null;
             while(true) {
                 Object request = this.in.readObject();
                 if (request instanceof Integer) {
@@ -57,13 +58,13 @@ class ServerOneClient extends Thread {
                             this.handleLoadData();
                             break;
                         case 1:
-                            this.handleClustering();
+                            clustering = this.handleClustering();
                             break;
                         case 2:
                             this.handleLoadDendrogramFromFile();
                             break;
                         case 3:
-                            this.handleSaveFile();
+                            this.handleSaveFile(clustering);
                             break;
                         default:
                             this.out.writeObject("Tipo di richiesta non valido");
@@ -112,7 +113,8 @@ class ServerOneClient extends Thread {
      * @throws IOException            Se c'è un errore nella lettura, esecuzione del clustering o salvataggio.
      * @throws ClassNotFoundException Se il tipo di oggetto ricevuto non è {@code Integer} o {@code String}.
      */
-    private void handleClustering() throws IOException, ClassNotFoundException {
+    private HierachicalClusterMiner handleClustering() throws IOException, ClassNotFoundException {
+        HierachicalClusterMiner clus = null;
         if (this.data == null) {
             this.out.writeObject("Dati non caricati");
         } else {
@@ -125,10 +127,12 @@ class ServerOneClient extends Thread {
                 clustering.mine(this.data, distance);
                 this.out.writeObject("OK");
                 this.out.writeObject(clustering.toString(this.data));
+                clus = clustering;
             } catch (InvalidClustersNumberException | IOException | InvalidDepthException | InvalidSizeException e) {
                 this.out.writeObject(e.getMessage());
             }
         }
+        return clus;
     }
 
     /**
@@ -137,14 +141,18 @@ class ServerOneClient extends Thread {
      * @throws IOException            Se c'è un errore nella scrittura del file o nella comunicazione.
      * @throws ClassNotFoundException Se il tipo di oggetto ricevuto non è {@code String}.
      */
-    private void handleSaveFile() throws IOException, ClassNotFoundException {
+    private void handleSaveFile(HierachicalClusterMiner clustering) throws IOException, ClassNotFoundException {
         String fileName = (String)this.in.readObject();
+        if (clustering == null) {
+            this.out.writeObject("Nessun dendrogramma da salvare!");
+            return;
+        }
+
         try {
-            HierachicalClusterMiner clustering = HierachicalClusterMiner.loadHierachicalClusterMiner(fileName);
             clustering.salva(fileName);
             this.out.writeObject("OK");
             this.out.writeObject("Salvataggio effettuato con successo!");
-        } catch (ClassNotFoundException | IOException e) {
+        } catch (IOException e) {
             this.out.writeObject(e.getMessage());
         }
     }

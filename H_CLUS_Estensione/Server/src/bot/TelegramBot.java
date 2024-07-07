@@ -72,9 +72,6 @@ public class TelegramBot extends TelegramLongPollingBot {
         if (update.hasMessage() && update.getMessage().hasText()) {
             String chatId = update.getMessage().getChatId().toString();
             String receivedMessage = update.getMessage().getText();
-            String serverProjectPath = System.getProperty("user.dir");
-            String infoFilePath = serverProjectPath + "/info.txt";
-            String helpFilePath = serverProjectPath + "/help.txt";
 
             try {
                 switch (receivedMessage) {
@@ -86,9 +83,7 @@ public class TelegramBot extends TelegramLongPollingBot {
                             this.sendMessage(chatId, "Nessuna sessione attiva. Digita /start per iniziare una nuova sessione.");
                         }
                     }
-                    case "/info" -> this.sendFileContent(chatId, infoFilePath);
                     case "/start" -> this.handleMessage(chatId, receivedMessage);
-                    case "/help" -> this.sendFileContent(chatId, helpFilePath);
                     default -> {
                         if(this.userSessions.containsKey(chatId)) {
                             this.handleMessage(chatId, receivedMessage);
@@ -130,6 +125,7 @@ public class TelegramBot extends TelegramLongPollingBot {
      */
     private void handleMessage(String chatId, String receivedMessage) throws IOException, ClassNotFoundException {
         ClientSession session = this.getSession(chatId);
+        String infoFilePath = System.getProperty("user.dir") + "/info.txt";
         if (session.state == null) {
             session.state = "START";
         }
@@ -137,8 +133,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         switch (session.state) {
             case "START":
                 if (receivedMessage.equals("/start")) {
-                    this.sendMessage(chatId, "Benvenuto! Io sono H-CLUS_Bot, il tuo assistente per la costruzione di dendrogrammi. Utilizzo il metodo gerarchico agglomerativo per costruire il dendrogramma.");
-                    this.sendMessage(chatId, "Sei connesso al socket " + this.serverIp.replace(".", ".\u200B") + ":" + this.serverPort);
+                    this.sendFileContent(chatId, infoFilePath);
                     session.out.writeObject(0);
                     List<String> tableNames = getTableNames();
                     this.sendMessage(chatId,"Tabelle disponibili nel database:\n" + String.join("\n- ", tableNames));
@@ -160,6 +155,10 @@ public class TelegramBot extends TelegramLongPollingBot {
                     session.state = "MENU";
                 }
                 break;
+            case "SAVE_FILE":
+                session.out.writeObject(3);
+                this.handleSaveFile(chatId, receivedMessage);
+                break;
             case "LOAD_FILE":
                 this.handleLoadDendrogramFromFile(chatId, receivedMessage);
                 break;
@@ -171,9 +170,6 @@ public class TelegramBot extends TelegramLongPollingBot {
                 break;
             case "ENTER_DISTANCE":
                 this.handleDistance(chatId, receivedMessage);
-                break;
-            case "SAVE_FILE":
-                this.handleSaveFile(chatId, receivedMessage);
                 break;
             default:
                 this.sendMessage(chatId, "Comando non valido.");
@@ -292,6 +288,7 @@ public class TelegramBot extends TelegramLongPollingBot {
             this.sendMessage(chatId, (String) session.in.readObject());
             this.sendMessage(chatId, "Inserisci il nome dell'archivio con estensione: \nnomefile.(txt, csv, json, xml,dat, bin, ser)");
             session.state = "SAVE_FILE";
+
         } else {
             this.sendMessage(chatId, risposta);
             session.out.writeObject(1);
@@ -310,7 +307,6 @@ public class TelegramBot extends TelegramLongPollingBot {
      */
     private void handleSaveFile(String chatId, String fileName) throws IOException, ClassNotFoundException {
         ClientSession session = this.getSession(chatId);
-        session.out.writeObject(3);
         session.out.writeObject(fileName);
         String risposta = (String) session.in.readObject();
         if (risposta.equals("OK")) {

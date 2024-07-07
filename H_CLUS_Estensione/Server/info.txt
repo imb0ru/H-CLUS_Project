@@ -1,5 +1,6 @@
+Benvenuto in H-CLUS_Bot!
 
-HCLUS_Bot è un sistema di data mining per la scoperta di un dendrogramma di cluster di dati utilizzando un algoritmo di clustering agglomerativo.
+H-CLUS_Bot è un sistema di data mining per la scoperta di un dendrogramma di cluster di dati utilizzando un algoritmo di clustering agglomerativo.
 
 - Data Mining:
 Il data mining è l'esplorazione e analisi di grandi quantità di dati per scoprire pattern significativi e conoscenze utili, utile per estrarre informazioni nascoste dai dati.

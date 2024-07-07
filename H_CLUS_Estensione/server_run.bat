@@ -22,7 +22,6 @@ for /f "tokens=2 delims=:" %%f in ('ipconfig ^| findstr /i "indirizzo ipv4"') do
     )
 )
 
-:: Imposta la directory di lavoro corrente su serverProjectPath
 cd /d %serverProjectPath%
 
 echo Esecuzione del file JAR con l' IP %ip% e la porta %port%
