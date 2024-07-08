@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.nio.file.FileAlreadyExistsException;
 
 /**
 * Gestore client per gestire le connessioni con i client.
@@ -69,8 +70,7 @@ class ServerOneClient extends Thread {
             System.out.println("Disconnessione client: " + clientSocket);
         } catch (ClassNotFoundException e) {
             System.out.println(e.getMessage());
-        }
-        finally {
+        } finally {
             try {
                 clientSocket.close();
                 out.close();
@@ -122,12 +122,20 @@ class ServerOneClient extends Thread {
             out.writeObject(clustering.toString(data));
 
             String fileName = (String) in.readObject();
-            clustering.salva(fileName);
-        } catch (InvalidSizeException | InvalidClustersNumberException | IOException |
-                 InvalidDepthException e) {
+
+            try {
+                clustering.salva(fileName);
+                out.writeObject("Dendrogramma salvato correttamente.");
+            } catch (FileAlreadyExistsException e) {
+                out.writeObject("Errore. Il file esiste già: " + fileName);
+            } catch (IOException e) {
+                out.writeObject("Errore durante il salvataggio del dendrogramma: " + e.getMessage());
+            }
+        } catch (InvalidSizeException | InvalidClustersNumberException | InvalidDepthException | IllegalArgumentException e) {
             out.writeObject(e.getMessage());
         }
     }
+
 
     /**
      * Gestisce il caricamento del dendrogram da un file.

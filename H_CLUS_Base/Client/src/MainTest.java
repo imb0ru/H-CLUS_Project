@@ -103,6 +103,8 @@ public class MainTest {
             System.out.println("Inserire il nome dell'archivio (comprensivo di estensione):");
             String fileName=Keyboard.readString();
             out.writeObject(fileName);
+            risposta = (String) in.readObject();
+            System.out.println(risposta);
         }
         else
             System.out.println(risposta); // stampo il messaggio di errore

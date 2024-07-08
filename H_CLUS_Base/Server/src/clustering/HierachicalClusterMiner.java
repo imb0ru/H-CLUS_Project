@@ -111,10 +111,14 @@ public class HierachicalClusterMiner implements Serializable {
 			throw new FileNotFoundException("File non trovato: " + fileName);
 		}
 		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
-			return (HierachicalClusterMiner) ois.readObject();
-		} catch (FileNotFoundException e) {
+			HierachicalClusterMiner readFile = (HierachicalClusterMiner) ois.readObject();
+			ois.close();
+			return readFile;
+        } catch (FileNotFoundException e) {
 			throw new FileNotFoundException("File non trovato: " + fileName);
 		}
+
+
 	}
 
 	/**
@@ -133,11 +137,11 @@ public class HierachicalClusterMiner implements Serializable {
 		}
 
 		if (fileName.matches(invalidRegex)) {
-			throw new IOException("Errore: Il nome del file contiene caratteri non validi.");
+			throw new IOException("Il nome del file contiene caratteri non validi.");
 		}
 
 		if (!fileName.matches(validRegex)) {
-			throw new IOException("Errore: Estensione del file non valida. Assicurati che il nome del file termini con una delle seguenti estensioni: .txt, .csv, .json, .xml, .dat, .bin, .ser");
+			throw new IOException("Estensione del file non valida. Assicurati che il nome del file termini con una delle seguenti estensioni: .txt, .csv, .json, .xml, .dat, .bin, .ser");
 		}
 
 		fileName = fileName.replace("\\", File.separator).replace("/", File.separator);
@@ -151,7 +155,7 @@ public class HierachicalClusterMiner implements Serializable {
 		File file = new File(filePath);
 
 		if (file.exists()) {
-			throw new FileAlreadyExistsException("Errore. Il file esiste già: " + fileName);
+			throw new FileAlreadyExistsException("Il file esiste già: " + fileName);
 		}
 
 		File parentDir = file.getParentFile();
@@ -161,7 +165,7 @@ public class HierachicalClusterMiner implements Serializable {
 
 		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
 			oos.writeObject(this);
-		}
+        }
 	}
 
 }

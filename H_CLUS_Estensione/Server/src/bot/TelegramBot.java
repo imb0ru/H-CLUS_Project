@@ -374,6 +374,8 @@ public class TelegramBot extends TelegramLongPollingBot {
         } catch (DatabaseConnectionException | SQLException e) {
             e.printStackTrace();
         }
+
+
         return tableNames;
     }
 

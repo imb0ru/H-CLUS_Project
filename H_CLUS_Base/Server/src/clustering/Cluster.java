@@ -63,7 +63,8 @@ public class Cluster implements Iterable<Integer>, Cloneable, Serializable {
 		Cluster clone;
 		try {
 			clone = (Cluster) super.clone();
-			clone.clusteredData = (Set<Integer>) ((TreeSet<Integer>) this.clusteredData).clone();
+            //noinspection unchecked
+            clone.clusteredData = (Set<Integer>) ((TreeSet<Integer>) this.clusteredData).clone();
 		} catch (CloneNotSupportedException e) {
 			throw new CloneNotSupportedException("Errore nella clonazione!");
 		}
