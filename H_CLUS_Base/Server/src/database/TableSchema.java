@@ -11,14 +11,14 @@ import java.util.List;
 /** Schema di una tabella */
 public class TableSchema {
 	/** Connessione al database */
-	private DbAccess db;
+	private final DbAccess db;
 
 	/** Classe interna che rappresenta un attributo della tabella */
-	public class Column{
+	public static class Column{
 		/** Nome dell'attributo */
-		private String name;
+		private final String name;
 		/** Tipo dell'attributo */
-		private String type;
+		private final String type;
 		/**
 		 * Costruttore
 		 * @param name Nome dell'attributo
@@ -54,7 +54,7 @@ public class TableSchema {
 	/**
 	 * Lista degli attributi della tabella
 	 */
-	List<Column> tableSchema=new ArrayList<Column>();
+	List<Column> tableSchema= new ArrayList<>();
 
 	/**
 	 * Costruttore
@@ -65,7 +65,7 @@ public class TableSchema {
 	 */
 	public TableSchema(DbAccess db, String tableName) throws SQLException, DatabaseConnectionException{
 		this.db=db;
-		HashMap<String,String> mapSQL_JAVATypes=new HashMap<String, String>();
+		HashMap<String,String> mapSQL_JAVATypes= new HashMap<>();
 		//http://java.sun.com/j2se/1.3/docs/guide/jdbc/getstart/mapping.html
 		mapSQL_JAVATypes.put("CHAR","string");
 		mapSQL_JAVATypes.put("VARCHAR","string");
@@ -84,8 +84,8 @@ public class TableSchema {
 	    while (res.next()) {
 	        if(mapSQL_JAVATypes.containsKey(res.getString("TYPE_NAME")))
 	       		 tableSchema.add(new Column(
-	       				 res.getString("COLUMN_NAME"),
-	       				 mapSQL_JAVATypes.get(res.getString("TYPE_NAME")))
+                                 res.getString("COLUMN_NAME"),
+                                 mapSQL_JAVATypes.get(res.getString("TYPE_NAME")))
 	       				 );
 	    }
 	    res.close();

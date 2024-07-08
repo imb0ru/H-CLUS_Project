@@ -5,8 +5,6 @@ import data.Data;
 import data.Example;
 import data.InvalidSizeException;
 
-import java.util.Iterator;
-
 /**
  * Classe AverageLinkDistance
  * Implementa l'interfaccia ClusterDistance per calcolare
@@ -29,12 +27,9 @@ public class AverageLinkDistance implements ClusterDistance {
     public double distance(Cluster c1, Cluster c2, Data d) throws InvalidSizeException {
         double sum = 0.0;
 
-        Iterator<Integer> it1 = c1.iterator();
-        while (it1.hasNext()) {
-            Example e1 = d.getExample(it1.next());
-            Iterator<Integer> it2 = c2.iterator();
-            while (it2.hasNext())
-                sum += e1.distance(d.getExample(it2.next()));
+        for (Integer integer : c1) {
+            Example e1 = d.getExample(integer);
+            for (Integer value : c2) sum += e1.distance(d.getExample(value));
         }
 
         return sum / (c1.getSize() * c2.getSize());

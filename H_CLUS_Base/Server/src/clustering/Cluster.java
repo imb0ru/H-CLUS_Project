@@ -123,10 +123,9 @@ public class Cluster implements Iterable<Integer>, Cloneable, Serializable {
 	 */
 	public String toString(Data data) {
 		StringBuilder str = new StringBuilder();
-		Iterator<Integer> it = clusteredData.iterator();
 
-		while (it.hasNext())
-			str.append("<[").append(data.getExample(it.next())).append("]>");
+        for (Integer clusteredDatum : clusteredData)
+            str.append("<[").append(data.getExample(clusteredDatum)).append("]>");
 
 		return str.toString();
 	}

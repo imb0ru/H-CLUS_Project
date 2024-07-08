@@ -69,7 +69,7 @@ public class Keyboard {
 
 	private static StringTokenizer reader;
 
-	private static BufferedReader in = new BufferedReader(
+	private static final BufferedReader in = new BufferedReader(
 			new InputStreamReader(System.in));
 
 	// -----------------------------------------------------------------
