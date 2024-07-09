@@ -154,10 +154,18 @@ Per farlo:
 
 ## **4. Istruzioni per l'uso**
 
-### Schermata di avvio del programma:
-
-<p style="text-align: center;width: 500px;">
+### Prima volta nella chat:
+<p style="text-align: center;width: 500px; height: 500px;">
     <img src="./assets/Avvio.jpeg" alt="">
+</p>
+
+---
+
+
+### Schermata di avvio del bot:
+
+<p style="text-align: center;width: 500px; height: 600px;">
+    <img src="./assets/Start.jpeg" alt="">
 </p>
 
 ---
@@ -199,6 +207,13 @@ Inserimento del nome del file che non esiste:
 
 <p style="text-align: center; width: 500px;">
     <img src="./assets/File error.jpeg" alt="">
+</p>
+
+---
+### Inserimento file senza estensione:
+Inserimento del nome del file:
+<p style="text-align: center;width: 500px;">
+    <img src="./assets/File noes.jpeg" alt="">
 </p>
 
 ---
@@ -272,6 +287,15 @@ Inserimento del nome del file:
 
 <p style="text-align: center; width: 500px;">
     <img src="./assets/Nome archivio.jpeg" alt="">
+</p>
+
+---
+
+### Inserimento nome file errato salvataggio:
+Inserimento del nome del file senza estensione:
+
+<p style="text-align: center; width: 500px;">
+    <img src="./assets/Nome ersa.jpeg" alt="">
 </p>
 
 ---
