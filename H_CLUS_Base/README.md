@@ -387,7 +387,7 @@ Per accedere alla documentazione JavaDoc del progetto, fare clic sui link sottos
 
 Per ulteriori informazioni, contattare:
 
-- **Ferrara Marco**: m.ferrara62@studenti.uniba.it;
-- **Appice Lorenzo**: l.appice@studenti.uniba.it;
-- **De giglio Pietro**: p.degiglio5@studenti.uniba.it;
+- **Ferrara Marco**: m.ferrara62@studenti.uniba.it Mat. 782407;
+- **Appice Lorenzo**: l.appice@studenti.uniba.it Mat. 777747;
+- **De giglio Pietro**: p.degiglio5@studenti.uniba.it Mat. 779409;
 
