@@ -159,8 +159,6 @@ class ServerOneClient extends Thread {
                 out.writeObject("OK");
                 out.writeObject(clustering.toString(data));
             }
-        } catch (FileNotFoundException e) {
-            out.writeObject("File non trovato: " + e.getMessage());
         } catch (IOException | ClassNotFoundException | InvalidDepthException e) {
             out.writeObject(e.getMessage());
         }
