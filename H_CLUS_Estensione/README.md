@@ -161,7 +161,6 @@ Per farlo:
 
 ---
 
-
 ### Schermata di avvio del bot:
 
 <p style="text-align: center;width: 500px; height: 600px;">
@@ -169,8 +168,15 @@ Per farlo:
 </p>
 
 ---
-### Inserimento tabella errato:
-Inserimento di un nome di tabella errato:
+
+### Inserimento di testo o comandi prima di instaurare una connessione
+
+<p style="text-align: center;width: 500px; height: 600px;">
+    <img src="./assets/testoprimastart.jpg" alt="">
+</p>
+
+---
+### Inserimento di un nome di tabella non valido
 
 <p style="text-align: center;width: 500px;">
     <img src="./assets/Tabella inesistente.jpeg" alt="">
@@ -178,22 +184,21 @@ Inserimento di un nome di tabella errato:
 Il programma ci dirà che la tabella non è stata trovata e ci dara la possibilità di inserire un'altro nome.
 
 ---
-### Inserimento nome tabella:
-Inserimento del nome della tabella:
+### ### Inserimento di un nome di tabella valido
 
 <p style="text-align: center; width: 500px;">
     <img src="./assets/Inserimento tabella.jpeg" alt="">
 </p>
 
 ---
-### Scelta diversa da 1 o 2:
-Inserimento di una scelta diversa da 1 o 2:
+### Inserimento di una scelta diversa da 1 o 2
+
 <p style="text-align: center; width: 500px;">
     <img src="./assets/Scelta diversa.jpeg" alt="">
 </p>
 
 ---
-### Scelta 1: 
+### Scelta 1
 
 Se inseriamo 1 avremo scelto il caricamento del dendrogramma da file: 
 
@@ -202,29 +207,27 @@ Se inseriamo 1 avremo scelto il caricamento del dendrogramma da file:
 </p>
 
 ---
-### Inserimento nome file errato:
-Inserimento del nome del file che non esiste:
+### Inserimento del nome di un file che non esiste
 
 <p style="text-align: center; width: 500px;">
     <img src="./assets/File error.jpeg" alt="">
 </p>
 
 ---
-### Inserimento file senza estensione:
-Inserimento del nome del file:
+### Inserimento del nome di un file senza estensione
 <p style="text-align: center;width: 500px;">
     <img src="./assets/File noes.jpeg" alt="">
 </p>
 
 ---
-### Inserimento file corretto:
-Inserimento del nome del file:
+### Inserimento del nome di un file valido
+
 <p style="text-align: center;width: 500px; height: 500px;">
     <img src="./assets/File corretto.jpeg" alt="">
 </p>
 
 ---
-### Scelta 2:
+### Scelta 2
 Se inseriamo 2 avremo scelto l'opzione apprendi dendrogramma dal database:
 
 <p style="text-align: center; width: 500px;">
@@ -232,16 +235,14 @@ Se inseriamo 2 avremo scelto l'opzione apprendi dendrogramma dal database:
 </p>
 
 ---
-### Inserimento profondità errato:
-Inserimento di una profondità errata:
+### Inserimento di una profondità non valida
 
 <p style="text-align: center; width: 500px;">
     <img src="./assets/prof errata.jpeg" alt="">
 </p>
 
 ---
-### Inserimento profondità corretto:
-Se inseriamo una profondità corretta (da 1 a 5):
+### Se inseriamo una profondità corretta (da 1 a 5)
 
 <p style="text-align: center; width: 500px;">
     <img src="./assets/prof corretta.jpeg" alt="">
@@ -249,15 +250,14 @@ Se inseriamo una profondità corretta (da 1 a 5):
 
 
 ---
-### Inserimento distanza errata:
-Se inseriamo una scelta errata:
+### Inserimento distanza non valida
 
 <p style="text-align: center; width: 500px;">
     <img src="./assets/Distanza errata.jpeg" alt="">
 </p>
 
 ---
-### Inserimento distanza 1:
+### Inserimento distanza valida 1
 Se inseriamo una scelta corretta (1 o 2):
 
 <p style="text-align: center; width: 500px; height: 500px;">
@@ -265,25 +265,22 @@ Se inseriamo una scelta corretta (1 o 2):
 </p>
 
 ---
-### Inserimento nome file:
-Inserimento del nome del file:
+### Inserimento del nome di un file valido
 
 <p style="text-align: center; width: 500px;">
     <img src="./assets/Nome archivios.jpeg" alt="">
 </p>
 
 ---
-### Inserimento distanza 2:
+### Inserimento distanza valida 2
 Se inseriamo una scelta corretta (1 o 2):
 
 <p style="text-align: center; width: 500px; height: 500px;">
     <img src="./assets/Scelta 2d.jpeg" alt="">
 </p>
 
-
 ---
-### Inserimento nome file:
-Inserimento del nome del file:
+### Inserimento del nome di un file valido
 
 <p style="text-align: center; width: 500px;">
     <img src="./assets/Nome archivio.jpeg" alt="">
@@ -291,8 +288,7 @@ Inserimento del nome del file:
 
 ---
 
-### Inserimento nome file errato salvataggio:
-Inserimento del nome del file senza estensione:
+### Inserimento del nome del file senza estensione
 
 <p style="text-align: center; width: 500px;">
     <img src="./assets/Nome ersa.jpeg" alt="">
