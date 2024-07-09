@@ -5,8 +5,6 @@ import data.Data;
 import data.Example;
 import data.InvalidSizeException;
 
-import java.util.Iterator;
-
 /**
  * classe SingleLinkDistance
  * Implementa il metodo distance dell'interfaccia
@@ -27,16 +25,14 @@ public class SingleLinkDistance implements ClusterDistance {
 	public double distance(Cluster c1, Cluster c2, Data d) throws InvalidSizeException {
 		double min=Double.MAX_VALUE;
 
-		Iterator<Integer> it1 = c1.iterator();
-		while(it1.hasNext()) {
-			Example e1=d.getExample(it1.next());
-			Iterator<Integer> it2 = c2.iterator();
-			while(it2.hasNext()) {
-                double distance = e1.distance(d.getExample(it2.next()));
-                if (distance<min)
-					min=distance;
-			}
-		}
+        for (Integer integer : c1) {
+            Example e1 = d.getExample(integer);
+            for (Integer value : c2) {
+                double distance = e1.distance(d.getExample(value));
+                if (distance < min)
+                    min = distance;
+            }
+        }
 		return min;
 	}
 }

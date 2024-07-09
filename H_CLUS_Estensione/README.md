@@ -156,7 +156,7 @@ Per farlo:
 
 ### Schermata di avvio del programma:
 
-<p style="text-align: center;">
+<p style="text-align: center;width: 500px;">
     <img src="./assets/Avvio.jpeg" alt="">
 </p>
 
@@ -164,7 +164,7 @@ Per farlo:
 ### Inserimento tabella errato:
 Inserimento di un nome di tabella errato:
 
-<p style="text-align: center;">
+<p style="text-align: center;width: 500px;">
     <img src="./assets/Tabella inesistente.jpeg" alt="">
 </p>
 Il programma ci dirà che la tabella non è stata trovata e ci dara la possibilità di inserire un'altro nome.
@@ -173,14 +173,14 @@ Il programma ci dirà che la tabella non è stata trovata e ci dara la possibili
 ### Inserimento nome tabella:
 Inserimento del nome della tabella:
 
-<p style="text-align: center;">
+<p style="text-align: center; width: 500px;">
     <img src="./assets/Inserimento tabella.jpeg" alt="">
 </p>
 
 ---
 ### Scelta diversa da 1 o 2:
 Inserimento di una scelta diversa da 1 o 2:
-<p style="text-align: center;">
+<p style="text-align: center; width: 500px;">
     <img src="./assets/Scelta diversa.jpeg" alt="">
 </p>
 
@@ -189,7 +189,7 @@ Inserimento di una scelta diversa da 1 o 2:
 
 Se inseriamo 1 avremo scelto il caricamento del dendrogramma da file: 
 
-<p style="text-align: center;">
+<p style="text-align: center; width: 500px;">
     <img src="./assets/Scelta 1.jpeg" alt="">
 </p>
 
@@ -197,14 +197,14 @@ Se inseriamo 1 avremo scelto il caricamento del dendrogramma da file:
 ### Inserimento nome file errato:
 Inserimento del nome del file che non esiste:
 
-<p style="text-align: center;">
+<p style="text-align: center; width: 500px;">
     <img src="./assets/File error.jpeg" alt="">
 </p>
 
 ---
 ### Inserimento file corretto:
 Inserimento del nome del file:
-<p style="text-align: center;">
+<p style="text-align: center;width: 500px; height: 500px;">
     <img src="./assets/File corretto.jpeg" alt="">
 </p>
 
@@ -212,7 +212,7 @@ Inserimento del nome del file:
 ### Scelta 2:
 Se inseriamo 2 avremo scelto l'opzione apprendi dendrogramma dal database:
 
-<p style="text-align: center;">
+<p style="text-align: center; width: 500px;">
     <img src="./assets/Scelta 2.jpeg" alt="">
 </p>
 
@@ -220,7 +220,7 @@ Se inseriamo 2 avremo scelto l'opzione apprendi dendrogramma dal database:
 ### Inserimento profondità errato:
 Inserimento di una profondità errata:
 
-<p style="text-align: center;">
+<p style="text-align: center; width: 500px;">
     <img src="./assets/prof errata.jpeg" alt="">
 </p>
 
@@ -228,7 +228,7 @@ Inserimento di una profondità errata:
 ### Inserimento profondità corretto:
 Se inseriamo una profondità corretta (da 1 a 5):
 
-<p style="text-align: center;">
+<p style="text-align: center; width: 500px;">
     <img src="./assets/prof corretta.jpeg" alt="">
 </p>
 
@@ -237,7 +237,7 @@ Se inseriamo una profondità corretta (da 1 a 5):
 ### Inserimento distanza errata:
 Se inseriamo una scelta errata:
 
-<p style="text-align: center;">
+<p style="text-align: center; width: 500px;">
     <img src="./assets/Distanza errata.jpeg" alt="">
 </p>
 
@@ -245,7 +245,7 @@ Se inseriamo una scelta errata:
 ### Inserimento distanza 1:
 Se inseriamo una scelta corretta (1 o 2):
 
-<p style="text-align: center;">
+<p style="text-align: center; width: 500px; height: 500px;">
     <img src="./assets/Scelta 1d.jpeg" alt="">
 </p>
 
@@ -253,7 +253,7 @@ Se inseriamo una scelta corretta (1 o 2):
 ### Inserimento nome file:
 Inserimento del nome del file:
 
-<p style="text-align: center;">
+<p style="text-align: center; width: 500px;">
     <img src="./assets/Nome archivios.jpeg" alt="">
 </p>
 
@@ -261,7 +261,7 @@ Inserimento del nome del file:
 ### Inserimento distanza 2:
 Se inseriamo una scelta corretta (1 o 2):
 
-<p style="text-align: center;">
+<p style="text-align: center; width: 500px; height: 500px;">
     <img src="./assets/Scelta 2d.jpeg" alt="">
 </p>
 
@@ -270,8 +270,16 @@ Se inseriamo una scelta corretta (1 o 2):
 ### Inserimento nome file:
 Inserimento del nome del file:
 
-<p style="text-align: center;">
-    <img src="./assets/Nome archivio2.jpeg" alt="">
+<p style="text-align: center; width: 500px;">
+    <img src="./assets/Nome archivio.jpeg" alt="">
+</p>
+
+---
+
+### Chiusura del programma:
+
+<p style="text-align: center; width: 500px;">
+    <img src="./assets/End.jpeg" alt="">
 </p>
 
 ---
